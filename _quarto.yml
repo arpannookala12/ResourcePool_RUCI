@@ -1,0 +1,21 @@
+project:
+  type: website
+
+website:
+  title: ""
+  navbar:
+    left:
+      - href: index.qmd
+        text: RUCI LAB
+      - href: datadict.qmd
+        text: Data Dictionary (CDC, EPA, USGS)
+      - href: eda.qmd
+        text: EDA for HPS data
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+

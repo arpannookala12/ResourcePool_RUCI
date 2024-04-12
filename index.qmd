@@ -1,0 +1,18 @@
+---
+title: "Resource List - RUCI LAB"
+---
+# Literature Review (Use of Big Data & ML in Public Transport)
+
+#### [Sheet link](https://docs.google.com/spreadsheets/d/1nBsYoIzlT-GBuFJbsYgTM-G9ulQqnuLfa2JMTTN393g/edit?usp=sharing)
+
+# Ordinal Regression Models (for Teleworking Days) using Household Pulse Survey
+
+[EDA performed on the dataset](eda.qmd)
+
+# Data Dictionary (CDC, EPA, USGS)
+
+[Go to dictionary](datadict.qmd)
+
+# Box Link
+
+[Go to box](https://rutgers.box.com/s/4gbvfg9p7ep4onqplmak7ijcko58ino4)

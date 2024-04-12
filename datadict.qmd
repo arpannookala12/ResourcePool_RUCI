@@ -1,0 +1,24 @@
+# Data Dictionary (Data from CDC PLACES, EPA SLD, USGS Building Footprint)
+
+# CDC PLACES
+[Go to metadata source](https://chronicdata.cdc.gov/500-Cities-Places/PLACES-Census-Tract-Data-GIS-Friendly-Format-2023-/yjkw-uj5s)
+````{python}
+import pandas as pd
+from itables import show
+df1 = pd.read_csv("CDC_metadata.csv")
+show(df1)
+````
+
+# EPA SLD
+[Go to metadata source](https://www.epa.gov/system/files/documents/2023-10/epa_sld_3.0_technicaldocumentationuserguide_may2021_0.pdf)
+````{python}
+df2 = pd.read_csv("EPA_metadata.csv")
+show(df2)
+````
+
+# USGS Building Footprint
+[Go to metadata source](https://www.sciencebase.gov/catalog/file/get/5775469ce4b07dd077c7088a?f=__disk__48%2F5f%2Fbe%2F485fbece9f077c7271822e787e45a505ede77d02&transform=1&allowOpen=true)
+````{python}
+df3 = pd.read_csv("USGSBFP_metadata.csv")
+show(df3)
+````

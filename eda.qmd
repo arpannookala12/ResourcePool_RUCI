@@ -1,0 +1,20 @@
+# First few rows of dataframe
+{{< embed SAE.ipynb#first-few-rows >}}
+# EST_ST distribution
+{{< embed SAE.ipynb#state-distribution >}}
+# EST_MSA distribution
+{{< embed SAE.ipynb#msa-distribution >}}
+# State-Wise Telecommuting Patterns
+{{< embed SAE.ipynb#state-wise-telecom >}}
+# City-Wise Telecommuting Patterns
+{{< embed SAE.ipynb#city-wise-telecom >}}
+# Telecommuting Frequency Distributions
+{{< embed SAE.ipynb#telecom-freq >}}
+# Telecommuting by Educational Attainment
+{{< embed SAE.ipynb#telecom-eeduc >}}
+# Telecommuting by Employment Sector
+{{< embed SAE.ipynb#telecom-kindwork >}}
+# Telecommuting by Number of People in the Household
+{{< embed SAE.ipynb#telecom-thhld >}}
+# Telecommuting by presence of Children in the Household
+{{< embed SAE.ipynb#telecom-child >}}
