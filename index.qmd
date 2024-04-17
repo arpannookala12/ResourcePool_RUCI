@@ -13,6 +13,13 @@ title: "Resource List - RUCI LAB"
 
 [Go to dictionary](datadict.qmd)
 
+# Maps on Felt
+* New Brunswick Area Map
+  [Go to map](https://felt.com/map/NB-EPA-CDC-BFP-data-H1YZ9B9A1eQQWSEgyY9BRxUAB?loc=40.4431,-74.4269,10.52z&share=1)
+
+* Jersey City Area Map
+  [Go to map](https://felt.com/map/JC-CDC-EPA-BFP-data-OwGY4sLjTHy9AJ5LIMrNDrA?loc=39.15,-44.73,3.15z&share=1)
+
 # Box Link
 
 [Go to box](https://rutgers.box.com/s/4gbvfg9p7ep4onqplmak7ijcko58ino4)
