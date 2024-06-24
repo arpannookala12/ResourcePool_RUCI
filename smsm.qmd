@@ -18,7 +18,7 @@ library(tidyr)
 
 ```{r}
 # Read the Household Pulse Survey data from a CSV file
-ind <- read.csv("D:\\DOWNLOADS_FOR_D_DRIVE_REAL_TIME\\HPSDATA\\HPS_Phase4Cycle01_PUF_CSV\\hps_04_00_01_puf.csv")
+ind <- read.csv("hps_04_00_01_puf.csv")
 # Display the data
 head(as.data.frame(ind))
 ```
@@ -94,9 +94,9 @@ head(as.data.frame(ind))
 ## Reading and Validating Constraint Data
 ```{r}
 # Read constraint data for age, sex, and education from CSV files
-con_age <- read.csv("D:\\Desktop_New\\RUCI_LAB\\con_age.csv")
-con_sex <- read.csv("D:\\Desktop_New\\RUCI_LAB\\con_sex.csv")
-con_edu <- read.csv("D:\\Desktop_New\\RUCI_LAB\\con_edu.csv")
+con_age <- read.csv("con_age.csv")
+con_sex <- read.csv("con_sex.csv")
+con_edu <- read.csv("con_edu.csv")
 
 # Display the constraint data
 head(as.data.frame(con_age))

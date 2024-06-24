@@ -224,7 +224,7 @@ Attaching package: 'dplyr'</code></pre>
 <h2 class="anchored" data-anchor-id="reading-the-individual-level-data">Reading the Individual Level Data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the Household Pulse Survey data from a CSV file</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"D:</span><span class="sc">\\</span><span class="st">DOWNLOADS_FOR_D_DRIVE_REAL_TIME</span><span class="sc">\\</span><span class="st">HPSDATA</span><span class="sc">\\</span><span class="st">HPS_Phase4Cycle01_PUF_CSV</span><span class="sc">\\</span><span class="st">hps_04_00_01_puf.csv"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"hps_04_00_01_puf.csv"</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the data</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">as.data.frame</span>(ind))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -356,9 +356,9 @@ Attaching package: 'dplyr'</code></pre>
 <h2 class="anchored" data-anchor-id="reading-and-validating-constraint-data">Reading and Validating Constraint Data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read constraint data for age, sex, and education from CSV files</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>con_age <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"D:</span><span class="sc">\\</span><span class="st">Desktop_New</span><span class="sc">\\</span><span class="st">RUCI_LAB</span><span class="sc">\\</span><span class="st">con_age.csv"</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>con_sex <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"D:</span><span class="sc">\\</span><span class="st">Desktop_New</span><span class="sc">\\</span><span class="st">RUCI_LAB</span><span class="sc">\\</span><span class="st">con_sex.csv"</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>con_edu <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"D:</span><span class="sc">\\</span><span class="st">Desktop_New</span><span class="sc">\\</span><span class="st">RUCI_LAB</span><span class="sc">\\</span><span class="st">con_edu.csv"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>con_age <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"con_age.csv"</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>con_sex <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"con_sex.csv"</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>con_edu <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"con_edu.csv"</span>)</span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the constraint data</span></span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">as.data.frame</span>(con_age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
