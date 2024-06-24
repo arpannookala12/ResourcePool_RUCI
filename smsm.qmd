@@ -1,0 +1,327 @@
+---
+title: "Spatial Microsimulation for Middlesex County, NJ"
+author: "Arpan Nookala"
+date: "2024-06-23"
+output: html_document
+format: 
+   html:
+     df-print: paged
+---
+
+```{r}
+# Loading Required Libraries
+library(dplyr)
+library(tidyr)
+```
+
+## Reading the Individual Level Data
+
+```{r}
+# Read the Household Pulse Survey data from a CSV file
+ind <- read.csv("D:\\DOWNLOADS_FOR_D_DRIVE_REAL_TIME\\HPSDATA\\HPS_Phase4Cycle01_PUF_CSV\\hps_04_00_01_puf.csv")
+# Display the data
+head(as.data.frame(ind))
+```
+
+## Data Filtering and Variable Selection
+
+```{r}
+# Filter data for Middlesex County (EST_MSA=35620) and state of New Jersey (EST_ST=34)
+ind <- ind %>% filter(EST_MSA==35620 & EST_ST==34)
+
+# Calculate Age from Birth Year
+ind$AGE <- 2024 - ind$TBIRTH_YEAR
+
+# Select variables of interest
+variables_of_interest <- c("EST_ST","EST_MSA", "MS", "RRACE", "TWDAYS", "EEDUC", "KINDWORK", "THHLD_NUMPER", "INCOME","EGENID_BIRTH","AGE","RHISPANIC","ANYWORK")
+ind <- ind %>% select(all_of(variables_of_interest))
+
+# Display the filtered and selected data
+head(as.data.frame(ind))
+```
+
+## Data Cleaning and Transformations
+
+```{r}
+# Display unique values of variables for understanding
+sort(unique(ind$AGE))
+sort(unique(ind$EEDUC))
+sort(unique(ind$EGENID_BIRTH))
+sort(unique(ind$KINDWORK))
+
+# Replace special values with NA in education variable
+ind$EEDUC[ind$EEDUC == -99] <- NA
+ind$EEDUC[ind$EEDUC == -88] <- NA
+
+# Drop rows with NA values
+ind <- ind %>% drop_na()
+
+# Filter data for individuals aged 25 and above
+ind <- ind[ind$AGE >= 25,]
+
+# Display cleaned data
+head(as.data.frame(ind))
+
+# Display unique values again after cleaning
+sort(unique(ind$AGE))
+sort(unique(ind$EEDUC))
+sort(unique(ind$EGENID_BIRTH))
+sort(unique(ind$KINDWORK))
+```
+
+## Recoding Variables
+```{r}
+# Define age group breaks and labels
+brks <- c(25, 30, 35, 40, 45, 50, 55, 60, 62, 65, 67, 70, 75, 80, 85, Inf)
+labs <- c("25 to 29 years", "30 to 34 years", "35 to 39 years", "40 to 44 years", 
+          "45 to 49 years", "50 to 54 years", "55 to 59 years", "60 and 61 years", 
+          "62 to 64 years", "65 and 66 years", "67 to 69 years", "70 to 74 years", 
+          "75 to 79 years", "80 to 84 years","85 years and over")
+
+# Recode age into groups
+ind$AGE <- cut(ind$AGE, breaks = brks, labels = labs, right=FALSE)
+
+# Recode gender variable
+ind$EGENID_BIRTH <- factor(ind$EGENID_BIRTH, levels = 1:2, labels = c("Male", "Female"))
+
+# Recode education levels
+ind$EEDUC <- factor(ind$EEDUC, levels = 1:7, labels = c("Less than high school","Some high school","High school graduate or equivalent (for example GED)","Some college, but degree not received or is in progress","Associate’s degree (for example AA, AS)","Bachelor's degree (for example BA, BS, AB)","Graduate degree (for example master's, professional, doctorate)"))
+
+# Display recoded data
+head(as.data.frame(ind))
+```
+
+## Reading and Validating Constraint Data
+```{r}
+# Read constraint data for age, sex, and education from CSV files
+con_age <- read.csv("D:\\Desktop_New\\RUCI_LAB\\con_age.csv")
+con_sex <- read.csv("D:\\Desktop_New\\RUCI_LAB\\con_sex.csv")
+con_edu <- read.csv("D:\\Desktop_New\\RUCI_LAB\\con_edu.csv")
+
+# Display the constraint data
+head(as.data.frame(con_age))
+head(as.data.frame(con_sex))
+head(as.data.frame(con_edu))
+
+# Validate the sums of the constraints
+# Sum of age constraints
+sum(con_age)
+# Sum of sex constraints
+sum(con_sex)
+# Sum of education constraints
+sum(con_edu)
+
+# Validate the row sums of the constraints
+# Row sums of age constraints
+rowSums(con_age)
+# Row sums of sex constraints
+rowSums(con_sex)
+# Row sums of education constraints
+rowSums(con_edu)
+
+# Check if the row sums of different constraints are equal
+# Check if row sums of age and sex constraints are equal
+rowSums(con_age) == rowSums(con_sex)
+# Check if row sums of age and education constraints are equal
+rowSums(con_age) == rowSums(con_edu)
+# Check if row sums of sex and education constraints are equal
+rowSums(con_sex) == rowSums(con_edu)
+```
+
+## Naming Columns and Combining Constraints
+```{r}
+# Assign column names to age and education constraints based on the levels in the individual data
+names(con_age) <- levels(ind$AGE)
+names(con_edu) <- levels(ind$EEDUC)
+
+# Combine age, sex, and education constraints into a single data frame
+cons <- cbind(con_age, con_sex, con_edu)
+
+# Display the combined constraints
+head(as.data.frame(cons))
+```
+
+## Creating Categorical Indicator Matrices
+```{r}
+# Create binary indicator matrix for age categories
+cat_age <- model.matrix(~ ind$AGE - 1)
+# Display the dimensions of the age indicator matrix
+dim(cat_age)
+
+# Create binary indicator matrix for sex categories
+cat_sex <- model.matrix(~ ind$EGENID_BIRTH - 1)
+# Display the dimensions of the sex indicator matrix
+dim(cat_sex)
+
+# Create binary indicator matrix for education categories
+cat_edu <- model.matrix(~ ind$EEDUC - 1)
+# Display the dimensions of the education indicator matrix
+dim(cat_edu)
+
+# Combine age, sex, and education indicator matrices into a single matrix
+ind_cat <- cbind(cat_age, cat_sex, cat_edu)
+
+# Display the first few rows of the combined indicator matrix
+head(as.data.frame(ind_cat))
+```
+
+## Aggregating Indicator Matrix and Defining Dimensions
+```{r}
+# Calculate the column sums of the indicator matrix
+colSums(ind_cat)
+
+# Aggregate the individual categories
+ind_agg <- colSums(ind_cat)
+
+# Compare the first row of constraints with the aggregated individual categories
+rbind(cons[1,], ind_agg)
+
+# Define the number of zones (rows) in the constraints data
+n_zone <- nrow(cons)
+# Display the number of zones
+n_zone
+
+# Define the number of individuals in the individual data
+n_ind <- nrow(ind)
+# Display the number of individuals
+n_ind
+
+# Define the number of age categories
+n_age <- ncol(con_age)
+# Display the number of age categories
+n_age
+
+# Define the number of sex categories
+n_sex <- ncol(con_sex)
+# Display the number of sex categories
+n_sex
+
+# Define the number of education categories
+n_edu <- ncol(con_edu)
+# Display the number of education categories
+n_edu
+```
+
+## Initializing Weight Matrices and Performing First Iteration of IPF
+```{r}
+# Initialize weight matrices with uniform weights
+weights <- matrix(data = 1, nrow = nrow(ind), ncol = nrow(cons))
+weights3 <- weights1 <- weights2 <- weights
+# Display the dimensions of the weights matrix
+dim(weights)
+
+# Aggregate the individual categories initially, based on constraints
+ind_agg0 <- t(apply(cons, 1, function(x) 1 * ind_agg))
+colnames(ind_agg0) <- names(cons)
+# Display the initial aggregated individual categories
+head(as.data.frame(ind_agg0))
+
+# First iteration of IPF to adjust weights based on age constraints
+for(j in 1:n_zone){
+  for(i in 1:n_age){
+    index <- ind_cat[, i] == 1
+    weights1[index, j] <- weights[index, j] * con_age[j, i] / ind_agg0[j, i]
+  }
+}
+# Display the adjusted weights after the first iteration
+head(as.data.frame(weights1))
+```
+
+## Aggregating After First IPF Iteration
+```{r}
+# Initialize aggregated matrices to store results of each IPF iteration
+ind_agg3 <- ind_agg2 <- ind_agg1 <- ind_agg0 * NA
+
+# Aggregate individual categories after the first IPF iteration
+for(i in 1:n_zone){
+  ind_agg1[i, ] <- colSums(ind_cat * weights1[, i])
+}
+# Display the aggregated individual categories after the first iteration
+head(as.data.frame(ind_agg1))
+
+# Calculate the row sums of the aggregated categories and the constraints for age
+rowSums(ind_agg1[, 1:15])
+rowSums(cons[, 1:15])
+
+# Check if the row sums of the aggregated categories match the constraints for age
+rowSums(ind_agg1[, 1:15]) == rowSums(cons[, 1:15])
+
+```
+
+## Second Iteration of IPF and Validation
+```{r}
+# Second iteration of IPF to adjust weights based on sex and age constraints
+for (j in 1:n_zone) {
+  for (i in 1:(n_sex + n_age)) {
+    index <- ind_cat[, i] == 1
+    weights2[index, j] <- weights1[index, j] * cons[j, i] / ind_agg1[j, i]
+  }
+}
+# Display the adjusted weights after the second iteration
+head(as.data.frame(weights2))
+
+# Aggregate individual categories after the second IPF iteration
+for(i in 1:n_zone){
+  ind_agg2[i, ] <- colSums(ind_cat * weights2[, i])
+}
+# Display the aggregated individual categories after the second iteration
+head(as.data.frame(ind_agg2))
+
+# Calculate and display the row sums of the aggregated categories for sex
+rowSums(ind_agg2[, 16:17])
+
+# Calculate and display the row sums of the constraints for sex
+rowSums(cons[, 16:17])
+
+# Check if the row sums of the aggregated categories match the constraints for sex
+rowSums(ind_agg2[, 16:17]) == rowSums(cons[, 16:17])
+```
+
+## Third Iteration of IPF and Final Validation
+```{r}
+# Third iteration of IPF to adjust weights based on sex, age, and education constraints
+for(j in 1:n_zone){
+  for(i in 1:(n_sex + n_age + n_edu)){
+    index <- ind_cat[, i] == 1
+    if(ind_agg2[j, i] != 0) {  # Check to avoid division by zero
+      weights3[index, j] <- weights2[index, j] * cons[j, i] / ind_agg2[j, i]
+    }
+  }
+}
+# Display the adjusted weights after the third iteration
+head(as.data.frame(weights3))
+
+# Aggregate individual categories after the third IPF iteration
+for(i in 1:n_zone){
+  ind_agg3[i, ] <- colSums(ind_cat * weights3[, i])
+}
+# Display the aggregated individual categories after the third iteration
+head(as.data.frame(ind_agg3))
+
+# Calculate and display the row sums of the aggregated categories for education
+rowSums(ind_agg3[, 18:24])
+
+# Calculate and display the row sums of the constraints for education
+rowSums(cons[, 18:24])
+
+# Check if the row sums of the aggregated categories match the constraints for education
+rowSums(ind_agg3[, 18:24]) == rowSums(cons[, 18:24])
+```
+
+## Correlation Analysis Between Aggregated Data and Constraints
+```{r}
+# Function to convert matrix to numeric vector
+vec <- function(x) as.numeric(as.matrix(x))
+
+# Calculate and display the correlation between the initial aggregated data and constraints
+cor(vec(ind_agg0), vec(cons))
+
+# Calculate and display the correlation between the first iteration aggregated data and constraints
+cor(vec(ind_agg1), vec(cons))
+
+# Calculate and display the correlation between the second iteration aggregated data and constraints
+cor(vec(ind_agg2), vec(cons))
+
+# Calculate and display the correlation between the third iteration aggregated data and constraints
+cor(vec(ind_agg3), vec(cons))
+```

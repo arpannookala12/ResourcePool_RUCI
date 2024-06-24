@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.552">
+<meta name="generator" content="quarto-1.5.47">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -78,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -97,7 +97,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -111,7 +111,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#literature-review-use-of-big-data-ml-in-public-transport" id="toc-literature-review-use-of-big-data-ml-in-public-transport" class="nav-link active" data-scroll-target="#literature-review-use-of-big-data-ml-in-public-transport">Literature Review (Use of Big Data &amp; ML in Public Transport)</a></li>
+  <li><a href="#spatial-microsimulation-using-the-household-pulse-survey-american-community-survey" id="toc-spatial-microsimulation-using-the-household-pulse-survey-american-community-survey" class="nav-link active" data-scroll-target="#spatial-microsimulation-using-the-household-pulse-survey-american-community-survey">Spatial Microsimulation using the Household Pulse Survey &amp; American Community Survey</a></li>
+  <li><a href="#literature-review-use-of-big-data-ml-in-public-transport" id="toc-literature-review-use-of-big-data-ml-in-public-transport" class="nav-link" data-scroll-target="#literature-review-use-of-big-data-ml-in-public-transport">Literature Review (Use of Big Data &amp; ML in Public Transport)</a></li>
   <li><a href="#ordinal-regression-models-for-teleworking-days-using-household-pulse-survey" id="toc-ordinal-regression-models-for-teleworking-days-using-household-pulse-survey" class="nav-link" data-scroll-target="#ordinal-regression-models-for-teleworking-days-using-household-pulse-survey">Ordinal Regression Models (for Teleworking Days) using Household Pulse Survey</a></li>
   <li><a href="#data-dictionary-cdc-epa-usgs" id="toc-data-dictionary-cdc-epa-usgs" class="nav-link" data-scroll-target="#data-dictionary-cdc-epa-usgs">Data Dictionary (CDC, EPA, USGS)</a></li>
   <li><a href="#maps-on-felt" id="toc-maps-on-felt" class="nav-link" data-scroll-target="#maps-on-felt">Maps on Felt</a></li>
@@ -141,11 +142,13 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="spatial-microsimulation-using-the-household-pulse-survey-american-community-survey" class="level1">
+<h1>Spatial Microsimulation using the Household Pulse Survey &amp; American Community Survey</h1>
+<p><a href="./smsm.html">R markdown notebook</a></p>
+</section>
 <section id="literature-review-use-of-big-data-ml-in-public-transport" class="level1">
 <h1>Literature Review (Use of Big Data &amp; ML in Public Transport)</h1>
-<section id="sheet-link" class="level4">
-<h4 class="anchored" data-anchor-id="sheet-link"><a href="https://docs.google.com/spreadsheets/d/1nBsYoIzlT-GBuFJbsYgTM-G9ulQqnuLfa2JMTTN393g/edit?usp=sharing">Sheet link</a></h4>
-</section>
+<p><a href="https://docs.google.com/spreadsheets/d/1nBsYoIzlT-GBuFJbsYgTM-G9ulQqnuLfa2JMTTN393g/edit?usp=sharing">Sheet link</a></p>
 </section>
 <section id="ordinal-regression-models-for-teleworking-days-using-household-pulse-survey" class="level1">
 <h1>Ordinal Regression Models (for Teleworking Days) using Household Pulse Survey</h1>
@@ -205,18 +208,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -248,7 +240,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -256,7 +270,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
