@@ -4,7 +4,7 @@
     "href": "smsm.html",
     "title": "Spatial Microsimulation for Middlesex County, NJ",
     "section": "",
-    "text": "# Loading Required Libraries\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\nlibrary(tidyr)"
+    "text": "# Python code here\n# Loading Required Libraries\nlibrary(dplyr)\n\n\nAttaching package: 'dplyr'\n\n\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n\n\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n\nlibrary(tidyr)"
   },
   {
     "objectID": "smsm.html#reading-the-individual-level-data",

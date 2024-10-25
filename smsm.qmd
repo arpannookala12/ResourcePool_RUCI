@@ -7,7 +7,9 @@ format:
    html:
      df-print: paged
 ---
-
+```{python, python.reticulate=FALSE}
+# Python code here
+```
 ```{r}
 # Loading Required Libraries
 library(dplyr)
@@ -327,7 +329,6 @@ cor(vec(ind_agg3), vec(cons))
 ```
 
 <!--
-```{python}
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -410,5 +411,4 @@ plt.show()
 # tools.display_dataframe_to_user(name="Telework Proportion by Age Group", dataframe=age_twday_proportion)
 # tools.display_dataframe_to_user(name="Telework Proportion by Gender", dataframe=gender_twday_proportion)
 # tools.display_dataframe_to_user(name="Telework Proportion by Educational Attainment", dataframe=education_twday_proportion)
-```
 -->
