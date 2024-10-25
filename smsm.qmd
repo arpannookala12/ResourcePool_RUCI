@@ -326,7 +326,7 @@ cor(vec(ind_agg2), vec(cons))
 cor(vec(ind_agg3), vec(cons))
 ```
 
-
+<!--
 ```{python}
 import pandas as pd
 import numpy as np
@@ -411,3 +411,4 @@ plt.show()
 # tools.display_dataframe_to_user(name="Telework Proportion by Gender", dataframe=gender_twday_proportion)
 # tools.display_dataframe_to_user(name="Telework Proportion by Educational Attainment", dataframe=education_twday_proportion)
 ```
+-->
