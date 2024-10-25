@@ -325,3 +325,89 @@ cor(vec(ind_agg2), vec(cons))
 # Calculate and display the correlation between the third iteration aggregated data and constraints
 cor(vec(ind_agg3), vec(cons))
 ```
+
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+file_path = '/mnt/data/smsmresults.csv'
+data = pd.read_csv(file_path)
+
+# Step 1: Data Cleaning and Preparation
+# Ensure 'TWDAYS' is consistent and treated as a categorical variable
+data['TWDAYS'] = data['TWDAYS'].str.strip().str.lower()
+data['TWDAYS'] = data['TWDAYS'].replace({
+    'yes, for 1-2 days': 'Yes, for 1-2 days', 
+    'yes, for 3-4 days': 'Yes, for 3-4 days', 
+    'yes, for 5 or more days': 'Yes, for 5 or more days',
+    'no': 'No'
+})
+
+# Convert columns to categorical type
+data['AGE'] = data['AGE'].astype('category')
+data['EEDUC'] = data['EEDUC'].astype('category')
+data['EGENID_BIRTH'] = data['EGENID_BIRTH'].astype('category')
+data['TWDAYS'] = data['TWDAYS'].astype('category')
+
+# Step 2: Descriptive Statistics
+# Calculate frequency of telework days
+twday_counts = data['TWDAYS'].value_counts()
+
+# Summarize by age group
+age_twday_summary = data.groupby(['AGE', 'TWDAYS']).size().unstack(fill_value=0)
+
+# Calculate proportions by age group
+age_twday_proportion = data.groupby(['AGE', 'TWDAYS']).size().groupby(level=0).apply(lambda x: x / x.sum()).unstack(fill_value=0)
+
+# Summarize by gender
+gender_twday_summary = data.groupby(['EGENID_BIRTH', 'TWDAYS']).size().unstack(fill_value=0)
+
+# Calculate proportions by gender
+gender_twday_proportion = data.groupby(['EGENID_BIRTH', 'TWDAYS']).size().groupby(level=0).apply(lambda x: x / x.sum()).unstack(fill_value=0)
+
+# Summarize by educational attainment
+education_twday_summary = data.groupby(['EEDUC', 'TWDAYS']).size().unstack(fill_value=0)
+
+# Calculate proportions by educational attainment
+education_twday_proportion = data.groupby(['EEDUC', 'TWDAYS']).size().groupby(level=0).apply(lambda x: x / x.sum()).unstack(fill_value=0)
+
+# Step 3: Visualization
+
+# Visualization for telework days by age group
+age_twday_proportion.plot(kind='bar', stacked=True, figsize=(12, 8))
+plt.ylabel('Proportion')
+plt.title('Proportion of Telework Days by Age Group')
+plt.legend(title='Telework Days', bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.tight_layout()
+plt.show()
+
+# Visualization for telework days by gender
+gender_twday_proportion.plot(kind='bar', stacked=True, figsize=(10, 6))
+plt.ylabel('Proportion')
+plt.title('Proportion of Telework Days by Gender')
+plt.legend(title='Telework Days', bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.tight_layout()
+plt.show()
+
+# Visualization for telework days by educational attainment
+education_twday_proportion.plot(kind='bar', stacked=True, figsize=(14, 10))
+plt.ylabel('Proportion')
+plt.title('Proportion of Telework Days by Educational Attainment')
+plt.legend(title='Telework Days', bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.tight_layout()
+plt.show()
+
+import ace_tools as tools
+
+tools.display_dataframe_to_user(name="Telework Days by Age Group", dataframe=age_twday_summary)
+tools.display_dataframe_to_user(name="Telework Days by Gender", dataframe=gender_twday_summary)
+tools.display_dataframe_to_user(name="Telework Days by Educational Attainment", dataframe=education_twday_summary)
+
+tools.display_dataframe_to_user(name="Telework Proportion by Age Group", dataframe=age_twday_proportion)
+tools.display_dataframe_to_user(name="Telework Proportion by Gender", dataframe=gender_twday_proportion)
+tools.display_dataframe_to_user(name="Telework Proportion by Educational Attainment", dataframe=education_twday_proportion)
+```
