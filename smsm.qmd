@@ -334,7 +334,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Load the dataset
-file_path = '/mnt/data/smsmresults.csv'
+file_path = 'smsmresults.csv'
 data = pd.read_csv(file_path)
 
 # Step 1: Data Cleaning and Preparation
@@ -401,13 +401,13 @@ plt.legend(title='Telework Days', bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
 plt.show()
 
-import ace_tools as tools
+# import ace_tools as tools
 
-tools.display_dataframe_to_user(name="Telework Days by Age Group", dataframe=age_twday_summary)
-tools.display_dataframe_to_user(name="Telework Days by Gender", dataframe=gender_twday_summary)
-tools.display_dataframe_to_user(name="Telework Days by Educational Attainment", dataframe=education_twday_summary)
+# tools.display_dataframe_to_user(name="Telework Days by Age Group", dataframe=age_twday_summary)
+# tools.display_dataframe_to_user(name="Telework Days by Gender", dataframe=gender_twday_summary)
+# tools.display_dataframe_to_user(name="Telework Days by Educational Attainment", dataframe=education_twday_summary)
 
-tools.display_dataframe_to_user(name="Telework Proportion by Age Group", dataframe=age_twday_proportion)
-tools.display_dataframe_to_user(name="Telework Proportion by Gender", dataframe=gender_twday_proportion)
-tools.display_dataframe_to_user(name="Telework Proportion by Educational Attainment", dataframe=education_twday_proportion)
+# tools.display_dataframe_to_user(name="Telework Proportion by Age Group", dataframe=age_twday_proportion)
+# tools.display_dataframe_to_user(name="Telework Proportion by Gender", dataframe=gender_twday_proportion)
+# tools.display_dataframe_to_user(name="Telework Proportion by Educational Attainment", dataframe=education_twday_proportion)
 ```
