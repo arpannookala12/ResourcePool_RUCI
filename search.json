@@ -102,7 +102,7 @@
     "href": "index.html",
     "title": "Resource List - RUCI LAB",
     "section": "",
-    "text": "Spatial Microsimulation using the Household Pulse Survey & American Community Survey\nR markdown notebook\n\n\nLiterature Review (Use of Big Data & ML in Public Transport)\nSheet link\n\n\nOrdinal Regression Models (for Teleworking Days) using Household Pulse Survey\nEDA performed on the dataset\n\n\nData Dictionary (CDC, EPA, USGS)\nGo to dictionary\n\n\nMaps on Felt\n\nNew Brunswick Area Map Go to map\nJersey City Area Map Go to map\n\n\n\nBox Link\nGo to box"
+    "text": "CPS & HPS Data distribution Visualizations\nNotebook\n\n\nSpatial Microsimulation using the Household Pulse Survey & American Community Survey\nR markdown notebook\n\n\nLiterature Review (Use of Big Data & ML in Public Transport)\nSheet link\n\n\nOrdinal Regression Models (for Teleworking Days) using Household Pulse Survey\nEDA performed on the dataset\n\n\nData Dictionary (CDC, EPA, USGS)\nGo to dictionary\n\n\nMaps on Felt\n\nNew Brunswick Area Map Go to map\nJersey City Area Map Go to map\n\n\n\nBox Link\nGo to box"
   },
   {
     "objectID": "datadict.html",
@@ -110,6 +110,13 @@
     "title": "Data Dictionary (Data from CDC PLACES, EPA SLD, USGS Building Footprint)",
     "section": "",
     "text": "CDC PLACES\nGo to metadata source\n\nimport pandas as pd\nfrom itables import show\ndf1 = pd.read_csv(\"CDC_metadata.csv\")\nshow(df1)\n\n\n\n    \n      \n      Column Name\n      Description\n      Type\n    \n  Loading... (need help?)\n\n\n\n\n\n\n\n\nEPA SLD\nGo to metadata source\n\ndf2 = pd.read_csv(\"EPA_metadata.csv\")\nshow(df2)\n\n\n\n    \n      \n      Field Name\n      Description\n      Data Source\n      Geographic Coverage*\n    \n  Loading... (need help?)\n\n\n\n\n\n\n\n\nUSGS Building Footprint\nGo to metadata source\n\ndf3 = pd.read_csv(\"USGSBFP_metadata.csv\")\nshow(df3)\n\n\n\n    \n      \n      Attribute Label\n      Attribute Definition\n      Attribute Definition Source\n    \n  Loading... (need help?)"
+  },
+  {
+    "objectID": "cps_visualizations.html",
+    "href": "cps_visualizations.html",
+    "title": "CPS & HPS data distribution visualizations",
+    "section": "",
+    "text": "Code\nimport os\nimport base64\nimport plotly.graph_objects as go\n\n# Directory containing images\nimage_folder = 'cps_plots_folder'\nimage_files = [f for f in os.listdir(image_folder) if f.endswith('.png')]\n\n# Function to convert image to base64\ndef image_to_base64(image_path):\n    with open(image_path, \"rb\") as image_file:\n        return base64.b64encode(image_file.read()).decode('utf-8')\n\n# Convert all images to base64 strings\nimage_sources = [f\"data:image/png;base64,{image_to_base64(os.path.join(image_folder, img))}\" for img in image_files]\n\n# Define figure\nfig = go.Figure()\n\n# Add traces for each image and use visible=False initially except the first\nfor idx, image_src in enumerate(image_sources):\n    fig.add_trace(\n        go.Image(\n            source=image_src,\n            visible=(idx == 0)  # Only the first image is visible by default\n        )\n    )\n\n# Create dropdown options to toggle visibility of images\ndropdown_buttons = [\n    dict(\n        label=image_files[idx],\n        method=\"update\",\n        args=[\n            {\"visible\": [i == idx for i in range(len(image_sources))]},  # Show only the selected image\n            {\"title\": f\"{image_files[idx]}\"}\n        ]\n    )\n    for idx in range(len(image_sources))\n]\n\n# Update layout with dropdown\nfig.update_layout(\n    updatemenus=[\n        dict(\n            buttons=dropdown_buttons,\n            direction=\"down\",\n            showactive=True,\n            x=0.01,\n            y=1.15,\n            xanchor=\"left\",\n            yanchor=\"top\"\n        )\n    ],\n    title=\"Interactive Plot Viewer with Dropdown\",\n    title_x=0.5\n)\n\n# Display the figure\nfig.show()"
   },
   {
     "objectID": "eda.html",

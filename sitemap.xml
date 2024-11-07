@@ -2,15 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://arpannookala12.github.io/ResourcePool_RUCI/smsm.html</loc>
-    <lastmod>2024-10-25T21:43:21.083Z</lastmod>
+    <lastmod>2024-11-07T20:07:41.593Z</lastmod>
   </url>
   <url>
     <loc>https://arpannookala12.github.io/ResourcePool_RUCI/index.html</loc>
-    <lastmod>2024-06-24T00:47:22.123Z</lastmod>
+    <lastmod>2024-11-07T18:49:14.064Z</lastmod>
   </url>
   <url>
     <loc>https://arpannookala12.github.io/ResourcePool_RUCI/datadict.html</loc>
     <lastmod>2024-04-12T01:49:12.649Z</lastmod>
+  </url>
+  <url>
+    <loc>https://arpannookala12.github.io/ResourcePool_RUCI/cps_visualizations.html</loc>
+    <lastmod>2024-11-07T19:58:37.520Z</lastmod>
   </url>
   <url>
     <loc>https://arpannookala12.github.io/ResourcePool_RUCI/eda.html</loc>
