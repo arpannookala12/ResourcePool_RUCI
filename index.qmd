@@ -3,7 +3,6 @@ title: "Resource List - RUCI LAB"
 ---
 
 # CPS & HPS Data distribution Visualizations
-[Notebook](cps_visualizations.qmd)
 
 # Spatial Microsimulation using the Household Pulse Survey & American Community Survey
 [R markdown notebook](smsm.qmd)
