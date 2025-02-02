@@ -8,6 +8,7 @@ format:
     code-fold: true
     df-print: paged    
 ---
+# CPS (RWB)
 ```{python}
 
 import os
@@ -72,6 +73,7 @@ fig.update_layout(
 fig.show()
 ```
 
+# CPS (RWM)
 ```{python}
 import os
 import base64
@@ -128,6 +130,136 @@ fig.update_layout(
         )
     ],
     title="Telework Days - CPS",
+    title_x=0.5
+)
+
+# Display the figure
+fig.show()
+```
+
+# HPS (RWB)
+```{python}
+import os
+import base64
+import plotly.graph_objects as go
+
+# Directory containing images
+image_folder = 'hps_rwb_folder'
+image_files = [f for f in os.listdir(image_folder) if f.endswith('.png')]
+
+# Function to convert image to base64
+def image_to_base64(image_path):
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode('utf-8')
+
+# Convert all images to base64 strings
+image_sources = [f"data:image/png;base64,{image_to_base64(os.path.join(image_folder, img))}" for img in image_files]
+
+# Define figure
+fig = go.Figure()
+
+# Add traces for each image and use visible=False initially except the first
+for idx, image_src in enumerate(image_sources):
+    fig.add_trace(
+        go.Image(
+            source=image_src,
+            visible=(idx == 0)  # Only the first image is visible by default
+        )
+    )
+
+# Create dropdown options to toggle visibility of images
+dropdown_buttons = [
+    dict(
+        label=image_files[idx],
+        method="update",
+        args=[
+            {"visible": [i == idx for i in range(len(image_sources))]},  # Show only the selected image
+            {"title": f"{image_files[idx]}"}
+        ]
+    )
+    for idx in range(len(image_sources))
+]
+
+# Update layout with dropdown
+fig.update_layout(
+    updatemenus=[
+        dict(
+            buttons=dropdown_buttons,
+            direction="down",
+            showactive=True,
+            x=0.01,
+            y=1.15,
+            xanchor="left",
+            yanchor="top"
+        )
+    ],
+    title="Telework Yes/No HPS",
+    title_x=0.5
+)
+
+# Display the figure
+fig.show()
+
+```
+
+
+# HPS (RWM)
+```{python}
+import os
+import base64
+import plotly.graph_objects as go
+
+# Directory containing images
+image_folder = 'hps_rwm_folder'
+image_files = [f for f in os.listdir(image_folder) if f.endswith('.png')]
+
+# Function to convert image to base64
+def image_to_base64(image_path):
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode('utf-8')
+
+# Convert all images to base64 strings
+image_sources = [f"data:image/png;base64,{image_to_base64(os.path.join(image_folder, img))}" for img in image_files]
+
+# Define figure
+fig = go.Figure()
+
+# Add traces for each image and use visible=False initially except the first
+for idx, image_src in enumerate(image_sources):
+    fig.add_trace(
+        go.Image(
+            source=image_src,
+            visible=(idx == 0)  # Only the first image is visible by default
+        )
+    )
+
+# Create dropdown options to toggle visibility of images
+dropdown_buttons = [
+    dict(
+        label=image_files[idx],
+        method="update",
+        args=[
+            {"visible": [i == idx for i in range(len(image_sources))]},  # Show only the selected image
+            {"title": f"{image_files[idx]}"}
+        ]
+    )
+    for idx in range(len(image_sources))
+]
+
+# Update layout with dropdown
+fig.update_layout(
+    updatemenus=[
+        dict(
+            buttons=dropdown_buttons,
+            direction="down",
+            showactive=True,
+            x=0.01,
+            y=1.15,
+            xanchor="left",
+            yanchor="top"
+        )
+    ],
+    title="Telework Days HPS",
     title_x=0.5
 )
 
