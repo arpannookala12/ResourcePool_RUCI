@@ -129,7 +129,7 @@ ul.task-list li input[type="checkbox"] {
 <h1>CPS Binary Classification Model Results &amp; Explainability</h1>
 <p>Multicollinearity Analysis</p>
 <div class="quarto-embed-nb-cell">
-<div id="vif" class="cell" data-outputid="fbe6fd1a-4c1b-4776-d81c-4b5d70ab0708" data-execution_count="38">
+<div id="vif" class="cell" data-outputid="18310b87-0b69-472e-ed3b-e60379dd9057" data-execution_count="9">
 <div class="cell-output cell-output-stdout">
 <pre><code>Performing multicollinearity analysis...</code></pre>
 </div>
@@ -187,19 +187,19 @@ Dropping features with high VIF: ['prcitshp', 'pemjot', 'pemjnum']</code></pre>
 <a class="quarto-notebook-link" id="nblink-1" href="hps_cps_pums-preview.html#cell-vif">Source: HPS Binary Classification Model</a></div>
 <p>Model Peformance</p>
 <div class="quarto-embed-nb-cell">
-<div id="results" class="cell" data-outputid="2f366896-79ca-4c97-c0db-646b69c07d79" data-execution_count="44">
+<div id="results" class="cell" data-outputid="993383b8-ac57-486a-cafc-90bf5a61449c" data-execution_count="15">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Cross-validation results:
 Best AUC: 0.8887 (+/- 0.0034)
 Best Error: 0.1568 (+/- 0.0013)
 
-Training final model...
-
-Comprehensive Model Performance Metrics:</code></pre>
+Training final model...</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
+Comprehensive Model Performance Metrics:
+
 Accuracy: 0.8443
 Precision (Positive Predictive Value): 0.8764
 Recall (Sensitivity/True Positive Rate): 0.9254
@@ -280,7 +280,7 @@ Top 10 Most Important Features:
 </div>
 <p>Probit Model</p>
 <div class="quarto-embed-nb-cell">
-<div id="probit" class="cell" data-outputid="d255b489-1e40-41f8-f3d1-5b4b5513c424" data-execution_count="45">
+<div id="probit" class="cell" data-outputid="f1c8a0be-7378-47ce-f029-58f95ebd05b4" data-execution_count="16">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Fitting Probit model for effect sizes and p-values...
@@ -294,8 +294,8 @@ Probit Model Summary:
 Dep. Variable:                 pttlwk   No. Observations:                14255
 Model:                         Probit   Df Residuals:                    14224
 Method:                           MLE   Df Model:                           30
-Date:                Sat, 01 Feb 2025   Pseudo R-squ.:                  0.2249
-Time:                        21:12:39   Log-Likelihood:                -6098.4
+Date:                Sun, 02 Feb 2025   Pseudo R-squ.:                  0.2249
+Time:                        05:33:30   Log-Likelihood:                -6098.4
 converged:                       True   LL-Null:                       -7868.1
 Covariance Type:            nonrobust   LLR p-value:                     0.000
 ==============================================================================
@@ -379,7 +379,7 @@ prnmchld      -0.0068      0.008     -0.860      0.390      -0.022       0.009
 </div>
 <p>SHAP Results</p>
 <div class="quarto-embed-nb-cell">
-<div id="shap" class="cell" data-outputid="aebcd33f-8625-4f16-b973-7ff6ba630f55">
+<div id="shap" class="cell" data-outputid="da051c1b-c0f3-446b-d639-d5ba8bde61d4" data-execution_count="17">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Calculating and plotting SHAP values for XGBoost model...
