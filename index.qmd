@@ -2,7 +2,8 @@
 title: "Resource List - RUCI LAB"
 ---
 
-# CPS & HPS Data distribution Visualizations
+# HPS, CPS, PUMS Binary Classification Modeling & Explainability
+[Results & Analysis](baselinemodels.qmd)
 
 # Spatial Microsimulation using the Household Pulse Survey & American Community Survey
 [R markdown notebook](smsm.qmd)
