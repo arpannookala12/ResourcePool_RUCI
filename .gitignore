@@ -1,4 +1,4 @@
 /.quarto/
 smsm.qmd
 cps_visualizations.qmd
-cps_visualizations.html
+_site/cps_visualizations.html
