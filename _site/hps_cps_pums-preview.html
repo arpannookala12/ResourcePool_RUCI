@@ -2376,7 +2376,7 @@ Generating SHAP Beeswarm plot...</code></pre>
 <h1>CPS Binary Classification Model</h1>
 </section>
 </div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [30]:</pre></div><div id="cell-18" class="cell" data-execution_count="30">
+<div class="cell-container"><div class="cell-decorator"><pre>In [1]:</pre></div><div id="cell-18" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -2392,20 +2392,20 @@ Generating SHAP Beeswarm plot...</code></pre>
 <span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> LabelEncoder</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [31]:</pre></div><div id="cell-19" class="cell" data-execution_count="31">
+<div class="cell-container"><div class="cell-decorator"><pre>In [2]:</pre></div><div id="cell-19" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load and prepare data</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> pd.read_csv(<span class="st">"filtered_df.csv"</span>)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> filtered_df[(filtered_df[<span class="st">'gestfips'</span>]<span class="op">==</span><span class="dv">34</span>) <span class="op">|</span> (filtered_df[<span class="st">'gestfips'</span>]<span class="op">==</span><span class="dv">36</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [32]:</pre></div><div id="cell-20" class="cell" data-execution_count="32">
+<div class="cell-container"><div class="cell-decorator"><pre>In [3]:</pre></div><div id="cell-20" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> filtered_df[[<span class="st">'hehousut'</span>,<span class="st">'hetelhhd'</span>,<span class="st">'hetelavl'</span>,<span class="st">'hefaminc'</span>,<span class="st">'hrnumhou'</span>,<span class="st">'hrhtype'</span>,<span class="st">'HUBUS'</span>,<span class="st">'gereg'</span>,<span class="st">'gediv'</span>,<span class="st">'gestfips'</span>,<span class="st">'gtcbsa'</span>,<span class="st">'gtco'</span>,<span class="st">'gtcbsast'</span>,<span class="st">'gtmetsta'</span>,<span class="st">'gtindvpc'</span>,<span class="st">'gtcbsasz'</span>,<span class="st">'gtcsa'</span>,<span class="st">'perrp'</span>,<span class="st">'prtage'</span>,<span class="st">'pemaritl'</span>,<span class="st">'pesex'</span>,<span class="st">'peeduca'</span>,<span class="st">'ptdtrace'</span>,<span class="st">'prdthsp'</span>,<span class="st">'PUCHINHH'</span>,<span class="st">'prfamrel'</span>,<span class="st">'prfamtyp'</span>,<span class="st">'pehspnon'</span>,<span class="st">'penatvty'</span>,<span class="st">'pemntvty'</span>,<span class="st">'pefntvty'</span>,<span class="st">'prcitshp'</span>,<span class="st">'prinuyer'</span>,<span class="st">'PUWK'</span>,<span class="st">'pemjot'</span>,<span class="st">'pemjnum'</span>,<span class="st">'pehruslt'</span>,<span class="st">'pehractt'</span>,<span class="st">'peio1cow'</span>,<span class="st">'prdtind1'</span>,<span class="st">'prdtocc1'</span>,<span class="st">'pternwa'</span>,<span class="st">'ptwk'</span>,<span class="st">'prchld'</span>,<span class="st">'prnmchld'</span>]]</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> filtered_df[<span class="st">'pttlwk'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [33]:</pre></div><div id="cell-21" class="cell" data-outputid="a4689e26-0fa7-4eef-dd60-9ace65607974" data-execution_count="33">
+<div class="cell-container"><div class="cell-decorator"><pre>In [4]:</pre></div><div id="cell-21" class="cell" data-outputid="6c6152fe-c5ed-4085-a92a-5246049b34a0" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="33">
+<div class="cell-output cell-output-display" data-execution_count="4">
 
-  <div id="df-f11a7b49-fe21-4679-8052-aa182a26d74b" class="colab-df-container">
+  <div id="df-c4cc3bcb-c274-46e4-b3a6-3da297519001" class="colab-df-container">
     <div>
 
 
@@ -2709,7 +2709,7 @@ Generating SHAP Beeswarm plot...</code></pre>
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-f11a7b49-fe21-4679-8052-aa182a26d74b')" title="Convert this dataframe to an interactive table." style="display:none;">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-c4cc3bcb-c274-46e4-b3a6-3da297519001')" title="Convert this dataframe to an interactive table." style="display:none;">
 
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
@@ -2759,12 +2759,12 @@ Generating SHAP Beeswarm plot...</code></pre>
 
     <script>
       const buttonEl =
-        document.querySelector('#df-f11a7b49-fe21-4679-8052-aa182a26d74b button.colab-df-convert');
+        document.querySelector('#df-c4cc3bcb-c274-46e4-b3a6-3da297519001 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-f11a7b49-fe21-4679-8052-aa182a26d74b');
+        const element = document.querySelector('#df-c4cc3bcb-c274-46e4-b3a6-3da297519001');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -2784,8 +2784,8 @@ Generating SHAP Beeswarm plot...</code></pre>
   </div>
 
 
-<div id="df-27d47647-8ea3-45c7-8f29-ed26790bc227">
-  <button class="colab-df-quickchart" onclick="quickchart('df-27d47647-8ea3-45c7-8f29-ed26790bc227')" title="Suggest charts" style="display:none;">
+<div id="df-e7b5a8f5-7541-49da-9d34-3db79ecd3e1c">
+  <button class="colab-df-quickchart" onclick="quickchart('df-e7b5a8f5-7541-49da-9d34-3db79ecd3e1c')" title="Suggest charts" style="display:none;">
 
 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
     <g>
@@ -2901,14 +2901,14 @@ Generating SHAP Beeswarm plot...</code></pre>
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-27d47647-8ea3-45c7-8f29-ed26790bc227 button');
+        document.querySelector('#df-e7b5a8f5-7541-49da-9d34-3db79ecd3e1c button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
   </script>
 </div>
 
-  <div id="id_bee97a96-f4f8-4f08-b408-c54417a81251">
+  <div id="id_22293359-c72c-4224-8eb3-2c83430b5639">
     <style>
       .colab-df-generate {
         background-color: #E8F0FE;
@@ -2949,7 +2949,7 @@ Generating SHAP Beeswarm plot...</code></pre>
     <script>
       (() => {
       const buttonEl =
-        document.querySelector('#id_bee97a96-f4f8-4f08-b408-c54417a81251 button.colab-df-generate');
+        document.querySelector('#id_22293359-c72c-4224-8eb3-2c83430b5639 button.colab-df-generate');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
@@ -2964,13 +2964,13 @@ Generating SHAP Beeswarm plot...</code></pre>
   </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [34]:</pre></div><div id="cell-22" class="cell" data-execution_count="34">
+<div class="cell-container"><div class="cell-decorator"><pre>In [5]:</pre></div><div id="cell-22" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert labels from 1.0/2.0 to 0/1</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> (y <span class="op">==</span> <span class="fl">2.0</span>).astype(<span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [35]:</pre></div><div id="cell-23" class="cell" data-outputid="f90fe906-d2a5-4d50-8c41-78c96e2b5fc3" data-execution_count="35">
+<div class="cell-container"><div class="cell-decorator"><pre>In [6]:</pre></div><div id="cell-23" class="cell" data-outputid="8e2d5157-0082-44f5-cdf2-71725598d9b6" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>y.value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="35">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 
 
@@ -3000,7 +3000,7 @@ Generating SHAP Beeswarm plot...</code></pre>
 </div><br><label><b>dtype:</b> int64</label>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [36]:</pre></div><div id="cell-24" class="cell" data-execution_count="36">
+<div class="cell-container"><div class="cell-decorator"><pre>In [7]:</pre></div><div id="cell-24" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Initialize label encoders dictionary</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># encoders = {}</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -3017,14 +3017,14 @@ Generating SHAP Beeswarm plot...</code></pre>
 <span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="co"># print("Shape of y after encoding:", y.shape)</span></span>
 <span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="co"># print("\nUnique values in target variable:", np.unique(y))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [37]:</pre></div><div id="cell-25" class="cell" data-execution_count="37">
+<div class="cell-container"><div class="cell-decorator"><pre>In [8]:</pre></div><div id="cell-25" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print("Performing initial feature selection...")</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co"># selector = SelectKBest(mutual_info_classif, k=100)  # Keep top 50 features</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># X_reduced = selector.fit_transform(X, y)</span></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># selected_features = X.columns[selector.get_support(indices=True)]</span></span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># print("Top 50 features selected.")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [38]:</pre></div><div id="vif" class="cell" data-outputid="fbe6fd1a-4c1b-4776-d81c-4b5d70ab0708" data-execution_count="38">
+<div class="cell-container"><div class="cell-decorator"><pre>In [9]:</pre></div><div id="vif" class="cell" data-outputid="18310b87-0b69-472e-ed3b-e60379dd9057" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame with reduced features for VIF and further steps</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># X = pd.DataFrame(X_reduced, columns=selected_features)</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -3102,11 +3102,11 @@ Generating SHAP Beeswarm plot...</code></pre>
 Dropping features with high VIF: ['prcitshp', 'pemjot', 'pemjnum']</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [39]:</pre></div><div id="cell-27" class="cell" data-execution_count="39">
+<div class="cell-container"><div class="cell-decorator"><pre>In [10]:</pre></div><div id="cell-27" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>, stratify<span class="op">=</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [40]:</pre></div><div id="cell-28" class="cell" data-outputid="d067319a-02b2-4b63-b68f-cf080021ba8f" data-execution_count="40">
+<div class="cell-container"><div class="cell-decorator"><pre>In [11]:</pre></div><div id="cell-28" class="cell" data-outputid="c892fe23-e3fc-49c4-fe9b-bc2a902cc40f" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recursive Feature Elimination</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Performing Recursive Feature Elimination..."</span>)</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> parallel_backend(<span class="st">'threading'</span>):</span>
@@ -3122,7 +3122,7 @@ Dropping features with high VIF: ['prcitshp', 'pemjot', 'pemjnum']</code></pre>
 <pre><code>Performing Recursive Feature Elimination...</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [41]:</pre></div><div id="cell-29" class="cell" data-execution_count="41">
+<div class="cell-container"><div class="cell-decorator"><pre>In [12]:</pre></div><div id="cell-29" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Outlier Analysis</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># print("Performing outlier analysis...")</span></span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># z_scores = np.abs((X_train_final - np.mean(X_train_final, axis=0)) / np.std(X_train_final, axis=0))</span></span>
@@ -3136,11 +3136,11 @@ Dropping features with high VIF: ['prcitshp', 'pemjot', 'pemjnum']</code></pre>
 <span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a><span class="co"># # Use the index from X_train_final before reset to filter y_train</span></span>
 <span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="co"># y_train = y_train[X_train_final.index[non_outliers]].reset_index(drop=True)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [42]:</pre></div><div id="cell-30" class="cell" data-outputid="ff3b9d4e-e3e8-4ea8-e87d-04282bff9977" data-execution_count="42">
+<div class="cell-container"><div class="cell-decorator"><pre>In [13]:</pre></div><div id="cell-30" class="cell" data-outputid="a9ef0925-2754-423c-b587-a83c01989c99" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>X_train_final</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="42">
+<div class="cell-output cell-output-display" data-execution_count="13">
 
-  <div id="df-31d7275c-c6d5-4853-8058-a2da1a1f8ff8" class="colab-df-container">
+  <div id="df-d96efa5a-f61c-4769-898f-b16887472d43" class="colab-df-container">
     <div>
 
 
@@ -3444,7 +3444,7 @@ Dropping features with high VIF: ['prcitshp', 'pemjot', 'pemjnum']</code></pre>
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-31d7275c-c6d5-4853-8058-a2da1a1f8ff8')" title="Convert this dataframe to an interactive table." style="display:none;">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-d96efa5a-f61c-4769-898f-b16887472d43')" title="Convert this dataframe to an interactive table." style="display:none;">
 
   <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960">
     <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
@@ -3494,12 +3494,12 @@ Dropping features with high VIF: ['prcitshp', 'pemjot', 'pemjnum']</code></pre>
 
     <script>
       const buttonEl =
-        document.querySelector('#df-31d7275c-c6d5-4853-8058-a2da1a1f8ff8 button.colab-df-convert');
+        document.querySelector('#df-d96efa5a-f61c-4769-898f-b16887472d43 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-31d7275c-c6d5-4853-8058-a2da1a1f8ff8');
+        const element = document.querySelector('#df-d96efa5a-f61c-4769-898f-b16887472d43');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -3519,8 +3519,8 @@ Dropping features with high VIF: ['prcitshp', 'pemjot', 'pemjnum']</code></pre>
   </div>
 
 
-<div id="df-42cd20fd-fe44-477b-842f-088a4b0e3b50">
-  <button class="colab-df-quickchart" onclick="quickchart('df-42cd20fd-fe44-477b-842f-088a4b0e3b50')" title="Suggest charts" style="display:none;">
+<div id="df-b115a9b2-c702-4d59-9a56-326ee544bef3">
+  <button class="colab-df-quickchart" onclick="quickchart('df-b115a9b2-c702-4d59-9a56-326ee544bef3')" title="Suggest charts" style="display:none;">
 
 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
     <g>
@@ -3636,14 +3636,14 @@ Dropping features with high VIF: ['prcitshp', 'pemjot', 'pemjnum']</code></pre>
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-42cd20fd-fe44-477b-842f-088a4b0e3b50 button');
+        document.querySelector('#df-b115a9b2-c702-4d59-9a56-326ee544bef3 button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
   </script>
 </div>
 
-  <div id="id_69b3fd3d-3fd5-483d-a560-38ce73211918">
+  <div id="id_22e9f9c1-d540-4507-b21f-9248e10dc819">
     <style>
       .colab-df-generate {
         background-color: #E8F0FE;
@@ -3684,7 +3684,7 @@ Dropping features with high VIF: ['prcitshp', 'pemjot', 'pemjnum']</code></pre>
     <script>
       (() => {
       const buttonEl =
-        document.querySelector('#id_69b3fd3d-3fd5-483d-a560-38ce73211918 button.colab-df-generate');
+        document.querySelector('#id_22e9f9c1-d540-4507-b21f-9248e10dc819 button.colab-df-generate');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
@@ -3699,7 +3699,7 @@ Dropping features with high VIF: ['prcitshp', 'pemjot', 'pemjnum']</code></pre>
   </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [43]:</pre></div><div id="cell-31" class="cell" data-outputid="d2b1e46c-1833-402e-e1ee-591562a176b3" data-execution_count="43">
+<div class="cell-container"><div class="cell-decorator"><pre>In [14]:</pre></div><div id="cell-31" class="cell" data-outputid="e973ae61-819d-4734-a994-a74a2a5f7193" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to DMatrix format for XGBoost</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>dtrain <span class="op">=</span> xgb.DMatrix(X_train_final, label<span class="op">=</span>y_train)</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>dtest <span class="op">=</span> xgb.DMatrix(X_test_final, label<span class="op">=</span>y_test)</span>
@@ -3735,7 +3735,7 @@ Dropping features with high VIF: ['prcitshp', 'pemjot', 'pemjnum']</code></pre>
 [4] train-auc:0.85822+0.00136   train-error:0.24076+0.00117 test-auc:0.84453+0.00454    test-error:0.24076+0.00468</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/usr/local/lib/python3.11/dist-packages/xgboost/core.py:158: UserWarning: [21:11:50] WARNING: /workspace/src/learner.cc:740: 
+<pre><code>/usr/local/lib/python3.11/dist-packages/xgboost/core.py:158: UserWarning: [05:33:21] WARNING: /workspace/src/learner.cc:740: 
 Parameters: { "n_estimators" } are not used.
 
   warnings.warn(smsg, UserWarning)</code></pre>
@@ -3838,7 +3838,7 @@ Parameters: { "n_estimators" } are not used.
 [99]    train-auc:0.93247+0.00148   train-error:0.12461+0.00257 test-auc:0.88874+0.00368    test-error:0.15679+0.00387</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [44]:</pre></div><div id="results" class="cell" data-outputid="2f366896-79ca-4c97-c0db-646b69c07d79" data-execution_count="44">
+<div class="cell-container"><div class="cell-decorator"><pre>In [15]:</pre></div><div id="results" class="cell" data-outputid="993383b8-ac57-486a-cafc-90bf5a61449c" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_curve, precision_recall_curve, average_precision_score</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -3969,18 +3969,18 @@ Cross-validation results:
 Best AUC: 0.8887 (+/- 0.0034)
 Best Error: 0.1568 (+/- 0.0013)
 
-Training final model...
-
-Comprehensive Model Performance Metrics:</code></pre>
+Training final model...</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/usr/local/lib/python3.11/dist-packages/xgboost/core.py:158: UserWarning: [21:11:56] WARNING: /workspace/src/learner.cc:740: 
+<pre><code>/usr/local/lib/python3.11/dist-packages/xgboost/core.py:158: UserWarning: [05:33:24] WARNING: /workspace/src/learner.cc:740: 
 Parameters: { "n_estimators" } are not used.
 
   warnings.warn(smsg, UserWarning)</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
+Comprehensive Model Performance Metrics:
+
 Accuracy: 0.8443
 Precision (Positive Predictive Value): 0.8764
 Recall (Sensitivity/True Positive Rate): 0.9254
@@ -4065,7 +4065,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [45]:</pre></div><div id="probit" class="cell" data-outputid="d255b489-1e40-41f8-f3d1-5b4b5513c424" data-execution_count="45">
+<div class="cell-container"><div class="cell-decorator"><pre>In [16]:</pre></div><div id="probit" class="cell" data-outputid="f1c8a0be-7378-47ce-f029-58f95ebd05b4" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shap</span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Fitting Probit model for effect sizes and p-values..."</span>)</span>
@@ -4096,8 +4096,8 @@ Probit Model Summary:
 Dep. Variable:                 pttlwk   No. Observations:                14255
 Model:                         Probit   Df Residuals:                    14224
 Method:                           MLE   Df Model:                           30
-Date:                Sat, 01 Feb 2025   Pseudo R-squ.:                  0.2249
-Time:                        21:12:39   Log-Likelihood:                -6098.4
+Date:                Sun, 02 Feb 2025   Pseudo R-squ.:                  0.2249
+Time:                        05:33:30   Log-Likelihood:                -6098.4
 converged:                       True   LL-Null:                       -7868.1
 Covariance Type:            nonrobust   LLR p-value:                     0.000
 ==============================================================================
@@ -4178,7 +4178,7 @@ prnmchld      -0.0068      0.008     -0.860      0.390      -0.022       0.009
 ==============================================================================</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [18]:</pre></div><div id="shap" class="cell" data-outputid="aebcd33f-8625-4f16-b973-7ff6ba630f55">
+<div class="cell-container"><div class="cell-decorator"><pre>In [17]:</pre></div><div id="shap" class="cell" data-outputid="da051c1b-c0f3-446b-d639-d5ba8bde61d4" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Calculating and plotting SHAP values for XGBoost model..."</span>)</span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>explainer <span class="op">=</span> shap.TreeExplainer(final_model)</span>
@@ -4223,7 +4223,7 @@ Generating SHAP Beeswarm plot...</code></pre>
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [19]:</pre></div><div id="cell-35" class="cell" data-outputid="cd9fd71e-458a-439a-aacd-696d4f86fc12">
+<div class="cell-container"><div class="cell-decorator"><pre>In [18]:</pre></div><div id="cell-35" class="cell" data-outputid="cd9fd71e-458a-439a-aacd-696d4f86fc12">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pip install bayesian-optimization</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Collecting bayesian-optimization
@@ -4241,7 +4241,7 @@ Installing collected packages: colorama, bayesian-optimization
 Successfully installed bayesian-optimization-2.0.3 colorama-0.4.6</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [20]:</pre></div><div id="cell-36" class="cell" data-outputid="439f915e-5848-4caf-ef0f-cb79ac578403">
+<div class="cell-container"><div class="cell-decorator"><pre>In [19]:</pre></div><div id="cell-36" class="cell" data-outputid="439f915e-5848-4caf-ef0f-cb79ac578403">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import pandas as pd</span></span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="co"># import numpy as np</span></span>
 <span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co"># from sklearn.model_selection import train_test_split</span></span>
@@ -4758,7 +4758,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <h1>PUMS Classification model</h1>
 </section>
 </div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [22]:</pre></div><div id="cell-38" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [21]:</pre></div><div id="cell-38" class="cell">
 <div class="sourceCode cell-code" id="cb113"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb113-1"><a href="#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb113-2"><a href="#cb113-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb113-3"><a href="#cb113-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
@@ -4773,11 +4773,11 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <span id="cb113-12"><a href="#cb113-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb113-13"><a href="#cb113-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [23]:</pre></div><div id="cell-39" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [22]:</pre></div><div id="cell-39" class="cell">
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"psam_p34.csv"</span>)</span>
 <span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pd.read_csv(<span class="st">"psam_p36.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [24]:</pre></div><div id="cell-40" class="cell" data-outputid="4b659734-6a5c-46f3-92b8-bb187c9a08f6">
+<div class="cell-container"><div class="cell-decorator"><pre>In [23]:</pre></div><div id="cell-40" class="cell" data-outputid="4b659734-6a5c-46f3-92b8-bb187c9a08f6">
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb115-1"><a href="#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Concatenate dataframes</span></span>
 <span id="cb115-2"><a href="#cb115-2" aria-hidden="true" tabindex="-1"></a>merged_df <span class="op">=</span> pd.concat([df, df2], axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb115-3"><a href="#cb115-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -4805,7 +4805,7 @@ JWTRNS
 Name: count, dtype: int64</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [25]:</pre></div><div id="cell-41" class="cell" data-outputid="0dbf2839-e03a-4c2b-f682-b60b65437402">
+<div class="cell-container"><div class="cell-decorator"><pre>In [24]:</pre></div><div id="cell-41" class="cell" data-outputid="0dbf2839-e03a-4c2b-f682-b60b65437402">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb117-1"><a href="#cb117-1" aria-hidden="true" tabindex="-1"></a>filtered_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 
@@ -5368,10 +5368,10 @@ Name: count, dtype: int64</code></pre>
   </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [26]:</pre></div><div id="cell-42" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [25]:</pre></div><div id="cell-42" class="cell">
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_columns'</span>, <span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [27]:</pre></div><div id="cell-43" class="cell" data-outputid="0296b0d6-d4bb-4bac-fb70-4508b7baf4dc">
+<div class="cell-container"><div class="cell-decorator"><pre>In [26]:</pre></div><div id="cell-43" class="cell" data-outputid="0296b0d6-d4bb-4bac-fb70-4508b7baf4dc">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb119-1"><a href="#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clean_dataframe(df, column_threshold<span class="op">=</span><span class="fl">0.1</span>):</span>
 <span id="cb119-2"><a href="#cb119-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
 <span id="cb119-3"><a href="#cb119-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Removes columns with more than `column_threshold`% NaN values,</span></span>
@@ -5402,7 +5402,7 @@ Name: count, dtype: int64</code></pre>
 <pre><code>Shape before: (269827, 131), Shape after: (300722, 206)</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [28]:</pre></div><div id="cell-44" class="cell" data-outputid="057d3e2d-8ce5-42ac-9b34-148bbb86ade5">
+<div class="cell-container"><div class="cell-decorator"><pre>In [27]:</pre></div><div id="cell-44" class="cell" data-outputid="057d3e2d-8ce5-42ac-9b34-148bbb86ade5">
 <div class="sourceCode cell-code" id="cb121"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a>filtered_df_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 
@@ -7285,11 +7285,11 @@ Name: count, dtype: int64</code></pre>
   </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [29]:</pre></div><div id="cell-45" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [28]:</pre></div><div id="cell-45" class="cell">
 <div class="sourceCode cell-code" id="cb122"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> filtered_df_new.drop([<span class="st">'RT'</span>,<span class="st">'SERIALNO'</span>,<span class="st">'JWTRNS'</span>], axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb122-2"><a href="#cb122-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> filtered_df_new[<span class="st">'JWTRNS'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [30]:</pre></div><div id="cell-46" class="cell" data-outputid="c3c4120c-c2b0-4097-afca-2c3d9b5a1e72">
+<div class="cell-container"><div class="cell-decorator"><pre>In [29]:</pre></div><div id="cell-46" class="cell" data-outputid="c3c4120c-c2b0-4097-afca-2c3d9b5a1e72">
 <div class="sourceCode cell-code" id="cb123"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 
@@ -9136,7 +9136,7 @@ Name: count, dtype: int64</code></pre>
   </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [31]:</pre></div><div id="cell-47" class="cell" data-outputid="b1ec8029-4f30-42eb-9893-848de8741add">
+<div class="cell-container"><div class="cell-decorator"><pre>In [30]:</pre></div><div id="cell-47" class="cell" data-outputid="b1ec8029-4f30-42eb-9893-848de8741add">
 <div class="sourceCode cell-code" id="cb124"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Performing initial feature selection..."</span>)</span>
 <span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>selector <span class="op">=</span> SelectKBest(mutual_info_classif, k<span class="op">=</span><span class="dv">50</span>)  <span class="co"># Keep top 50 features</span></span>
 <span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>X_reduced <span class="op">=</span> selector.fit_transform(X, y)</span>
@@ -9147,7 +9147,7 @@ Name: count, dtype: int64</code></pre>
 Top 50 features selected.</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [32]:</pre></div><div id="cell-48" class="cell" data-outputid="87ee91c1-c9f6-487a-ab43-150e6eb0b228">
+<div class="cell-container"><div class="cell-decorator"><pre>In [31]:</pre></div><div id="cell-48" class="cell" data-outputid="87ee91c1-c9f6-487a-ab43-150e6eb0b228">
 <div class="sourceCode cell-code" id="cb126"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a DataFrame with reduced features for VIF and further steps</span></span>
 <span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> pd.DataFrame(X_reduced, columns<span class="op">=</span>selected_features)</span>
 <span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -9230,11 +9230,11 @@ Top 50 features selected.</code></pre>
 Dropping features with high VIF: ['CIT', 'NATIVITY', 'OC', 'PRIVCOV', 'RAC1P', 'RAC2P', 'RC', 'FHICOVP', 'FPUBCOVP']</code></pre>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [33]:</pre></div><div id="cell-49" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [32]:</pre></div><div id="cell-49" class="cell">
 <div class="sourceCode cell-code" id="cb130"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data</span></span>
 <span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>, stratify<span class="op">=</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [34]:</pre></div><div id="cell-50" class="cell" data-outputid="4d77972e-d1e6-4933-eb2e-4abe642b302b">
+<div class="cell-container"><div class="cell-decorator"><pre>In [33]:</pre></div><div id="cell-50" class="cell" data-outputid="4d77972e-d1e6-4933-eb2e-4abe642b302b">
 <div class="sourceCode cell-code" id="cb131"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb131-1"><a href="#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Recursive Feature Elimination</span></span>
 <span id="cb131-2"><a href="#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Performing Recursive Feature Elimination..."</span>)</span>
 <span id="cb131-3"><a href="#cb131-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> parallel_backend(<span class="st">'threading'</span>):</span>
@@ -9306,7 +9306,7 @@ Dropping features with high VIF: ['CIT', 'NATIVITY', 'OC', 'PRIVCOV', 'RAC1P', '
 </div>
 </div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [35]:</pre></div><div id="cell-51" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [34]:</pre></div><div id="cell-51" class="cell">
 <div class="sourceCode cell-code" id="cb133"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb133-1"><a href="#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # Outlier Analysis</span></span>
 <span id="cb133-2"><a href="#cb133-2" aria-hidden="true" tabindex="-1"></a><span class="co"># print("Performing outlier analysis...")</span></span>
 <span id="cb133-3"><a href="#cb133-3" aria-hidden="true" tabindex="-1"></a><span class="co"># z_scores = np.abs((X_train_final - np.mean(X_train_final, axis=0)) / np.std(X_train_final, axis=0))</span></span>
@@ -9319,10 +9319,10 @@ Dropping features with high VIF: ['CIT', 'NATIVITY', 'OC', 'PRIVCOV', 'RAC1P', '
 <span id="cb133-10"><a href="#cb133-10" aria-hidden="true" tabindex="-1"></a><span class="co"># X_train_final = X_train_final[non_outliers].reset_index(drop=True)</span></span>
 <span id="cb133-11"><a href="#cb133-11" aria-hidden="true" tabindex="-1"></a><span class="co"># y_train = y_train.iloc[X_train.index[non_outliers]].reset_index(drop=True) # Use iloc and original X_train index to align</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [36]:</pre></div><div id="cell-52" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [35]:</pre></div><div id="cell-52" class="cell">
 <div class="sourceCode cell-code" id="cb134"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a>X_train_final</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [37]:</pre></div><div id="cell-53" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [36]:</pre></div><div id="cell-53" class="cell">
 <div class="sourceCode cell-code" id="cb135"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb135-1"><a href="#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to DMatrix format for XGBoost</span></span>
 <span id="cb135-2"><a href="#cb135-2" aria-hidden="true" tabindex="-1"></a>dtrain <span class="op">=</span> xgb.DMatrix(X_train_final, label<span class="op">=</span>y_train)</span>
 <span id="cb135-3"><a href="#cb135-3" aria-hidden="true" tabindex="-1"></a>dtest <span class="op">=</span> xgb.DMatrix(X_test_final, label<span class="op">=</span>y_test)</span>
@@ -9350,7 +9350,7 @@ Dropping features with high VIF: ['CIT', 'NATIVITY', 'OC', 'PRIVCOV', 'RAC1P', '
 <span id="cb135-25"><a href="#cb135-25" aria-hidden="true" tabindex="-1"></a>    verbose_eval<span class="op">=</span><span class="va">True</span></span>
 <span id="cb135-26"><a href="#cb135-26" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [38]:</pre></div><div id="cell-54" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [37]:</pre></div><div id="cell-54" class="cell">
 <div class="sourceCode cell-code" id="cb136"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb136-2"><a href="#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> roc_curve, precision_recall_curve, average_precision_score</span>
 <span id="cb136-3"><a href="#cb136-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -9476,7 +9476,7 @@ Dropping features with high VIF: ['CIT', 'NATIVITY', 'OC', 'PRIVCOV', 'RAC1P', '
 <span id="cb136-123"><a href="#cb136-123" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb136-124"><a href="#cb136-124" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [39]:</pre></div><div id="cell-55" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [38]:</pre></div><div id="cell-55" class="cell">
 <div class="sourceCode cell-code" id="cb137"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb137-1"><a href="#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb137-2"><a href="#cb137-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shap</span>
 <span id="cb137-3"><a href="#cb137-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Fitting Probit model for effect sizes and p-values..."</span>)</span>
@@ -9495,7 +9495,7 @@ Dropping features with high VIF: ['CIT', 'NATIVITY', 'OC', 'PRIVCOV', 'RAC1P', '
 <span id="cb137-16"><a href="#cb137-16" aria-hidden="true" tabindex="-1"></a>marginal_effects <span class="op">=</span> probit_results.get_margeff()</span>
 <span id="cb137-17"><a href="#cb137-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(marginal_effects.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div>
-<div class="cell-container"><div class="cell-decorator"><pre>In [40]:</pre></div><div id="cell-56" class="cell">
+<div class="cell-container"><div class="cell-decorator"><pre>In [39]:</pre></div><div id="cell-56" class="cell">
 <div class="sourceCode cell-code" id="cb138"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Calculating and plotting SHAP values for XGBoost model..."</span>)</span>
 <span id="cb138-2"><a href="#cb138-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb138-3"><a href="#cb138-3" aria-hidden="true" tabindex="-1"></a>explainer <span class="op">=</span> shap.TreeExplainer(final_model)</span>
