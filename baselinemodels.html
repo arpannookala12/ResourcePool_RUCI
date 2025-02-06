@@ -114,10 +114,18 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#cps-binary-classification-model-results-explainability" id="toc-cps-binary-classification-model-results-explainability" class="nav-link active" data-scroll-target="#cps-binary-classification-model-results-explainability">CPS Binary Classification Model Results &amp; Explainability</a></li>
-  <li><a href="#pums-binary-classification-model-results-explainability" id="toc-pums-binary-classification-model-results-explainability" class="nav-link" data-scroll-target="#pums-binary-classification-model-results-explainability">PUMS Binary Classification Model Results &amp; Explainability</a></li>
+  <li><a href="#cps-binary-classification-model-results-explainability" id="toc-cps-binary-classification-model-results-explainability" class="nav-link active" data-scroll-target="#cps-binary-classification-model-results-explainability">CPS Binary Classification Model Results &amp; Explainability</a>
+  <ul class="collapse">
+  <li><a href="#model-peformance" id="toc-model-peformance" class="nav-link" data-scroll-target="#model-peformance">Model Peformance</a></li>
+  <li><a href="#probit-model" id="toc-probit-model" class="nav-link" data-scroll-target="#probit-model">Probit Model</a></li>
+  </ul></li>
+  <li><a href="#pums-binary-classification-model-results-explainability" id="toc-pums-binary-classification-model-results-explainability" class="nav-link" data-scroll-target="#pums-binary-classification-model-results-explainability">PUMS Binary Classification Model Results &amp; Explainability</a>
+  <ul class="collapse">
+  <li><a href="#model-performance" id="toc-model-performance" class="nav-link" data-scroll-target="#model-performance">Model Performance</a></li>
+  <li><a href="#probit-model-1" id="toc-probit-model-1" class="nav-link" data-scroll-target="#probit-model-1">Probit Model</a></li>
+  </ul></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="hps_cps_pums-preview.html"><i class="bi bi-journal-code"></i>HPS Binary Classification Model</a></li></ul></div></nav>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -127,212 +135,309 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="cps-binary-classification-model-results-explainability" class="level1">
 <h1>CPS Binary Classification Model Results &amp; Explainability</h1>
-<p>Multicollinearity Analysis</p>
-<div class="quarto-embed-nb-cell">
-<div id="vif" class="cell" data-outputid="18310b87-0b69-472e-ed3b-e60379dd9057" data-execution_count="9">
-<div class="cell-output cell-output-stdout">
-<pre><code>Performing multicollinearity analysis...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>VIF Results:
-     Feature        VIF
-0   hehousut   1.046027
-1   hetelhhd   2.254292
-2   hetelavl   2.282600
-3   hefaminc   1.434420
-4   hrnumhou   2.452866
-5    hrhtype   4.732866
-6      HUBUS   1.156651
-7      gereg   0.000000
-8      gediv   0.000000
-9   gestfips   2.652757
-10    gtcbsa   2.183617
-11      gtco   2.202980
-12  gtcbsast   4.391335
-13  gtmetsta   2.231556
-14  gtindvpc   2.651372
-15  gtcbsasz   9.794757
-16     gtcsa   5.458005
-17     perrp   5.387685
-18    prtage   1.678536
-19  pemaritl   3.464919
-20     pesex   1.148676
-21   peeduca   1.524835
-22  ptdtrace   1.271114
-23   prdthsp   5.773714
-24  PUCHINHH   1.015834
-25  prfamrel   6.719113
-26  prfamtyp   4.662360
-27  pehspnon   5.659180
-28  penatvty   7.903467
-29  pemntvty   8.318010
-30  pefntvty   7.946751
-31  prcitshp  12.204819
-32  prinuyer   8.446316
-33      PUWK   1.015886
-34    pemjot  83.410023
-35   pemjnum  83.510317
-36  pehruslt   2.022003
-37  pehractt   2.050188
-38  peio1cow   1.171097
-39  prdtind1   1.193875
-40  prdtocc1   1.359964
-41   pternwa   3.260463
-42      ptwk   3.171225
-43    prchld   4.825561
-44  prnmchld   5.667953
-Dropping features with high VIF: ['prcitshp', 'pemjot', 'pemjnum']</code></pre>
-</div>
-</div>
-<a class="quarto-notebook-link" id="nblink-1" href="hps_cps_pums-preview.html#cell-vif">Source: HPS Binary Classification Model</a></div>
-<p>Model Peformance</p>
-<div class="quarto-embed-nb-cell">
-<div id="results" class="cell" data-outputid="993383b8-ac57-486a-cafc-90bf5a61449c" data-execution_count="15">
+<section id="model-peformance" class="level2">
+<h2 class="anchored" data-anchor-id="model-peformance">Model Peformance</h2>
+<p>:::{.quarto-embed-nb-cell notebook=“D:_New_LAB_RUCI_with_dummies.ipynb” notebook-title=” Probit Regression Results ” notebook-cellId=“cell-results”}</p>
+<div id="results" class="cell" data-outputid="d7ee94c0-a11e-434f-ea07-4fc65a4c30f4">
 <div class="cell-output cell-output-stdout">
 <pre><code>
-Cross-validation results:
-Best AUC: 0.8887 (+/- 0.0034)
-Best Error: 0.1568 (+/- 0.0013)
+Calculating additional performance metrics...
 
-Training final model...</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
 Comprehensive Model Performance Metrics:
+RMSE: 0.2913
+MSE: 0.0849
+MAE: 0.1675
+R-squared: 0.5357
 
-Accuracy: 0.8443
-Precision (Positive Predictive Value): 0.8764
-Recall (Sensitivity/True Positive Rate): 0.9254
-Specificity (True Negative Rate): 0.5886
-False Positive Rate: 0.4114
-False Negative Rate: 0.0746
-F1 Score: 0.9002
-Prevalence: 0.7593
-Negative Predictive Value: 0.7143
-Positive Likelihood Ratio: 2.2492
-Negative Likelihood Ratio: 0.1268
-
-Classification Report:
-              precision    recall  f1-score   support
-
-           0       0.71      0.59      0.65       858
-           1       0.88      0.93      0.90      2706
-
-    accuracy                           0.84      3564
-   macro avg       0.80      0.76      0.77      3564
-weighted avg       0.84      0.84      0.84      3564
-
-
-Confusion Matrix:
-[[ 505  353]
- [ 202 2504]]
-
-ROC AUC Score: 0.8916
-
-Top 10 Most Important Features:
-     Feature  Importance
-26  prdtocc1       234.0
-25  prdtind1       223.0
-12    prtage       176.0
-6       gtco       134.0
-15   peeduca       127.0
-23  pehractt       126.0
-0   hefaminc       111.0
-24  peio1cow       108.0
-19  pemntvty        91.0
-3      HUBUS        77.0
-11     perrp        75.0
-1   hrnumhou        67.0
-22  pehruslt        66.0
-21  prinuyer        58.0
-20  pefntvty        55.0
-17  prfamrel        51.0
-5     gtcbsa        47.0
-27   pternwa        44.0
-28    prchld        43.0
-14     pesex        42.0
-10     gtcsa        36.0
-29  prnmchld        36.0
-16  ptdtrace        32.0
-18  penatvty        28.0
-2    hrhtype        27.0
-4   gestfips        26.0
-8   gtindvpc        24.0
-13  pemaritl        22.0
-9   gtcbsasz        14.0
-7   gtcbsast        12.0</code></pre>
+Precision: 0.7888
+Recall/Sensitivity: 0.7051
+Specificity: 0.9401
+F1 Score: 0.7446
+Prevalence: 0.2407
+Negative Predictive Value: 0.9095
+Positive Likelihood Ratio: 11.7783
+Negative Likelihood Ratio: 0.3136</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="baselinemodels_files/figure-html/hps_cps_pums-results-output-3.png" id="results-1" class="img-fluid figure-img"></p>
+<p><img src="baselinemodels_files/figure-html/cps_with_dummies-results-output-2.png" id="results-1" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Generating SHAP values...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="baselinemodels_files/figure-html/cps_with_dummies-results-output-4.png" id="results-2" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="baselinemodels_files/figure-html/hps_cps_pums-results-output-4.png" id="results-2" class="img-fluid figure-img"></p>
+<p><img src="baselinemodels_files/figure-html/cps_with_dummies-results-output-5.png" id="results-3" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="baselinemodels_files/figure-html/cps_with_dummies-results-output-6.png" id="results-4" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="baselinemodels_files/figure-html/cps_with_dummies-results-output-7.png" id="results-5" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="baselinemodels_files/figure-html/cps_with_dummies-results-output-8.png" id="results-6" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-</div>
-<p>Probit Model</p>
-<div class="quarto-embed-nb-cell">
-<div id="probit" class="cell" data-outputid="f1c8a0be-7378-47ce-f029-58f95ebd05b4" data-execution_count="16">
+<p>:::</p>
+</section>
+<section id="probit-model" class="level2">
+<h2 class="anchored" data-anchor-id="probit-model">Probit Model</h2>
+<p>:::{.quarto-embed-nb-cell notebook=“D:_New_LAB_RUCI_with_dummies.ipynb” notebook-title=” Probit Regression Results ” notebook-cellId=“cell-probit”}</p>
+<div id="probit" class="cell" data-outputid="c135bab8-9c99-4eae-c4c2-993ad129d9f4">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Fitting Probit model for effect sizes and p-values...
+Removed 471 low variance columns
+Removed 10 highly correlated features
 Optimization terminated successfully.
-         Current function value: 0.427806
-         Iterations 6
+         Current function value: 0.356300
+         Iterations 9
 
 Probit Model Summary:
                           Probit Regression Results                           
 ==============================================================================
 Dep. Variable:                 pttlwk   No. Observations:                14255
-Model:                         Probit   Df Residuals:                    14224
-Method:                           MLE   Df Model:                           30
-Date:                Sun, 02 Feb 2025   Pseudo R-squ.:                  0.2249
-Time:                        05:33:30   Log-Likelihood:                -6098.4
+Model:                         Probit   Df Residuals:                    14055
+Method:                           MLE   Df Model:                          199
+Date:                Thu, 06 Feb 2025   Pseudo R-squ.:                  0.3545
+Time:                        08:33:29   Log-Likelihood:                -5079.1
 converged:                       True   LL-Null:                       -7868.1
-Covariance Type:            nonrobust   LLR p-value:                     0.000
-==============================================================================
-                 coef    std err          z      P&gt;|z|      [0.025      0.975]
-------------------------------------------------------------------------------
-const          2.2208      0.902      2.463      0.014       0.454       3.988
-hefaminc      -0.0550      0.006     -9.743      0.000      -0.066      -0.044
-hrnumhou       0.0550      0.014      3.858      0.000       0.027       0.083
-hrhtype        0.0036      0.014      0.266      0.790      -0.023       0.030
-HUBUS          0.2808      0.031      9.035      0.000       0.220       0.342
-gestfips       0.1019      0.022      4.544      0.000       0.058       0.146
-gtcbsa     -3.337e-06   1.93e-06     -1.729      0.084   -7.12e-06    4.46e-07
-gtco        -8.21e-05      0.001     -0.151      0.880      -0.001       0.001
-gtcbsast       0.1007      0.032      3.175      0.001       0.039       0.163
-gtindvpc       0.0028      0.041      0.069      0.945      -0.077       0.083
-gtcbsasz       0.0894      0.020      4.542      0.000       0.051       0.128
-gtcsa         -0.0012      0.000     -6.856      0.000      -0.002      -0.001
-perrp          0.0007      0.005      0.137      0.891      -0.009       0.011
-prtage         0.0054      0.001      4.802      0.000       0.003       0.008
-pemaritl       0.0251      0.011      2.260      0.024       0.003       0.047
-pesex         -0.1291      0.027     -4.695      0.000      -0.183      -0.075
-peeduca       -0.1358      0.007    -19.551      0.000      -0.149      -0.122
-ptdtrace      -0.0401      0.011     -3.645      0.000      -0.062      -0.019
-prfamrel       0.1337      0.022      5.951      0.000       0.090       0.178
-penatvty    7.458e-05      0.000      0.246      0.805      -0.001       0.001
-pemntvty       0.0010      0.000      3.370      0.001       0.000       0.002
-pefntvty      -0.0003      0.000     -1.054      0.292      -0.001       0.000
-prinuyer       0.0044      0.003      1.526      0.127      -0.001       0.010
-pehruslt       0.0014      0.001      1.061      0.289      -0.001       0.004
-pehractt      -0.0056      0.002     -3.699      0.000      -0.009      -0.003
-peio1cow      -0.1141      0.012     -9.191      0.000      -0.138      -0.090
-prdtind1       0.0064      0.001      5.538      0.000       0.004       0.009
-prdtocc1       0.0539      0.002     24.860      0.000       0.050       0.058
-pternwa    -1.354e-07   9.27e-08     -1.461      0.144   -3.17e-07    4.62e-08
-prchld         0.0042      0.010      0.407      0.684      -0.016       0.024
-prnmchld      -0.0282      0.033     -0.859      0.390      -0.092       0.036
-==============================================================================
+Covariance Type:                  HC0   LLR p-value:                     0.000
+========================================================================================
+                           coef    std err          z      P&gt;|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------
+const                   -0.4438        nan        nan        nan         nan         nan
+hetelhhd_dummy_2        -0.3904      0.125     -3.120      0.002      -0.636      -0.145
+hetelavl_dummy_2         0.0665      0.167      0.399      0.690      -0.260       0.393
+hefaminc_dummy_10        0.0909      0.160      0.568      0.570      -0.223       0.405
+hefaminc_dummy_11       -0.1193      0.144     -0.826      0.409      -0.402       0.164
+hefaminc_dummy_12        0.0291      0.188      0.155      0.877      -0.339       0.397
+hefaminc_dummy_13        0.1481      0.108      1.368      0.171      -0.064       0.360
+hefaminc_dummy_14        0.1722      0.113      1.525      0.127      -0.049       0.394
+hefaminc_dummy_15        0.2896      0.101      2.859      0.004       0.091       0.488
+hefaminc_dummy_16        0.4533      0.122      3.720      0.000       0.214       0.692
+hefaminc_dummy_7        -0.1080      0.226     -0.477      0.633      -0.552       0.336
+hefaminc_dummy_8         0.2058      0.158      1.299      0.194      -0.105       0.516
+hefaminc_dummy_9        -0.2087      0.181     -1.151      0.250      -0.564       0.147
+hrnumhou                -0.0828      0.028     -3.000      0.003      -0.137      -0.029
+hrhtype_dummy_3         -0.0427      0.107     -0.398      0.690      -0.253       0.168
+hrhtype_dummy_4          0.0338      0.104      0.326      0.744      -0.169       0.237
+hrhtype_dummy_6         -0.0910      0.177     -0.513      0.608      -0.438       0.256
+hrhtype_dummy_7         -0.1437      0.182     -0.791      0.429      -0.500       0.212
+HUBUS_dummy_2           -0.3604      0.080     -4.485      0.000      -0.518      -0.203
+gestfips_dummy_36        0.0539      0.188      0.287      0.774      -0.315       0.422
+gtcbsa_dummy_10580       0.1101        nan        nan        nan         nan         nan
+gtcbsa_dummy_13780      -0.1873      0.351     -0.534      0.594      -0.875       0.500
+gtcbsa_dummy_15380      -0.1131   5.19e+07  -2.18e-09      1.000   -1.02e+08    1.02e+08
+gtcbsa_dummy_35620       0.1921    1.6e+06    1.2e-07      1.000   -3.13e+06    3.13e+06
+gtcbsa_dummy_37980      -0.2836        nan        nan        nan         nan         nan
+gtcbsa_dummy_40380      -0.0566   5.96e+07   -9.5e-10      1.000   -1.17e+08    1.17e+08
+gtcbsa_dummy_45060      -0.1722        nan        nan        nan         nan         nan
+gtcbsa_dummy_45940       0.4605      0.248      1.857      0.063      -0.026       0.947
+gtco_dummy_103          -0.1515      0.125     -1.210      0.226      -0.397       0.094
+gtco_dummy_119          -0.2373      0.131     -1.813      0.070      -0.494       0.019
+gtco_dummy_13            0.0841      0.097      0.871      0.384      -0.105       0.273
+gtco_dummy_17            0.0980      0.115      0.849      0.396      -0.128       0.324
+gtco_dummy_23           -0.0961      0.100     -0.959      0.338      -0.293       0.100
+gtco_dummy_27            0.3721      0.096      3.857      0.000       0.183       0.561
+gtco_dummy_3             0.1696      0.094      1.813      0.070      -0.014       0.353
+gtco_dummy_31            0.2710      0.132      2.055      0.040       0.013       0.530
+gtco_dummy_35            0.0497      0.129      0.385      0.700      -0.203       0.302
+gtco_dummy_39           -0.0034      0.136     -0.025      0.980      -0.270       0.263
+gtco_dummy_47            0.7798      0.156      4.989      0.000       0.473       1.086
+gtco_dummy_5             0.5346      0.146      3.660      0.000       0.248       0.821
+gtco_dummy_55           -0.1912      0.170     -1.122      0.262      -0.525       0.143
+gtco_dummy_59           -0.3640      0.131     -2.783      0.005      -0.620      -0.108
+gtco_dummy_61            0.8676      0.159      5.457      0.000       0.556       1.179
+gtco_dummy_67           -0.1184      0.411     -0.288      0.773      -0.924       0.687
+gtco_dummy_7            -0.0162   4.53e+06  -3.57e-09      1.000   -8.89e+06    8.89e+06
+gtco_dummy_71            0.0603      0.148      0.409      0.683      -0.229       0.349
+gtco_dummy_81            0.7921      0.161      4.911      0.000       0.476       1.108
+gtco_dummy_85            0.1173      0.232      0.507      0.612      -0.336       0.571
+gtco_dummy_87           -1.0649      0.195     -5.458      0.000      -1.447      -0.683
+gtcbsast_dummy_2        -0.1585      0.101     -1.570      0.116      -0.356       0.039
+gtcbsast_dummy_3        -0.1579        nan        nan        nan         nan         nan
+gtcbsast_dummy_4         0.0213        nan        nan        nan         nan         nan
+gtindvpc_dummy_1        -0.8703      0.179     -4.871      0.000      -1.220      -0.520
+gtindvpc_dummy_2        -0.2450      0.176     -1.394      0.163      -0.589       0.099
+gtcbsasz_dummy_2        -0.3653      0.219     -1.665      0.096      -0.795       0.065
+gtcbsasz_dummy_3        -0.3957      0.240     -1.650      0.099      -0.866       0.074
+gtcbsasz_dummy_4        -0.0621        nan        nan        nan         nan         nan
+gtcbsasz_dummy_5        -0.1698        nan        nan        nan         nan         nan
+gtcbsasz_dummy_7        -0.0915   8.05e+05  -1.14e-07      1.000   -1.58e+06    1.58e+06
+gtcsa_dummy_104         -0.2497      0.207     -1.208      0.227      -0.655       0.155
+gtcsa_dummy_428          0.2514      0.228      1.104      0.270      -0.195       0.698
+perrp_dummy_41.0         0.1192      0.213      0.560      0.576      -0.298       0.537
+perrp_dummy_42.0        -0.2038      0.145     -1.410      0.159      -0.487       0.080
+perrp_dummy_44.0         0.3822      0.169      2.267      0.023       0.052       0.713
+perrp_dummy_48.0        -0.3012      0.164     -1.836      0.066      -0.623       0.020
+perrp_dummy_50.0        -0.1561      0.267     -0.585      0.559      -0.680       0.367
+perrp_dummy_51.0        -0.0459      0.280     -0.164      0.870      -0.594       0.502
+perrp_dummy_52.0        -0.4274      0.318     -1.346      0.178      -1.050       0.195
+perrp_dummy_55.0         0.6969      0.180      3.872      0.000       0.344       1.050
+prtage                  -0.0426      0.021     -2.026      0.043      -0.084      -0.001
+pemaritl_dummy_2.0      -0.1861      0.146     -1.273      0.203      -0.473       0.100
+pemaritl_dummy_3.0       0.0187      0.137      0.136      0.891      -0.250       0.288
+pemaritl_dummy_4.0      -0.0314      0.105     -0.298      0.766      -0.238       0.175
+pemaritl_dummy_5.0      -0.1715      0.139     -1.238      0.216      -0.443       0.100
+pemaritl_dummy_6.0      -0.0865      0.105     -0.826      0.409      -0.292       0.119
+pesex_dummy_2.0          0.2232      0.035      6.335      0.000       0.154       0.292
+peeduca_dummy_33.0       0.3720      0.378      0.984      0.325      -0.369       1.113
+peeduca_dummy_37.0       0.1358      0.325      0.418      0.676      -0.500       0.772
+peeduca_dummy_38.0       0.0823      0.326      0.252      0.801      -0.557       0.721
+peeduca_dummy_39.0       0.3780      0.200      1.890      0.059      -0.014       0.770
+peeduca_dummy_40.0       0.6360      0.202      3.145      0.002       0.240       1.032
+peeduca_dummy_41.0       0.5762      0.222      2.600      0.009       0.142       1.010
+peeduca_dummy_42.0       0.6776      0.206      3.290      0.001       0.274       1.081
+peeduca_dummy_43.0       0.8655      0.200      4.330      0.000       0.474       1.257
+peeduca_dummy_44.0       1.0688      0.202      5.287      0.000       0.673       1.465
+peeduca_dummy_45.0       1.1099      0.219      5.058      0.000       0.680       1.540
+peeduca_dummy_46.0       1.2331      0.216      5.711      0.000       0.810       1.656
+ptdtrace_dummy_2.0      -0.0249      0.055     -0.455      0.649      -0.132       0.082
+ptdtrace_dummy_4.0      -0.0388      0.074     -0.523      0.601      -0.184       0.106
+prdthsp_dummy_2.0        0.1004      0.147      0.685      0.493      -0.187       0.388
+prdthsp_dummy_4.0       -0.3129      0.209     -1.497      0.134      -0.723       0.097
+prdthsp_dummy_6.0       -0.2805      0.202     -1.391      0.164      -0.676       0.115
+prdthsp_dummy_7.0        0.0820      0.159      0.516      0.606      -0.230       0.394
+PUCHINHH_dummy_3.0      -0.2696      0.195     -1.381      0.167      -0.652       0.113
+PUCHINHH_dummy_9.0      -0.0507      0.138     -0.367      0.714      -0.321       0.220
+prfamrel_dummy_1.0      -0.0493      0.142     -0.348      0.728      -0.327       0.228
+prfamrel_dummy_4.0      -0.2085      0.245     -0.850      0.396      -0.689       0.272
+prfamtyp_dummy_3.0      -0.0399      0.255     -0.156      0.876      -0.539       0.460
+prfamtyp_dummy_5.0      -0.3361      0.213     -1.580      0.114      -0.753       0.081
+pehspnon_dummy_2.0       0.1137      0.104      1.091      0.275      -0.091       0.318
+penatvty_dummy_207.0     0.0231      0.166      0.139      0.889      -0.302       0.348
+penatvty_dummy_210.0     0.0226      0.165      0.137      0.891      -0.301       0.346
+penatvty_dummy_303.0     0.1393      0.304      0.458      0.647      -0.457       0.736
+penatvty_dummy_329.0     0.1313      0.222      0.591      0.555      -0.304       0.567
+penatvty_dummy_333.0    -0.3091      0.254     -1.215      0.224      -0.808       0.189
+penatvty_dummy_365.0     0.1572      0.327      0.481      0.631      -0.484       0.798
+penatvty_dummy_57.0      0.3278      0.143      2.288      0.022       0.047       0.609
+pemntvty_dummy_207.0    -0.1621      0.231     -0.703      0.482      -0.614       0.290
+pemntvty_dummy_210.0     0.3692      0.150      2.465      0.014       0.076       0.663
+pemntvty_dummy_233.0     0.3973      0.362      1.098      0.272      -0.312       1.106
+pemntvty_dummy_303.0    -0.4136      0.335     -1.235      0.217      -1.070       0.243
+pemntvty_dummy_329.0    -0.3135      0.326     -0.962      0.336      -0.952       0.325
+pemntvty_dummy_332.0    -0.4948      0.165     -2.991      0.003      -0.819      -0.171
+pemntvty_dummy_333.0     0.4170      0.216      1.934      0.053      -0.006       0.840
+pemntvty_dummy_364.0    -0.6624      0.368     -1.802      0.071      -1.383       0.058
+pemntvty_dummy_365.0     1.2720      0.230      5.533      0.000       0.821       1.723
+pemntvty_dummy_57.0     -0.0017      0.069     -0.025      0.980      -0.137       0.134
+pemntvty_dummy_73.0     -0.1555      0.232     -0.670      0.503      -0.610       0.299
+pefntvty_dummy_120.0    -0.1514      0.134     -1.133      0.257      -0.413       0.110
+pefntvty_dummy_207.0     0.2339      0.227      1.031      0.303      -0.211       0.679
+pefntvty_dummy_233.0    -0.4991      0.378     -1.321      0.186      -1.239       0.241
+pefntvty_dummy_303.0    -0.0906      0.288     -0.314      0.753      -0.656       0.475
+pefntvty_dummy_329.0     0.5558      0.298      1.868      0.062      -0.027       1.139
+pefntvty_dummy_364.0     0.4193      0.371      1.129      0.259      -0.309       1.147
+pefntvty_dummy_365.0    -1.0838      0.290     -3.732      0.000      -1.653      -0.515
+pefntvty_dummy_57.0      0.0957      0.069      1.388      0.165      -0.039       0.231
+pefntvty_dummy_73.0      0.3499      0.231      1.512      0.130      -0.104       0.803
+prcitshp_dummy_4.0       0.4262      0.148      2.876      0.004       0.136       0.717
+prcitshp_dummy_5.0       0.4360      0.161      2.706      0.007       0.120       0.752
+prinuyer_dummy_11.0     -0.0443      0.139     -0.319      0.750      -0.316       0.228
+prinuyer_dummy_12.0     -0.1863      0.148     -1.256      0.209      -0.477       0.104
+prinuyer_dummy_14.0     -0.0306      0.146     -0.209      0.834      -0.317       0.256
+prinuyer_dummy_15.0     -0.3445      0.178     -1.933      0.053      -0.694       0.005
+prinuyer_dummy_16.0     -0.1977      0.128     -1.541      0.123      -0.449       0.054
+prinuyer_dummy_17.0     -0.2555      0.122     -2.094      0.036      -0.495      -0.016
+prinuyer_dummy_18.0     -0.0259      0.150     -0.172      0.863      -0.320       0.268
+prinuyer_dummy_19.0     -0.0810      0.153     -0.528      0.597      -0.381       0.219
+prinuyer_dummy_20.0     -0.4099      0.164     -2.504      0.012      -0.731      -0.089
+prinuyer_dummy_21.0     -0.0698      0.150     -0.466      0.641      -0.363       0.224
+prinuyer_dummy_22.0     -0.0406      0.142     -0.287      0.774      -0.318       0.237
+prinuyer_dummy_23.0     -0.1634      0.161     -1.017      0.309      -0.478       0.152
+prinuyer_dummy_24.0     -0.4663      0.160     -2.914      0.004      -0.780      -0.153
+prinuyer_dummy_25.0     -0.4639      0.148     -3.136      0.002      -0.754      -0.174
+prinuyer_dummy_26.0     -0.2901      0.161     -1.803      0.071      -0.606       0.025
+prinuyer_dummy_27.0     -0.5785      0.189     -3.068      0.002      -0.948      -0.209
+prinuyer_dummy_28.0     -0.1560      0.170     -0.919      0.358      -0.489       0.177
+pemjot_dummy_2.0        -0.4350      0.064     -6.818      0.000      -0.560      -0.310
+pehruslt                -0.0201      0.021     -0.977      0.329      -0.060       0.020
+pehractt                 0.0488      0.021      2.346      0.019       0.008       0.090
+peio1cow_dummy_2.0      -0.6072      0.114     -5.311      0.000      -0.831      -0.383
+peio1cow_dummy_3.0      -0.9695      0.117     -8.289      0.000      -1.199      -0.740
+peio1cow_dummy_4.0      -0.4798      0.108     -4.428      0.000      -0.692      -0.267
+peio1cow_dummy_5.0      -0.3845      0.119     -3.242      0.001      -0.617      -0.152
+peio1cow_dummy_6.0      -0.1254      0.126     -0.997      0.319      -0.372       0.121
+peio1cow_dummy_7.0      -0.2443      0.125     -1.951      0.051      -0.490       0.001
+prdtind1_dummy_19.0      0.2093      0.117      1.792      0.073      -0.020       0.438
+prdtind1_dummy_21.0     -0.0161      0.103     -0.156      0.876      -0.218       0.186
+prdtind1_dummy_22.0     -0.4119      0.072     -5.711      0.000      -0.553      -0.271
+prdtind1_dummy_23.0     -0.8310      0.130     -6.409      0.000      -1.085      -0.577
+prdtind1_dummy_32.0      0.2446      0.069      3.548      0.000       0.109       0.380
+prdtind1_dummy_33.0      0.5550      0.103      5.365      0.000       0.352       0.758
+prdtind1_dummy_34.0     -0.0839      0.108     -0.774      0.439      -0.296       0.129
+prdtind1_dummy_36.0      0.3042      0.058      5.250      0.000       0.191       0.418
+prdtind1_dummy_38.0     -0.0279      0.095     -0.292      0.770      -0.215       0.159
+prdtind1_dummy_4.0      -0.3925      0.097     -4.053      0.000      -0.582      -0.203
+prdtind1_dummy_40.0     -0.3013      0.080     -3.743      0.000      -0.459      -0.144
+prdtind1_dummy_41.0     -0.3179      0.096     -3.320      0.001      -0.506      -0.130
+prdtind1_dummy_42.0     -0.1392      0.077     -1.810      0.070      -0.290       0.012
+prdtind1_dummy_43.0     -0.1846      0.098     -1.880      0.060      -0.377       0.008
+prdtind1_dummy_44.0     -0.4101      0.103     -3.998      0.000      -0.611      -0.209
+prdtind1_dummy_46.0     -0.7857      0.114     -6.917      0.000      -1.008      -0.563
+prdtind1_dummy_48.0     -0.6080      0.178     -3.407      0.001      -0.958      -0.258
+prdtind1_dummy_49.0     -0.0754      0.119     -0.633      0.527      -0.309       0.158
+prdtind1_dummy_51.0     -0.1874      0.104     -1.808      0.071      -0.391       0.016
+prdtocc1_dummy_10.0     -1.0416      0.087    -11.907      0.000      -1.213      -0.870
+prdtocc1_dummy_11.0     -0.7223      0.098     -7.346      0.000      -0.915      -0.530
+prdtocc1_dummy_12.0     -1.0094      0.172     -5.859      0.000      -1.347      -0.672
+prdtocc1_dummy_13.0     -0.6446      0.129     -4.994      0.000      -0.898      -0.392
+prdtocc1_dummy_14.0     -0.8193      0.114     -7.172      0.000      -1.043      -0.595
+prdtocc1_dummy_15.0     -0.5606      0.132     -4.255      0.000      -0.819      -0.302
+prdtocc1_dummy_16.0     -0.1442      0.066     -2.201      0.028      -0.273      -0.016
+prdtocc1_dummy_17.0     -0.1676      0.057     -2.914      0.004      -0.280      -0.055
+prdtocc1_dummy_19.0     -0.8087      0.130     -6.209      0.000      -1.064      -0.553
+prdtocc1_dummy_2.0       0.2930      0.055      5.292      0.000       0.185       0.402
+prdtocc1_dummy_20.0     -0.8588      0.137     -6.246      0.000      -1.128      -0.589
+prdtocc1_dummy_21.0     -0.9260      0.117     -7.929      0.000      -1.155      -0.697
+prdtocc1_dummy_22.0     -1.6501      0.205     -8.037      0.000      -2.053      -1.248
+prdtocc1_dummy_3.0       0.4683      0.071      6.626      0.000       0.330       0.607
+prdtocc1_dummy_4.0      -0.0518      0.095     -0.544      0.587      -0.239       0.135
+prdtocc1_dummy_5.0      -0.0389      0.115     -0.337      0.736      -0.265       0.187
+prdtocc1_dummy_6.0      -0.2713      0.092     -2.962      0.003      -0.451      -0.092
+prdtocc1_dummy_7.0      -0.0872      0.101     -0.866      0.386      -0.284       0.110
+prdtocc1_dummy_8.0      -0.7237      0.081     -8.986      0.000      -0.882      -0.566
+prdtocc1_dummy_9.0      -0.0342      0.081     -0.422      0.673      -0.193       0.125
+pternwa                  0.0320      0.023      1.386      0.166      -0.013       0.077
+ptwk_dummy_1            -0.0838      0.207     -0.404      0.686      -0.490       0.322
+prchld_dummy_1.0        -0.0076      0.085     -0.090      0.929      -0.174       0.159
+prchld_dummy_10.0       -0.1151      0.099     -1.159      0.246      -0.310       0.079
+prchld_dummy_2.0        -0.1091      0.108     -1.012      0.312      -0.321       0.102
+prchld_dummy_3.0        -0.0836      0.067     -1.251      0.211      -0.215       0.047
+prchld_dummy_4.0        -0.1046      0.068     -1.530      0.126      -0.239       0.029
+prchld_dummy_5.0        -0.0709      0.107     -0.661      0.509      -0.281       0.139
+prchld_dummy_8.0        -0.1087      0.122     -0.887      0.375      -0.349       0.131
+prnmchld                 0.0549      0.028      1.977      0.048       0.000       0.109
+========================================================================================
 
 Marginal Effects (Probit):
        Probit Marginal Effects       
@@ -340,75 +445,599 @@ Marginal Effects (Probit):
 Dep. Variable:                 pttlwk
 Method:                          dydx
 At:                           overall
-==============================================================================
-                dy/dx    std err          z      P&gt;|z|      [0.025      0.975]
-------------------------------------------------------------------------------
-hefaminc      -0.0132      0.001     -9.814      0.000      -0.016      -0.011
-hrnumhou       0.0133      0.003      3.862      0.000       0.007       0.020
-hrhtype        0.0009      0.003      0.266      0.790      -0.006       0.007
-HUBUS          0.0676      0.007      9.111      0.000       0.053       0.082
-gestfips       0.0245      0.005      4.554      0.000       0.014       0.035
-gtcbsa     -8.035e-07   4.65e-07     -1.729      0.084   -1.71e-06    1.07e-07
-gtco       -1.977e-05      0.000     -0.151      0.880      -0.000       0.000
-gtcbsast       0.0242      0.008      3.179      0.001       0.009       0.039
-gtindvpc       0.0007      0.010      0.069      0.945      -0.019       0.020
-gtcbsasz       0.0215      0.005      4.552      0.000       0.012       0.031
-gtcsa         -0.0003   4.27e-05     -6.884      0.000      -0.000      -0.000
-perrp          0.0002      0.001      0.137      0.891      -0.002       0.003
-prtage         0.0013      0.000      4.810      0.000       0.001       0.002
-pemaritl       0.0060      0.003      2.261      0.024       0.001       0.011
-pesex         -0.0311      0.007     -4.706      0.000      -0.044      -0.018
-peeduca       -0.0327      0.002    -20.201      0.000      -0.036      -0.030
-ptdtrace      -0.0097      0.003     -3.649      0.000      -0.015      -0.004
-prfamrel       0.0322      0.005      5.969      0.000       0.022       0.043
-penatvty    1.796e-05   7.29e-05      0.246      0.805      -0.000       0.000
-pemntvty       0.0002   7.18e-05      3.374      0.001       0.000       0.000
-pefntvty   -7.247e-05   6.87e-05     -1.054      0.292      -0.000    6.23e-05
-prinuyer       0.0011      0.001      1.527      0.127      -0.000       0.002
-pehruslt       0.0003      0.000      1.061      0.289      -0.000       0.001
-pehractt      -0.0014      0.000     -3.705      0.000      -0.002      -0.001
-peio1cow      -0.0275      0.003     -9.272      0.000      -0.033      -0.022
-prdtind1       0.0015      0.000      5.555      0.000       0.001       0.002
-prdtocc1       0.0130      0.000     26.497      0.000       0.012       0.014
-pternwa    -3.261e-08   2.23e-08     -1.462      0.144   -7.63e-08    1.11e-08
-prchld         0.0010      0.002      0.407      0.684      -0.004       0.006
-prnmchld      -0.0068      0.008     -0.860      0.390      -0.022       0.009
-==============================================================================</code></pre>
+========================================================================================
+                          dy/dx    std err          z      P&gt;|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------
+hetelhhd_dummy_2        -0.0778        nan        nan        nan         nan         nan
+hetelavl_dummy_2         0.0133      0.032      0.409      0.682      -0.050       0.077
+hefaminc_dummy_10        0.0181      0.026      0.687      0.492      -0.034       0.070
+hefaminc_dummy_11       -0.0238      0.033     -0.714      0.475      -0.089       0.041
+hefaminc_dummy_12        0.0058      0.036      0.163      0.871      -0.064       0.076
+hefaminc_dummy_13        0.0295        nan        nan        nan         nan         nan
+hefaminc_dummy_14        0.0343        nan        nan        nan         nan         nan
+hefaminc_dummy_15        0.0577        nan        nan        nan         nan         nan
+hefaminc_dummy_16        0.0903        nan        nan        nan         nan         nan
+hefaminc_dummy_7        -0.0215      0.049     -0.438      0.661      -0.118       0.075
+hefaminc_dummy_8         0.0410        nan        nan        nan         nan         nan
+hefaminc_dummy_9        -0.0416      0.038     -1.084      0.278      -0.117       0.034
+hrnumhou                -0.0165        nan        nan        nan         nan         nan
+hrhtype_dummy_3         -0.0085      0.021     -0.399      0.690      -0.050       0.033
+hrhtype_dummy_4          0.0067      0.020      0.336      0.737      -0.033       0.046
+hrhtype_dummy_6         -0.0181      0.034     -0.538      0.590      -0.084       0.048
+hrhtype_dummy_7         -0.0286      0.032     -0.900      0.368      -0.091       0.034
+HUBUS_dummy_2           -0.0718        nan        nan        nan         nan         nan
+gestfips_dummy_36        0.0107      0.038      0.281      0.779      -0.064       0.086
+gtcbsa_dummy_10580       0.0219        nan        nan        nan         nan         nan
+gtcbsa_dummy_13780      -0.0373      0.068     -0.549      0.583      -0.171       0.096
+gtcbsa_dummy_15380      -0.0226   1.03e+07  -2.19e-09      1.000   -2.02e+07    2.02e+07
+gtcbsa_dummy_35620       0.0383   2.78e+05   1.38e-07      1.000   -5.45e+05    5.45e+05
+gtcbsa_dummy_37980      -0.0565   9.01e+04  -6.28e-07      1.000   -1.77e+05    1.77e+05
+gtcbsa_dummy_40380      -0.0113   1.19e+07  -9.51e-10      1.000   -2.33e+07    2.33e+07
+gtcbsa_dummy_45060      -0.0343        nan        nan        nan         nan         nan
+gtcbsa_dummy_45940       0.0918        nan        nan        nan         nan         nan
+gtco_dummy_103          -0.0302      0.024     -1.278      0.201      -0.077       0.016
+gtco_dummy_119          -0.0473      0.020     -2.383      0.017      -0.086      -0.008
+gtco_dummy_13            0.0168      0.020      0.854      0.393      -0.022       0.055
+gtco_dummy_17            0.0195      0.021      0.935      0.350      -0.021       0.060
+gtco_dummy_23           -0.0192      0.017     -1.129      0.259      -0.052       0.014
+gtco_dummy_27            0.0742        nan        nan        nan         nan         nan
+gtco_dummy_3             0.0338      0.006      5.359      0.000       0.021       0.046
+gtco_dummy_31            0.0540        nan        nan        nan         nan         nan
+gtco_dummy_35            0.0099      0.026      0.381      0.704      -0.041       0.061
+gtco_dummy_39           -0.0007      0.027     -0.025      0.980      -0.054       0.052
+gtco_dummy_47            0.1554        nan        nan        nan         nan         nan
+gtco_dummy_5             0.1066        nan        nan        nan         nan         nan
+gtco_dummy_55           -0.0381      0.011     -3.559      0.000      -0.059      -0.017
+gtco_dummy_59           -0.0726        nan        nan        nan         nan         nan
+gtco_dummy_61            0.1729        nan        nan        nan         nan         nan
+gtco_dummy_67           -0.0236      0.081     -0.292      0.771      -0.182       0.135
+gtco_dummy_7            -0.0032   9.03e+05  -3.58e-09      1.000   -1.77e+06    1.77e+06
+gtco_dummy_71            0.0120      0.027      0.445      0.656      -0.041       0.065
+gtco_dummy_81            0.1579        nan        nan        nan         nan         nan
+gtco_dummy_85            0.0234      0.049      0.480      0.631      -0.072       0.119
+gtco_dummy_87           -0.2123        nan        nan        nan         nan         nan
+gtcbsast_dummy_2        -0.0316      0.018     -1.771      0.077      -0.067       0.003
+gtcbsast_dummy_3        -0.0315        nan        nan        nan         nan         nan
+gtcbsast_dummy_4         0.0042        nan        nan        nan         nan         nan
+gtindvpc_dummy_1        -0.1735        nan        nan        nan         nan         nan
+gtindvpc_dummy_2        -0.0488      0.022     -2.212      0.027      -0.092      -0.006
+gtcbsasz_dummy_2        -0.0728      0.021     -3.396      0.001      -0.115      -0.031
+gtcbsasz_dummy_3        -0.0789      0.017     -4.561      0.000      -0.113      -0.045
+gtcbsasz_dummy_4        -0.0124        nan        nan        nan         nan         nan
+gtcbsasz_dummy_5        -0.0338        nan        nan        nan         nan         nan
+gtcbsasz_dummy_7        -0.0182   1.56e+05  -1.17e-07      1.000   -3.05e+05    3.05e+05
+gtcsa_dummy_104         -0.0498      0.037     -1.359      0.174      -0.122       0.022
+gtcsa_dummy_428          0.0501      0.034      1.478      0.139      -0.016       0.117
+perrp_dummy_41.0         0.0238      0.017      1.410      0.159      -0.009       0.057
+perrp_dummy_42.0        -0.0406      0.048     -0.851      0.395      -0.134       0.053
+perrp_dummy_44.0         0.0762        nan        nan        nan         nan         nan
+perrp_dummy_48.0        -0.0600      0.056     -1.081      0.280      -0.169       0.049
+perrp_dummy_50.0        -0.0311      0.064     -0.487      0.626      -0.156       0.094
+perrp_dummy_51.0        -0.0091      0.059     -0.155      0.877      -0.125       0.107
+perrp_dummy_52.0        -0.0852      0.080     -1.061      0.288      -0.243       0.072
+perrp_dummy_55.0         0.1389        nan        nan        nan         nan         nan
+prtage                  -0.0085        nan        nan        nan         nan         nan
+pemaritl_dummy_2.0      -0.0371      0.012     -3.160      0.002      -0.060      -0.014
+pemaritl_dummy_3.0       0.0037      0.027      0.136      0.892      -0.050       0.058
+pemaritl_dummy_4.0      -0.0063      0.020     -0.312      0.755      -0.046       0.033
+pemaritl_dummy_5.0      -0.0342      0.019     -1.768      0.077      -0.072       0.004
+pemaritl_dummy_6.0      -0.0172      0.016     -1.053      0.292      -0.049       0.015
+pesex_dummy_2.0          0.0445        nan        nan        nan         nan         nan
+peeduca_dummy_33.0       0.0741      0.088      0.838      0.402      -0.099       0.248
+peeduca_dummy_37.0       0.0271      0.071      0.382      0.702      -0.112       0.166
+peeduca_dummy_38.0       0.0164      0.069      0.237      0.813      -0.119       0.152
+peeduca_dummy_39.0       0.0753      0.050      1.498      0.134      -0.023       0.174
+peeduca_dummy_40.0       0.1268      0.042      3.015      0.003       0.044       0.209
+peeduca_dummy_41.0       0.1148      0.049      2.341      0.019       0.019       0.211
+peeduca_dummy_42.0       0.1351      0.038      3.541      0.000       0.060       0.210
+peeduca_dummy_43.0       0.1725        nan        nan        nan         nan         nan
+peeduca_dummy_44.0       0.2130        nan        nan        nan         nan         nan
+peeduca_dummy_45.0       0.2212        nan        nan        nan         nan         nan
+peeduca_dummy_46.0       0.2458        nan        nan        nan         nan         nan
+ptdtrace_dummy_2.0      -0.0050      0.010     -0.480      0.632      -0.025       0.015
+ptdtrace_dummy_4.0      -0.0077      0.014     -0.549      0.583      -0.035       0.020
+prdthsp_dummy_2.0        0.0200      0.033      0.600      0.548      -0.045       0.085
+prdthsp_dummy_4.0       -0.0624        nan        nan        nan         nan         nan
+prdthsp_dummy_6.0       -0.0559        nan        nan        nan         nan         nan
+prdthsp_dummy_7.0        0.0163      0.034      0.482      0.630      -0.050       0.083
+PUCHINHH_dummy_3.0      -0.0537        nan        nan        nan         nan         nan
+PUCHINHH_dummy_9.0      -0.0101      0.023     -0.436      0.663      -0.056       0.035
+prfamrel_dummy_1.0      -0.0098      0.035     -0.277      0.782      -0.079       0.060
+prfamrel_dummy_4.0      -0.0416      0.047     -0.884      0.376      -0.134       0.051
+prfamtyp_dummy_3.0      -0.0079      0.048     -0.165      0.869      -0.102       0.086
+prfamtyp_dummy_5.0      -0.0670      0.063     -1.058      0.290      -0.191       0.057
+pehspnon_dummy_2.0       0.0227      0.024      0.926      0.355      -0.025       0.071
+penatvty_dummy_207.0     0.0046      0.035      0.133      0.894      -0.063       0.072
+penatvty_dummy_210.0     0.0045      0.034      0.134      0.893      -0.061       0.070
+penatvty_dummy_303.0     0.0278      0.060      0.461      0.645      -0.090       0.146
+penatvty_dummy_329.0     0.0262      0.045      0.577      0.564      -0.063       0.115
+penatvty_dummy_333.0    -0.0616      0.026     -2.405      0.016      -0.112      -0.011
+penatvty_dummy_365.0     0.0313      0.064      0.490      0.624      -0.094       0.157
+penatvty_dummy_57.0      0.0653      0.101      0.644      0.520      -0.134       0.264
+pemntvty_dummy_207.0    -0.0323      0.044     -0.731      0.465      -0.119       0.054
+pemntvty_dummy_210.0     0.0736        nan        nan        nan         nan         nan
+pemntvty_dummy_233.0     0.0792      0.034      2.296      0.022       0.012       0.147
+pemntvty_dummy_303.0    -0.0824      0.053     -1.553      0.120      -0.186       0.022
+pemntvty_dummy_329.0    -0.0625      0.063     -0.988      0.323      -0.186       0.062
+pemntvty_dummy_332.0    -0.0986        nan        nan        nan         nan         nan
+pemntvty_dummy_333.0     0.0831        nan        nan        nan         nan         nan
+pemntvty_dummy_364.0    -0.1320      0.051     -2.587      0.010      -0.232      -0.032
+pemntvty_dummy_365.0     0.2535        nan        nan        nan         nan         nan
+pemntvty_dummy_57.0     -0.0003      0.014     -0.024      0.981      -0.029       0.028
+pemntvty_dummy_73.0     -0.0310      0.043     -0.725      0.469      -0.115       0.053
+pefntvty_dummy_120.0    -0.0302        nan        nan        nan         nan         nan
+pefntvty_dummy_207.0     0.0466      0.036      1.304      0.192      -0.023       0.117
+pefntvty_dummy_233.0    -0.0995      0.004    -24.044      0.000      -0.108      -0.091
+pefntvty_dummy_303.0    -0.0181      0.054     -0.332      0.740      -0.125       0.089
+pefntvty_dummy_329.0     0.1108      0.019      5.941      0.000       0.074       0.147
+pefntvty_dummy_364.0     0.0836      0.072      1.154      0.248      -0.058       0.225
+pefntvty_dummy_365.0    -0.2160        nan        nan        nan         nan         nan
+pefntvty_dummy_57.0      0.0191      0.030      0.643      0.520      -0.039       0.077
+pefntvty_dummy_73.0      0.0697      0.058      1.196      0.232      -0.045       0.184
+prcitshp_dummy_4.0       0.0849      0.105      0.810      0.418      -0.120       0.290
+prcitshp_dummy_5.0       0.0869      0.105      0.825      0.410      -0.120       0.293
+prinuyer_dummy_11.0     -0.0088      0.024     -0.372      0.710      -0.055       0.038
+prinuyer_dummy_12.0     -0.0371        nan        nan        nan         nan         nan
+prinuyer_dummy_14.0     -0.0061      0.028     -0.220      0.826      -0.060       0.048
+prinuyer_dummy_15.0     -0.0687        nan        nan        nan         nan         nan
+prinuyer_dummy_16.0     -0.0394        nan        nan        nan         nan         nan
+prinuyer_dummy_17.0     -0.0509        nan        nan        nan         nan         nan
+prinuyer_dummy_18.0     -0.0052      0.029     -0.180      0.857      -0.061       0.051
+prinuyer_dummy_19.0     -0.0161      0.026     -0.628      0.530      -0.066       0.034
+prinuyer_dummy_20.0     -0.0817        nan        nan        nan         nan         nan
+prinuyer_dummy_21.0     -0.0139      0.024     -0.584      0.559      -0.061       0.033
+prinuyer_dummy_22.0     -0.0081      0.026     -0.312      0.755      -0.059       0.043
+prinuyer_dummy_23.0     -0.0326      0.017     -1.917      0.055      -0.066       0.001
+prinuyer_dummy_24.0     -0.0930        nan        nan        nan         nan         nan
+prinuyer_dummy_25.0     -0.0925        nan        nan        nan         nan         nan
+prinuyer_dummy_26.0     -0.0578        nan        nan        nan         nan         nan
+prinuyer_dummy_27.0     -0.1153        nan        nan        nan         nan         nan
+prinuyer_dummy_28.0     -0.0311      0.020     -1.559      0.119      -0.070       0.008
+pemjot_dummy_2.0        -0.0867        nan        nan        nan         nan         nan
+pehruslt                -0.0040      0.003     -1.313      0.189      -0.010       0.002
+pehractt                 0.0097        nan        nan        nan         nan         nan
+peio1cow_dummy_2.0      -0.1210        nan        nan        nan         nan         nan
+peio1cow_dummy_3.0      -0.1932        nan        nan        nan         nan         nan
+peio1cow_dummy_4.0      -0.0956        nan        nan        nan         nan         nan
+peio1cow_dummy_5.0      -0.0766        nan        nan        nan         nan         nan
+peio1cow_dummy_6.0      -0.0250      0.029     -0.858      0.391      -0.082       0.032
+peio1cow_dummy_7.0      -0.0487      0.026     -1.909      0.056      -0.099       0.001
+prdtind1_dummy_19.0      0.0417      0.014      2.981      0.003       0.014       0.069
+prdtind1_dummy_21.0     -0.0032      0.020     -0.160      0.873      -0.042       0.036
+prdtind1_dummy_22.0     -0.0821        nan        nan        nan         nan         nan
+prdtind1_dummy_23.0     -0.1656        nan        nan        nan         nan         nan
+prdtind1_dummy_32.0      0.0488        nan        nan        nan         nan         nan
+prdtind1_dummy_33.0      0.1106        nan        nan        nan         nan         nan
+prdtind1_dummy_34.0     -0.0167      0.020     -0.838      0.402      -0.056       0.022
+prdtind1_dummy_36.0      0.0606        nan        nan        nan         nan         nan
+prdtind1_dummy_38.0     -0.0056      0.018     -0.306      0.759      -0.041       0.030
+prdtind1_dummy_4.0      -0.0782        nan        nan        nan         nan         nan
+prdtind1_dummy_40.0     -0.0600        nan        nan        nan         nan         nan
+prdtind1_dummy_41.0     -0.0634        nan        nan        nan         nan         nan
+prdtind1_dummy_42.0     -0.0277        nan        nan        nan         nan         nan
+prdtind1_dummy_43.0     -0.0368        nan        nan        nan         nan         nan
+prdtind1_dummy_44.0     -0.0817        nan        nan        nan         nan         nan
+prdtind1_dummy_46.0     -0.1566        nan        nan        nan         nan         nan
+prdtind1_dummy_48.0     -0.1212        nan        nan        nan         nan         nan
+prdtind1_dummy_49.0     -0.0150      0.019     -0.788      0.431      -0.052       0.022
+prdtind1_dummy_51.0     -0.0374      0.012     -3.125      0.002      -0.061      -0.014
+prdtocc1_dummy_10.0     -0.2076        nan        nan        nan         nan         nan
+prdtocc1_dummy_11.0     -0.1440        nan        nan        nan         nan         nan
+prdtocc1_dummy_12.0     -0.2012        nan        nan        nan         nan         nan
+prdtocc1_dummy_13.0     -0.1285        nan        nan        nan         nan         nan
+prdtocc1_dummy_14.0     -0.1633        nan        nan        nan         nan         nan
+prdtocc1_dummy_15.0     -0.1117        nan        nan        nan         nan         nan
+prdtocc1_dummy_16.0     -0.0287        nan        nan        nan         nan         nan
+prdtocc1_dummy_17.0     -0.0334        nan        nan        nan         nan         nan
+prdtocc1_dummy_19.0     -0.1612        nan        nan        nan         nan         nan
+prdtocc1_dummy_2.0       0.0584        nan        nan        nan         nan         nan
+prdtocc1_dummy_20.0     -0.1712        nan        nan        nan         nan         nan
+prdtocc1_dummy_21.0     -0.1846        nan        nan        nan         nan         nan
+prdtocc1_dummy_22.0     -0.3289        nan        nan        nan         nan         nan
+prdtocc1_dummy_3.0       0.0933        nan        nan        nan         nan         nan
+prdtocc1_dummy_4.0      -0.0103      0.018     -0.583      0.560      -0.045       0.024
+prdtocc1_dummy_5.0      -0.0078      0.022     -0.350      0.726      -0.051       0.036
+prdtocc1_dummy_6.0      -0.0541        nan        nan        nan         nan         nan
+prdtocc1_dummy_7.0      -0.0174      0.018     -0.960      0.337      -0.053       0.018
+prdtocc1_dummy_8.0      -0.1443        nan        nan        nan         nan         nan
+prdtocc1_dummy_9.0      -0.0068      0.016     -0.424      0.672      -0.038       0.025
+pternwa                  0.0064      0.003      2.006      0.045       0.000       0.013
+ptwk_dummy_1            -0.0167      0.040     -0.415      0.678      -0.096       0.062
+prchld_dummy_1.0        -0.0015      0.017     -0.090      0.929      -0.035       0.032
+prchld_dummy_10.0       -0.0229      0.016     -1.435      0.151      -0.054       0.008
+prchld_dummy_2.0        -0.0218      0.019     -1.159      0.246      -0.059       0.015
+prchld_dummy_3.0        -0.0167      0.011     -1.459      0.145      -0.039       0.006
+prchld_dummy_4.0        -0.0209      0.007     -2.911      0.004      -0.035      -0.007
+prchld_dummy_5.0        -0.0141      0.019     -0.753      0.451      -0.051       0.023
+prchld_dummy_8.0        -0.0217      0.021     -1.020      0.308      -0.063       0.020
+prnmchld                 0.0109        nan        nan        nan         nan         nan
+========================================================================================
+
+Top 10 Most Significant Variables:
+                                Variable  Coefficient  Std Error    Z-Score  \
+prdtocc1_dummy_10.0  prdtocc1_dummy_10.0    -1.041564   0.087472 -11.907428   
+prdtocc1_dummy_8.0    prdtocc1_dummy_8.0    -0.723746   0.080538  -8.986380   
+peio1cow_dummy_3.0    peio1cow_dummy_3.0    -0.969504   0.116961  -8.289127   
+prdtocc1_dummy_22.0  prdtocc1_dummy_22.0    -1.650114   0.205311  -8.037127   
+prdtocc1_dummy_21.0  prdtocc1_dummy_21.0    -0.925981   0.116783  -7.929049   
+prdtocc1_dummy_11.0  prdtocc1_dummy_11.0    -0.722348   0.098332  -7.345973   
+prdtocc1_dummy_14.0  prdtocc1_dummy_14.0    -0.819323   0.114242  -7.171822   
+prdtind1_dummy_46.0  prdtind1_dummy_46.0    -0.785719   0.113591  -6.917108   
+pemjot_dummy_2.0        pemjot_dummy_2.0    -0.434968   0.063793  -6.818380   
+prdtocc1_dummy_3.0    prdtocc1_dummy_3.0     0.468295   0.070678   6.625764   
+
+                          P-Value  
+prdtocc1_dummy_10.0  1.082656e-32  
+prdtocc1_dummy_8.0   2.555069e-19  
+peio1cow_dummy_3.0   1.140827e-16  
+prdtocc1_dummy_22.0  9.196906e-16  
+prdtocc1_dummy_21.0  2.208309e-15  
+prdtocc1_dummy_11.0  2.042670e-13  
+prdtocc1_dummy_14.0  7.400639e-13  
+prdtind1_dummy_46.0  4.609557e-12  
+pemjot_dummy_2.0     9.207254e-12  
+prdtocc1_dummy_3.0   3.454563e-11  </code></pre>
 </div>
 </div>
-</div>
-<p>SHAP Results</p>
-<div class="quarto-embed-nb-cell">
-<div id="shap" class="cell" data-outputid="da051c1b-c0f3-446b-d639-d5ba8bde61d4" data-execution_count="17">
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Calculating and plotting SHAP values for XGBoost model...
-Generating SHAP Beeswarm plot...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="baselinemodels_files/figure-html/hps_cps_pums-shap-output-2.png" id="shap-1" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Generating SHAP Bar plot...</code></pre>
-</div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="baselinemodels_files/figure-html/hps_cps_pums-shap-output-4.png" id="shap-2" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
+<p>:::</p>
+</section>
 </section>
 <section id="pums-binary-classification-model-results-explainability" class="level1">
 <h1>PUMS Binary Classification Model Results &amp; Explainability</h1>
+<section id="model-performance" class="level2">
+<h2 class="anchored" data-anchor-id="model-performance">Model Performance</h2>
+<p>:::{.quarto-embed-nb-cell notebook=“D:_New_LAB_RUCI_with_dummies.ipynb” notebook-title=” Probit Regression Results ” notebook-cellId=“cell-results”}</p>
+<div id="results" class="cell" data-outputid="f8a8fb5f-9aac-449b-c5fa-a08f98be221c">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Calculating additional performance metrics...
+
+Comprehensive Model Performance Metrics:
+RMSE: 0.2814
+MSE: 0.0792
+MAE: 0.1474
+R-squared: 0.0958
+
+Precision: 0.3622
+Recall/Sensitivity: 0.0398
+Specificity: 0.9925
+F1 Score: 0.0717
+Prevalence: 0.0970
+Negative Predictive Value: 0.9059
+Positive Likelihood Ratio: 5.2870
+Negative Likelihood Ratio: 0.9675</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="baselinemodels_files/figure-html/pums_with_dummies-results-output-2.png" id="results-1" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Generating SHAP values...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="baselinemodels_files/figure-html/pums_with_dummies-results-output-4.png" id="results-2" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="baselinemodels_files/figure-html/pums_with_dummies-results-output-5.png" id="results-3" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="baselinemodels_files/figure-html/pums_with_dummies-results-output-6.png" id="results-4" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="baselinemodels_files/figure-html/pums_with_dummies-results-output-7.png" id="results-5" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="baselinemodels_files/figure-html/pums_with_dummies-results-output-8.png" id="results-6" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>:::</p>
+</section>
+<section id="probit-model-1" class="level2">
+<h2 class="anchored" data-anchor-id="probit-model-1">Probit Model</h2>
+<p>:::{.quarto-embed-nb-cell notebook=“D:_New_LAB_RUCI_with_dummies.ipynb” notebook-title=” Probit Regression Results ” notebook-cellId=“cell-probit”}</p>
+<div id="probit" class="cell" data-outputid="7cdc5800-1ac2-4b27-f7f4-c233379716e0">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Fitting Probit model for effect sizes and p-values...
+Removed 64 low variance columns
+Removed 4 highly correlated features
+Warning: Maximum number of iterations has been exceeded.
+         Current function value: 0.253002
+         Iterations: 35
+
+Probit Model Summary:</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                          Probit Regression Results                           
+==============================================================================
+Dep. Variable:                 JWTRNS   No. Observations:                47672
+Model:                         Probit   Df Residuals:                    47570
+Method:                           MLE   Df Model:                          101
+Date:                Thu, 06 Feb 2025   Pseudo R-squ.:                  0.2057
+Time:                        08:32:57   Log-Likelihood:                -12061.
+converged:                      False   LL-Null:                       -15185.
+Covariance Type:                  HC0   LLR p-value:                     0.000
+========================================================================================
+                           coef    std err          z      P&gt;|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------
+const                   -1.7055      0.374     -4.562      0.000      -2.438      -0.973
+AGEP                     0.0670      0.024      2.738      0.006       0.019       0.115
+BROADBND_dummy_2.0       0.0175      0.061      0.284      0.776      -0.103       0.138
+DDRS_dummy_2.0           0.1390      0.173      0.801      0.423      -0.201       0.479
+DEAR_dummy_2             0.0425      0.078      0.547      0.585      -0.110       0.195
+DEYE_dummy_2             0.1593      0.093      1.717      0.086      -0.023       0.341
+DIALUP_dummy_2.0         0.1160      0.070      1.662      0.097      -0.021       0.253
+DOUT_dummy_2.0          -0.3907      0.114     -3.441      0.001      -0.613      -0.168
+DPHY_dummy_2.0           0.0479      0.085      0.561      0.575      -0.119       0.215
+DREM_dummy_2.0          -0.0076      0.091     -0.084      0.933      -0.187       0.171
+ESR_dummy_2.0           -5.2626   2.35e+06  -2.24e-06      1.000   -4.61e+06    4.61e+06
+ESR_dummy_3.0           -6.0468      0.102    -59.231      0.000      -6.247      -5.847
+ESR_dummy_6.0           -6.9979      0.119    -58.696      0.000      -7.232      -6.764
+HFL_dummy_2.0           -0.0533      0.056     -0.955      0.339      -0.163       0.056
+HFL_dummy_3.0           -0.0272      0.031     -0.888      0.375      -0.087       0.033
+HFL_dummy_4.0           -0.0713      0.036     -1.961      0.050      -0.143    -4.5e-05
+HHL_dummy_2.0           -0.0691      0.050     -1.373      0.170      -0.168       0.030
+HHL_dummy_3.0            0.0639      0.044      1.451      0.147      -0.022       0.150
+HHL_dummy_4.0           -0.0389      0.054     -0.718      0.473      -0.145       0.067
+HHL_dummy_5.0           -0.0476      0.071     -0.670      0.503      -0.187       0.092
+HHLDRAGEP                0.0182      0.022      0.845      0.398      -0.024       0.060
+HHLDRHISP_dummy_16.0     0.0560      0.126      0.443      0.658      -0.192       0.304
+HHLDRHISP_dummy_17.0     0.0600      0.158      0.379      0.705      -0.250       0.370
+HHLDRHISP_dummy_19.0    -0.3912      0.194     -2.013      0.044      -0.772      -0.010
+HHLDRHISP_dummy_2.0     -0.2452      0.161     -1.524      0.128      -0.561       0.070
+HHLDRHISP_dummy_3.0      0.0085      0.078      0.109      0.913      -0.144       0.161
+HHLDRHISP_dummy_5.0     -0.0056      0.139     -0.040      0.968      -0.277       0.266
+HHT_dummy_2.0            0.1672   2.16e+10   7.75e-12      1.000   -4.23e+10    4.23e+10
+HHT_dummy_3.0           -0.3132   5.31e+06   -5.9e-08      1.000   -1.04e+07    1.04e+07
+HICOV_dummy_2           -0.0794      0.071     -1.111      0.266      -0.219       0.061
+HINCP                    0.0935      0.009     10.519      0.000       0.076       0.111
+HISP_dummy_16           -0.0519      0.124     -0.418      0.676      -0.295       0.191
+HISP_dummy_17           -0.2335      0.161     -1.455      0.146      -0.548       0.081
+HISP_dummy_19            0.1699      0.172      0.987      0.323      -0.167       0.507
+HISP_dummy_2             0.1094      0.144      0.763      0.446      -0.172       0.391
+HISP_dummy_3            -0.0504      0.077     -0.655      0.513      -0.201       0.100
+HISP_dummy_5             0.0718      0.136      0.529      0.597      -0.194       0.338
+HISPEED_dummy_2.0       -0.1167      0.035     -3.346      0.001      -0.185      -0.048
+HUGCL_dummy_1.0          0.0097      0.056      0.175      0.861      -0.099       0.119
+HUPAC_dummy_2.0         -0.0800      0.104     -0.771      0.441      -0.283       0.123
+HUPAC_dummy_3.0         -0.2080      0.134     -1.557      0.119      -0.470       0.054
+HUPAC_dummy_4.0         -0.0577      0.094     -0.613      0.540      -0.242       0.127
+HUPAOC_dummy_2.0         0.0061      0.109      0.056      0.955      -0.207       0.220
+HUPAOC_dummy_3.0         0.1279      0.140      0.914      0.361      -0.146       0.402
+HUPAOC_dummy_4.0        -0.0343      0.097     -0.352      0.725      -0.225       0.157
+LANX_dummy_2.0           0.0587      0.042      1.412      0.158      -0.023       0.140
+LAPTOP_dummy_2.0        -0.2561      0.052     -4.925      0.000      -0.358      -0.154
+MAR_dummy_2             -0.0736      0.094     -0.786      0.432      -0.257       0.110
+MAR_dummy_3             -0.0375      0.055     -0.687      0.492      -0.145       0.070
+MAR_dummy_4              0.1311      0.094      1.392      0.164      -0.053       0.316
+MAR_dummy_5             -0.0893      0.046     -1.960      0.050      -0.179     1.3e-05
+MIG_dummy_3.0            0.1084      0.036      2.988      0.003       0.037       0.180
+PRIVCOV_dummy_2          0.0136      0.051      0.266      0.790      -0.087       0.114
+PUBCOV_dummy_2           0.0873      0.044      1.989      0.047       0.001       0.173
+R60_dummy_1.0           -0.0303      0.035     -0.858      0.391      -0.099       0.039
+R60_dummy_2.0           -0.0048      0.042     -0.113      0.910      -0.088       0.078
+R65_dummy_1.0            0.0077      0.037      0.204      0.838      -0.066       0.081
+R65_dummy_2.0            0.1076      0.049      2.193      0.028       0.011       0.204
+RAC1P_dummy_2           -0.0499      0.038     -1.325      0.185      -0.124       0.024
+RAC1P_dummy_6            0.1099      0.038      2.866      0.004       0.035       0.185
+RAC1P_dummy_8           -0.0905      0.053     -1.698      0.090      -0.195       0.014
+RAC1P_dummy_9            0.0315      0.038      0.829      0.407      -0.043       0.106
+SATELLITE_dummy_2.0      0.0478      0.052      0.912      0.362      -0.055       0.150
+SCHL_dummy_13.0          0.1440      0.156      0.926      0.355      -0.161       0.449
+SCHL_dummy_14.0         -0.0403      0.138     -0.292      0.770      -0.311       0.230
+SCHL_dummy_15.0          0.1638      0.119      1.373      0.170      -0.070       0.398
+SCHL_dummy_16.0          0.0871      0.084      1.039      0.299      -0.077       0.251
+SCHL_dummy_17.0          0.2057      0.107      1.915      0.055      -0.005       0.416
+SCHL_dummy_18.0          0.1795      0.092      1.947      0.052      -0.001       0.360
+SCHL_dummy_19.0          0.3121      0.086      3.646      0.000       0.144       0.480
+SCHL_dummy_20.0          0.2563      0.089      2.893      0.004       0.083       0.430
+SCHL_dummy_21.0          0.6000      0.082      7.299      0.000       0.439       0.761
+SCHL_dummy_22.0          0.5716      0.084      6.816      0.000       0.407       0.736
+SCHL_dummy_23.0          0.3064      0.093      3.290      0.001       0.124       0.489
+SCHL_dummy_24.0          0.3978      0.098      4.069      0.000       0.206       0.589
+SMARTPHONE_dummy_2.0    -0.0765      0.071     -1.077      0.282      -0.216       0.063
+TABLET_dummy_2.0         0.0026      0.026      0.100      0.921      -0.048       0.053
+WIF_dummy_1.0            0.2502      0.292      0.857      0.391      -0.322       0.822
+WIF_dummy_2.0            0.1825      0.293      0.623      0.533      -0.392       0.757
+WIF_dummy_3.0            0.0286      0.294      0.097      0.922      -0.548       0.605
+WKEXREL_dummy_10.0       0.2867   2.16e+10   1.33e-11      1.000   -4.23e+10    4.23e+10
+WKEXREL_dummy_11.0       0.0967   2.16e+10   4.48e-12      1.000   -4.23e+10    4.23e+10
+WKEXREL_dummy_12.0      -0.2163   2.16e+10     -1e-11      1.000   -4.23e+10    4.23e+10
+WKEXREL_dummy_13.0       0.0062   8.22e+06   7.56e-10      1.000   -1.61e+07    1.61e+07
+WKEXREL_dummy_14.0      -0.0729   8.14e+06  -8.95e-09      1.000    -1.6e+07     1.6e+07
+WKEXREL_dummy_15.0      -0.2465   9.21e+06  -2.68e-08      1.000   -1.81e+07    1.81e+07
+WKEXREL_dummy_2.0       -0.0407      0.031     -1.320      0.187      -0.101       0.020
+WKEXREL_dummy_3.0       -0.1801      0.072     -2.495      0.013      -0.322      -0.039
+WKEXREL_dummy_4.0       -0.0240      0.034     -0.711      0.477      -0.090       0.042
+WKEXREL_dummy_5.0       -0.0269      0.049     -0.547      0.585      -0.123       0.070
+WKEXREL_dummy_6.0       -0.0786      0.087     -0.899      0.369      -0.250       0.093
+WKEXREL_dummy_7.0       -0.1291      0.076     -1.693      0.090      -0.279       0.020
+WKEXREL_dummy_8.0       -0.1110      0.096     -1.162      0.245      -0.298       0.076
+WKEXREL_dummy_9.0       -0.3651      0.232     -1.575      0.115      -0.819       0.089
+WKL_dummy_2.0           -0.8893      0.094     -9.413      0.000      -1.074      -0.704
+WKL_dummy_3.0            1.5457      0.097     15.886      0.000       1.355       1.736
+WORKSTAT_dummy_10.0     -0.5093      0.450     -1.131      0.258      -1.392       0.373
+WORKSTAT_dummy_12.0     -0.1287      0.488     -0.264      0.792      -1.085       0.828
+WORKSTAT_dummy_13.0      0.3465      0.314      1.103      0.270      -0.269       0.962
+WORKSTAT_dummy_15.0      0.4656      0.401      1.160      0.246      -0.321       1.252
+WORKSTAT_dummy_2.0       0.1987      0.096      2.078      0.038       0.011       0.386
+WORKSTAT_dummy_3.0       0.0993      0.063      1.581      0.114      -0.024       0.222
+WORKSTAT_dummy_7.0       0.0596      0.068      0.872      0.383      -0.074       0.194
+WORKSTAT_dummy_9.0       0.1506      0.221      0.681      0.496      -0.283       0.584
+========================================================================================
+
+Possibly complete quasi-separation: A fraction 0.37 of observations can be
+perfectly predicted. This might indicate that there is complete
+quasi-separation. In this case some parameters will not be identified.
+
+Marginal Effects (Probit):
+       Probit Marginal Effects       
+=====================================
+Dep. Variable:                 JWTRNS
+Method:                          dydx
+At:                           overall
+========================================================================================
+                          dy/dx    std err          z      P&gt;|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------
+AGEP                     0.0094        nan        nan        nan         nan         nan
+BROADBND_dummy_2.0       0.0024        nan        nan        nan         nan         nan
+DDRS_dummy_2.0           0.0195        nan        nan        nan         nan         nan
+DEAR_dummy_2             0.0059        nan        nan        nan         nan         nan
+DEYE_dummy_2             0.0223        nan        nan        nan         nan         nan
+DIALUP_dummy_2.0         0.0162        nan        nan        nan         nan         nan
+DOUT_dummy_2.0          -0.0547        nan        nan        nan         nan         nan
+DPHY_dummy_2.0           0.0067        nan        nan        nan         nan         nan
+DREM_dummy_2.0          -0.0011        nan        nan        nan         nan         nan
+ESR_dummy_2.0           -0.7365   3.29e+05  -2.24e-06      1.000   -6.45e+05    6.45e+05
+ESR_dummy_3.0           -0.8463        nan        nan        nan         nan         nan
+ESR_dummy_6.0           -0.9794        nan        nan        nan         nan         nan
+HFL_dummy_2.0           -0.0075        nan        nan        nan         nan         nan
+HFL_dummy_3.0           -0.0038        nan        nan        nan         nan         nan
+HFL_dummy_4.0           -0.0100        nan        nan        nan         nan         nan
+HHL_dummy_2.0           -0.0097        nan        nan        nan         nan         nan
+HHL_dummy_3.0            0.0089        nan        nan        nan         nan         nan
+HHL_dummy_4.0           -0.0054        nan        nan        nan         nan         nan
+HHL_dummy_5.0           -0.0067        nan        nan        nan         nan         nan
+HHLDRAGEP                0.0025        nan        nan        nan         nan         nan
+HHLDRHISP_dummy_16.0     0.0078        nan        nan        nan         nan         nan
+HHLDRHISP_dummy_17.0     0.0084        nan        nan        nan         nan         nan
+HHLDRHISP_dummy_19.0    -0.0548        nan        nan        nan         nan         nan
+HHLDRHISP_dummy_2.0     -0.0343        nan        nan        nan         nan         nan
+HHLDRHISP_dummy_3.0      0.0012        nan        nan        nan         nan         nan
+HHLDRHISP_dummy_5.0     -0.0008        nan        nan        nan         nan         nan
+HHT_dummy_2.0            0.0234   3.02e+09   7.75e-12      1.000   -5.92e+09    5.92e+09
+HHT_dummy_3.0           -0.0438   7.65e+05  -5.73e-08      1.000    -1.5e+06     1.5e+06
+HICOV_dummy_2           -0.0111        nan        nan        nan         nan         nan
+HINCP                    0.0131        nan        nan        nan         nan         nan
+HISP_dummy_16           -0.0073        nan        nan        nan         nan         nan
+HISP_dummy_17           -0.0327        nan        nan        nan         nan         nan
+HISP_dummy_19            0.0238        nan        nan        nan         nan         nan
+HISP_dummy_2             0.0153        nan        nan        nan         nan         nan
+HISP_dummy_3            -0.0071        nan        nan        nan         nan         nan
+HISP_dummy_5             0.0100        nan        nan        nan         nan         nan
+HISPEED_dummy_2.0       -0.0163        nan        nan        nan         nan         nan
+HUGCL_dummy_1.0          0.0014        nan        nan        nan         nan         nan
+HUPAC_dummy_2.0         -0.0112        nan        nan        nan         nan         nan
+HUPAC_dummy_3.0         -0.0291        nan        nan        nan         nan         nan
+HUPAC_dummy_4.0         -0.0081        nan        nan        nan         nan         nan
+HUPAOC_dummy_2.0         0.0009        nan        nan        nan         nan         nan
+HUPAOC_dummy_3.0         0.0179        nan        nan        nan         nan         nan
+HUPAOC_dummy_4.0        -0.0048        nan        nan        nan         nan         nan
+LANX_dummy_2.0           0.0082        nan        nan        nan         nan         nan
+LAPTOP_dummy_2.0        -0.0358        nan        nan        nan         nan         nan
+MAR_dummy_2             -0.0103        nan        nan        nan         nan         nan
+MAR_dummy_3             -0.0052        nan        nan        nan         nan         nan
+MAR_dummy_4              0.0183        nan        nan        nan         nan         nan
+MAR_dummy_5             -0.0125        nan        nan        nan         nan         nan
+MIG_dummy_3.0            0.0152        nan        nan        nan         nan         nan
+PRIVCOV_dummy_2          0.0019        nan        nan        nan         nan         nan
+PUBCOV_dummy_2           0.0122        nan        nan        nan         nan         nan
+R60_dummy_1.0           -0.0042        nan        nan        nan         nan         nan
+R60_dummy_2.0           -0.0007        nan        nan        nan         nan         nan
+R65_dummy_1.0            0.0011        nan        nan        nan         nan         nan
+R65_dummy_2.0            0.0151        nan        nan        nan         nan         nan
+RAC1P_dummy_2           -0.0070        nan        nan        nan         nan         nan
+RAC1P_dummy_6            0.0154        nan        nan        nan         nan         nan
+RAC1P_dummy_8           -0.0127        nan        nan        nan         nan         nan
+RAC1P_dummy_9            0.0044        nan        nan        nan         nan         nan
+SATELLITE_dummy_2.0      0.0067        nan        nan        nan         nan         nan
+SCHL_dummy_13.0          0.0202        nan        nan        nan         nan         nan
+SCHL_dummy_14.0         -0.0056        nan        nan        nan         nan         nan
+SCHL_dummy_15.0          0.0229        nan        nan        nan         nan         nan
+SCHL_dummy_16.0          0.0122        nan        nan        nan         nan         nan
+SCHL_dummy_17.0          0.0288        nan        nan        nan         nan         nan
+SCHL_dummy_18.0          0.0251        nan        nan        nan         nan         nan
+SCHL_dummy_19.0          0.0437        nan        nan        nan         nan         nan
+SCHL_dummy_20.0          0.0359        nan        nan        nan         nan         nan
+SCHL_dummy_21.0          0.0840        nan        nan        nan         nan         nan
+SCHL_dummy_22.0          0.0800        nan        nan        nan         nan         nan
+SCHL_dummy_23.0          0.0429        nan        nan        nan         nan         nan
+SCHL_dummy_24.0          0.0557        nan        nan        nan         nan         nan
+SMARTPHONE_dummy_2.0    -0.0107        nan        nan        nan         nan         nan
+TABLET_dummy_2.0         0.0004        nan        nan        nan         nan         nan
+WIF_dummy_1.0            0.0350        nan        nan        nan         nan         nan
+WIF_dummy_2.0            0.0255        nan        nan        nan         nan         nan
+WIF_dummy_3.0            0.0040        nan        nan        nan         nan         nan
+WKEXREL_dummy_10.0       0.0401   3.02e+09   1.33e-11      1.000   -5.92e+09    5.92e+09
+WKEXREL_dummy_11.0       0.0135   3.02e+09   4.48e-12      1.000   -5.92e+09    5.92e+09
+WKEXREL_dummy_12.0      -0.0303   3.02e+09     -1e-11      1.000   -5.92e+09    5.92e+09
+WKEXREL_dummy_13.0       0.0009   1.15e+06   7.56e-10      1.000   -2.26e+06    2.26e+06
+WKEXREL_dummy_14.0      -0.0102   1.14e+06  -8.98e-09      1.000   -2.23e+06    2.23e+06
+WKEXREL_dummy_15.0      -0.0345   1.28e+06   -2.7e-08      1.000   -2.51e+06    2.51e+06
+WKEXREL_dummy_2.0       -0.0057        nan        nan        nan         nan         nan
+WKEXREL_dummy_3.0       -0.0252        nan        nan        nan         nan         nan
+WKEXREL_dummy_4.0       -0.0034        nan        nan        nan         nan         nan
+WKEXREL_dummy_5.0       -0.0038        nan        nan        nan         nan         nan
+WKEXREL_dummy_6.0       -0.0110        nan        nan        nan         nan         nan
+WKEXREL_dummy_7.0       -0.0181        nan        nan        nan         nan         nan
+WKEXREL_dummy_8.0       -0.0155        nan        nan        nan         nan         nan
+WKEXREL_dummy_9.0       -0.0511        nan        nan        nan         nan         nan
+WKL_dummy_2.0           -0.1245        nan        nan        nan         nan         nan
+WKL_dummy_3.0            0.2163        nan        nan        nan         nan         nan
+WORKSTAT_dummy_10.0     -0.0713        nan        nan        nan         nan         nan
+WORKSTAT_dummy_12.0     -0.0180        nan        nan        nan         nan         nan
+WORKSTAT_dummy_13.0      0.0485        nan        nan        nan         nan         nan
+WORKSTAT_dummy_15.0      0.0652        nan        nan        nan         nan         nan
+WORKSTAT_dummy_2.0       0.0278        nan        nan        nan         nan         nan
+WORKSTAT_dummy_3.0       0.0139        nan        nan        nan         nan         nan
+WORKSTAT_dummy_7.0       0.0083        nan        nan        nan         nan         nan
+WORKSTAT_dummy_9.0       0.0211        nan        nan        nan         nan         nan
+========================================================================================
+
+Top 10 Most Significant Variables:
+                          Variable  Coefficient  Std Error    Z-Score  \
+ESR_dummy_3.0        ESR_dummy_3.0    -6.046823   0.102090 -59.230522   
+ESR_dummy_6.0        ESR_dummy_6.0    -6.997910   0.119223 -58.696022   
+WKL_dummy_3.0        WKL_dummy_3.0     1.545731   0.097304  15.885554   
+HINCP                        HINCP     0.093459   0.008884  10.519390   
+WKL_dummy_2.0        WKL_dummy_2.0    -0.889296   0.094473  -9.413236   
+SCHL_dummy_21.0    SCHL_dummy_21.0     0.599952   0.082196   7.299062   
+SCHL_dummy_22.0    SCHL_dummy_22.0     0.571636   0.083865   6.816102   
+LAPTOP_dummy_2.0  LAPTOP_dummy_2.0    -0.256125   0.052010  -4.924543   
+const                        const    -1.705480   0.373832  -4.562156   
+SCHL_dummy_24.0    SCHL_dummy_24.0     0.397794   0.097751   4.069468   
+
+                       P-Value  
+ESR_dummy_3.0     0.000000e+00  
+ESR_dummy_6.0     0.000000e+00  
+WKL_dummy_3.0     7.978972e-57  
+HINCP             7.032777e-26  
+WKL_dummy_2.0     4.810921e-21  
+SCHL_dummy_21.0   2.897805e-13  
+SCHL_dummy_22.0   9.354363e-12  
+LAPTOP_dummy_2.0  8.455767e-07  
+const             5.063111e-06  
+SCHL_dummy_24.0   4.712057e-05  </code></pre>
+</div>
+</div>
+<p>:::</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

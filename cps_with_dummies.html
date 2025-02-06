@@ -1,0 +1,2341 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>cps_with_dummies</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">RUCI LAB</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./datadict.html"> 
+<span class="menu-text">Data Dictionary (CDC, EPA, USGS)</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./eda.html"> 
+<span class="menu-text">EDA for HPS data</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+
+<div id="cell-0" class="cell" data-outputid="132d1067-6161-4368-c877-256daccdc496">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (classification_report, confusion_matrix, roc_auc_score,roc_curve,precision_recall_curve, average_precision_score,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                           mean_squared_error, mean_absolute_error, r2_score, accuracy_score)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.calibration <span class="im">import</span> calibration_curve</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shap</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Loading data..."</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> pd.read_csv(<span class="st">"filtered_df.csv"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> filtered_df[(filtered_df[<span class="st">'gestfips'</span>]<span class="op">==</span><span class="dv">34</span>) <span class="op">|</span> (filtered_df[<span class="st">'gestfips'</span>]<span class="op">==</span><span class="dv">36</span>)]</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Define features and target</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> filtered_df[[<span class="st">'hehousut'</span>,<span class="st">'hetelhhd'</span>,<span class="st">'hetelavl'</span>,<span class="st">'hefaminc'</span>,<span class="st">'hrnumhou'</span>,<span class="st">'hrhtype'</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                <span class="st">'HUBUS'</span>,<span class="st">'gereg'</span>,<span class="st">'gediv'</span>,<span class="st">'gestfips'</span>,<span class="st">'gtcbsa'</span>,<span class="st">'gtco'</span>,<span class="st">'gtcbsast'</span>,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>                <span class="st">'gtmetsta'</span>,<span class="st">'gtindvpc'</span>,<span class="st">'gtcbsasz'</span>,<span class="st">'gtcsa'</span>,<span class="st">'perrp'</span>,<span class="st">'prtage'</span>,<span class="st">'pemaritl'</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                <span class="st">'pesex'</span>,<span class="st">'peeduca'</span>,<span class="st">'ptdtrace'</span>,<span class="st">'prdthsp'</span>,<span class="st">'PUCHINHH'</span>,<span class="st">'prfamrel'</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                <span class="st">'prfamtyp'</span>,<span class="st">'pehspnon'</span>,<span class="st">'penatvty'</span>,<span class="st">'pemntvty'</span>,<span class="st">'pefntvty'</span>,<span class="st">'prcitshp'</span>,</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>                <span class="st">'prinuyer'</span>,<span class="st">'PUWK'</span>,<span class="st">'pemjot'</span>,<span class="st">'pemjnum'</span>,<span class="st">'pehruslt'</span>,<span class="st">'pehractt'</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>                <span class="st">'peio1cow'</span>,<span class="st">'prdtind1'</span>,<span class="st">'prdtocc1'</span>,<span class="st">'pternwa'</span>,<span class="st">'ptwk'</span>,<span class="st">'prchld'</span>,<span class="st">'prnmchld'</span>]]</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> filtered_df[<span class="st">'pttlwk'</span>]</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> (y <span class="op">==</span> <span class="fl">1.0</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Data shape: X = </span><span class="sc">{</span>X<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, y = </span><span class="sc">{</span>y<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Loading data...
+Data shape: X = (17819, 45), y = (17819,)</code></pre>
+</div>
+</div>
+<div id="cell-1" class="cell" data-outputid="9e6bbf96-13f1-458a-a1d4-48205bdb9663">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define continuous columns</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>continuous_columns <span class="op">=</span> [</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'hrnumhou'</span>,   <span class="co"># Number of persons living in household</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'prtage'</span>,     <span class="co"># Age</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'pemjnum'</span>,    <span class="co"># Number of jobs</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'pehruslt'</span>,   <span class="co"># Usual hours worked</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'pehractt'</span>,   <span class="co"># Actual hours worked last week</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'pternwa'</span>,    <span class="co"># Weekly earnings</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'prnmchld'</span>    <span class="co"># Number of own children</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_dummies_with_base(df, continuous_cols):</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create dummy variables while preserving continuous features and dropping base categories"""</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Creating dummy variables..."</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    df_processed <span class="op">=</span> df.copy()</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    dummies_list <span class="op">=</span> []</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> column <span class="kw">in</span> df_processed.columns:</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> column <span class="kw">in</span> continuous_cols:</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Convert to numeric without filling missing values</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            df_processed[column] <span class="op">=</span> pd.to_numeric(df_processed[column], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>            dummies_list.append(df_processed[[column]])</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Create dummies with drop_first=True to avoid dummy variable trap</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            df_temp <span class="op">=</span> df_processed[column].copy()</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>            df_temp <span class="op">=</span> df_temp.<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="bu">str</span>(x) <span class="cf">if</span> pd.notnull(x) <span class="kw">and</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                                (<span class="kw">not</span> <span class="bu">isinstance</span>(x, (<span class="bu">int</span>, <span class="bu">float</span>)) <span class="kw">or</span> x <span class="op">&gt;=</span> <span class="dv">0</span>) <span class="cf">else</span> np.nan)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>            dummies <span class="op">=</span> pd.get_dummies(df_temp, prefix<span class="op">=</span><span class="ss">f"</span><span class="sc">{</span>column<span class="sc">}</span><span class="ss">_dummy"</span>, drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>            dummies_list.append(dummies)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Optionally, print the dropped base category</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(dummies.columns) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>                base_category <span class="op">=</span> df_temp.dropna().unique()[<span class="dv">0</span>]</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                <span class="bu">print</span>(<span class="ss">f"Dropped base category for </span><span class="sc">{</span>column<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>base_category<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    final_df <span class="op">=</span> pd.concat(dummies_list, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Original shape: </span><span class="sc">{</span>df<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Final shape after dummy creation: </span><span class="sc">{</span>final_df<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> final_df</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dummies with standardization</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>X_with_dummies <span class="op">=</span> create_dummies_with_base(X, continuous_columns)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Standardize continuous features</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> column <span class="kw">in</span> continuous_columns:</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> column <span class="kw">in</span> X_with_dummies.columns:</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>        col_data <span class="op">=</span> X_with_dummies[[column]].fillna(X_with_dummies[column].median())</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>        X_with_dummies[column] <span class="op">=</span> scaler.fit_transform(col_data)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Final shape after standardization: </span><span class="sc">{</span>X_with_dummies<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Creating dummy variables...
+Dropped base category for hehousut: 1
+Dropped base category for hetelhhd: 1
+Dropped base category for hetelavl: 2
+Dropped base category for hefaminc: 14
+Dropped base category for hrhtype: 1
+Dropped base category for HUBUS: 1
+Dropped base category for gestfips: 34
+Dropped base category for gtcbsa: 35620
+Dropped base category for gtco: 3
+Dropped base category for gtcbsast: 2
+Dropped base category for gtmetsta: 1
+Dropped base category for gtindvpc: 0
+Dropped base category for gtcbsasz: 7
+Dropped base category for gtcsa: 408
+Dropped base category for perrp: 40.0
+Dropped base category for pemaritl: 1.0
+Dropped base category for pesex: 2.0
+Dropped base category for peeduca: 44.0
+Dropped base category for ptdtrace: 1.0
+Dropped base category for prdthsp: 7.0
+Dropped base category for PUCHINHH: 9.0
+Dropped base category for prfamrel: 1.0
+Dropped base category for prfamtyp: 1.0
+Dropped base category for pehspnon: 2.0
+Dropped base category for penatvty: 104.0
+Dropped base category for pemntvty: 104.0
+Dropped base category for pefntvty: 104.0
+Dropped base category for prcitshp: 4.0
+Dropped base category for prinuyer: 19.0
+Dropped base category for PUWK: 1.0
+Dropped base category for pemjot: 2.0
+Dropped base category for peio1cow: 4.0
+Dropped base category for prdtind1: 25.0
+Dropped base category for prdtocc1: 21.0
+Dropped base category for ptwk: 0
+Dropped base category for prchld: 0.0
+
+Original shape: (17819, 45)
+Final shape after dummy creation: (17819, 684)
+
+Final shape after standardization: (17819, 684)</code></pre>
+</div>
+</div>
+<div id="cell-2" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, let's convert any boolean columns to numeric in X_with_dummies</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> X_with_dummies.columns:</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> X_with_dummies[col].dtype <span class="op">==</span> <span class="bu">bool</span>:</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        X_with_dummies[col] <span class="op">=</span> X_with_dummies[col].astype(<span class="bu">int</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> X_with_dummies[col].dtype <span class="op">==</span> <span class="st">'object'</span>:</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        X_with_dummies[col] <span class="op">=</span> pd.to_numeric(X_with_dummies[col], errors<span class="op">=</span><span class="st">'coerce'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-3" class="cell" data-outputid="eeb1594b-e048-49c9-bad2-2187445f1abc">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>X_with_dummies</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+
+  <div id="df-f93775ee-b44e-400c-b8bc-21ff73a1b0b3" class="colab-df-container">
+    <div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">hehousut_dummy_12</th>
+<th data-quarto-table-cell-role="th">hehousut_dummy_2</th>
+<th data-quarto-table-cell-role="th">hehousut_dummy_3</th>
+<th data-quarto-table-cell-role="th">hehousut_dummy_4</th>
+<th data-quarto-table-cell-role="th">hehousut_dummy_5</th>
+<th data-quarto-table-cell-role="th">hehousut_dummy_6</th>
+<th data-quarto-table-cell-role="th">hehousut_dummy_7</th>
+<th data-quarto-table-cell-role="th">hetelhhd_dummy_2</th>
+<th data-quarto-table-cell-role="th">hetelavl_dummy_2</th>
+<th data-quarto-table-cell-role="th">hefaminc_dummy_10</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">prchld_dummy_15.0</th>
+<th data-quarto-table-cell-role="th">prchld_dummy_2.0</th>
+<th data-quarto-table-cell-role="th">prchld_dummy_3.0</th>
+<th data-quarto-table-cell-role="th">prchld_dummy_4.0</th>
+<th data-quarto-table-cell-role="th">prchld_dummy_5.0</th>
+<th data-quarto-table-cell-role="th">prchld_dummy_6.0</th>
+<th data-quarto-table-cell-role="th">prchld_dummy_7.0</th>
+<th data-quarto-table-cell-role="th">prchld_dummy_8.0</th>
+<th data-quarto-table-cell-role="th">prchld_dummy_9.0</th>
+<th data-quarto-table-cell-role="th">prnmchld</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">651</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>-0.534288</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">652</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>-0.534288</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">653</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>-0.534288</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">654</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>-0.534288</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">655</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>-0.534288</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">318282</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>-0.534288</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">318283</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>-0.534288</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">318284</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>-0.534288</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">318399</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>-0.534288</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">318400</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>...</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0.494731</td>
+</tr>
+</tbody>
+</table>
+
+<p>17819 rows × 684 columns</p>
+</div>
+    <div class="colab-df-buttons">
+
+  <div class="colab-df-container">
+    <button class="colab-df-convert" onclick="convertToInteractive('df-f93775ee-b44e-400c-b8bc-21ff73a1b0b3')" title="Convert this dataframe to an interactive table." style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 -960 960 960">
+    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"></path>
+  </svg>
+    </button>
+
+  <style>
+    .colab-df-container {
+      display:flex;
+      gap: 12px;
+    }
+
+    .colab-df-convert {
+      background-color: #E8F0FE;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      fill: #1967D2;
+      height: 32px;
+      padding: 0 0 0 0;
+      width: 32px;
+    }
+
+    .colab-df-convert:hover {
+      background-color: #E2EBFA;
+      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+      fill: #174EA6;
+    }
+
+    .colab-df-buttons div {
+      margin-bottom: 4px;
+    }
+
+    [theme=dark] .colab-df-convert {
+      background-color: #3B4455;
+      fill: #D2E3FC;
+    }
+
+    [theme=dark] .colab-df-convert:hover {
+      background-color: #434B5C;
+      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+      fill: #FFFFFF;
+    }
+  </style>
+
+    <script>
+      const buttonEl =
+        document.querySelector('#df-f93775ee-b44e-400c-b8bc-21ff73a1b0b3 button.colab-df-convert');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      async function convertToInteractive(key) {
+        const element = document.querySelector('#df-f93775ee-b44e-400c-b8bc-21ff73a1b0b3');
+        const dataTable =
+          await google.colab.kernel.invokeFunction('convertToInteractive',
+                                                    [key], {});
+        if (!dataTable) return;
+
+        const docLinkHtml = 'Like what you see? Visit the ' +
+          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
+          + ' to learn more about interactive tables.';
+        element.innerHTML = '';
+        dataTable['output_type'] = 'display_data';
+        await google.colab.output.renderOutput(dataTable, element);
+        const docLink = document.createElement('div');
+        docLink.innerHTML = docLinkHtml;
+        element.appendChild(docLink);
+      }
+    </script>
+  </div>
+
+
+<div id="df-bf59aacf-4973-41a0-bfc5-a4e377bb6967">
+  <button class="colab-df-quickchart" onclick="quickchart('df-bf59aacf-4973-41a0-bfc5-a4e377bb6967')" title="Suggest charts" style="display:none;">
+
+<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
+    <g>
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"></path>
+    </g>
+</svg>
+  </button>
+
+<style>
+  .colab-df-quickchart {
+      --bg-color: #E8F0FE;
+      --fill-color: #1967D2;
+      --hover-bg-color: #E2EBFA;
+      --hover-fill-color: #174EA6;
+      --disabled-fill-color: #AAA;
+      --disabled-bg-color: #DDD;
+  }
+
+  [theme=dark] .colab-df-quickchart {
+      --bg-color: #3B4455;
+      --fill-color: #D2E3FC;
+      --hover-bg-color: #434B5C;
+      --hover-fill-color: #FFFFFF;
+      --disabled-bg-color: #3B4455;
+      --disabled-fill-color: #666;
+  }
+
+  .colab-df-quickchart {
+    background-color: var(--bg-color);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
+    fill: var(--fill-color);
+    height: 32px;
+    padding: 0;
+    width: 32px;
+  }
+
+  .colab-df-quickchart:hover {
+    background-color: var(--hover-bg-color);
+    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    fill: var(--button-hover-fill-color);
+  }
+
+  .colab-df-quickchart-complete:disabled,
+  .colab-df-quickchart-complete:disabled:hover {
+    background-color: var(--disabled-bg-color);
+    fill: var(--disabled-fill-color);
+    box-shadow: none;
+  }
+
+  .colab-df-spinner {
+    border: 2px solid var(--fill-color);
+    border-color: transparent;
+    border-bottom-color: var(--fill-color);
+    animation:
+      spin 1s steps(1) infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+      border-left-color: var(--fill-color);
+    }
+    20% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    30% {
+      border-color: transparent;
+      border-left-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+      border-right-color: var(--fill-color);
+    }
+    40% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-top-color: var(--fill-color);
+    }
+    60% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+    }
+    80% {
+      border-color: transparent;
+      border-right-color: var(--fill-color);
+      border-bottom-color: var(--fill-color);
+    }
+    90% {
+      border-color: transparent;
+      border-bottom-color: var(--fill-color);
+    }
+  }
+</style>
+
+  <script>
+    async function quickchart(key) {
+      const quickchartButtonEl =
+        document.querySelector('#' + key + ' button');
+      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
+      quickchartButtonEl.classList.add('colab-df-spinner');
+      try {
+        const charts = await google.colab.kernel.invokeFunction(
+            'suggestCharts', [key], {});
+      } catch (error) {
+        console.error('Error during call to suggestCharts:', error);
+      }
+      quickchartButtonEl.classList.remove('colab-df-spinner');
+      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
+    }
+    (() => {
+      let quickchartButtonEl =
+        document.querySelector('#df-bf59aacf-4973-41a0-bfc5-a4e377bb6967 button');
+      quickchartButtonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+    })();
+  </script>
+</div>
+
+  <div id="id_203ec5ac-cce4-4371-98dd-b4ab81b34e60">
+    <style>
+      .colab-df-generate {
+        background-color: #E8F0FE;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        fill: #1967D2;
+        height: 32px;
+        padding: 0 0 0 0;
+        width: 32px;
+      }
+
+      .colab-df-generate:hover {
+        background-color: #E2EBFA;
+        box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
+        fill: #174EA6;
+      }
+
+      [theme=dark] .colab-df-generate {
+        background-color: #3B4455;
+        fill: #D2E3FC;
+      }
+
+      [theme=dark] .colab-df-generate:hover {
+        background-color: #434B5C;
+        box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
+        fill: #FFFFFF;
+      }
+    </style>
+    <button class="colab-df-generate" onclick="generateWithVariable('X_with_dummies')" title="Generate code using this dataframe." style="display:none;">
+
+  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewbox="0 0 24 24" width="24px">
+    <path d="M7,19H8.4L18.45,9,17,7.55,7,17.6ZM5,21V16.75L18.45,3.32a2,2,0,0,1,2.83,0l1.4,1.43a1.91,1.91,0,0,1,.58,1.4,1.91,1.91,0,0,1-.58,1.4L9.25,21ZM18.45,9,17,7.55Zm-12,3A5.31,5.31,0,0,0,4.9,8.1,5.31,5.31,0,0,0,1,6.5,5.31,5.31,0,0,0,4.9,4.9,5.31,5.31,0,0,0,6.5,1,5.31,5.31,0,0,0,8.1,4.9,5.31,5.31,0,0,0,12,6.5,5.46,5.46,0,0,0,6.5,12Z"></path>
+  </svg>
+    </button>
+    <script>
+      (() => {
+      const buttonEl =
+        document.querySelector('#id_203ec5ac-cce4-4371-98dd-b4ab81b34e60 button.colab-df-generate');
+      buttonEl.style.display =
+        google.colab.kernel.accessAllowed ? 'block' : 'none';
+
+      buttonEl.onclick = () => {
+        google.colab.notebook.generateWithVariable('X_with_dummies');
+      }
+      })();
+    </script>
+  </div>
+
+    </div>
+  </div>
+</div>
+</div>
+<div id="cell-4" class="cell" data-outputid="3b1a1418-2a43-473a-ad43-ac29d9517966">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># def calculate_vif_optimized(df, threshold=5):</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     """</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     Calculate VIF iteratively, removing highest VIF features until all are below threshold</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     Uses batch processing and early stopping for efficiency</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     """</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#     print("\nCalculating VIF scores iteratively...")</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#     numerical_df = df.select_dtypes(include=np.number).copy()</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Initialize variables</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     features_to_drop = []</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#     max_vif = float('inf')</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#     while len(numerical_df.columns) &gt; 0 and max_vif &gt; threshold:</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#         # Calculate VIF in batches of 50 features</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#         vif_data = []</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co">#         batch_size = 50</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co">#         for i in range(0, len(numerical_df.columns), batch_size):</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co">#             batch_cols = numerical_df.columns[i:i + batch_size]</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co">#             batch_df = numerical_df[batch_cols]</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co">#             batch_vif = [</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co">#                 (col, variance_inflation_factor(batch_df.values, j))</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co">#                 for j, col in enumerate(batch_cols)</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co">#             ]</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co">#             vif_data.extend(batch_vif)</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co">#         # Convert to DataFrame</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co">#         vif_df = pd.DataFrame(vif_data, columns=['Feature', 'VIF'])</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="co">#         # Find highest VIF</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co">#         max_vif_row = vif_df.loc[vif_df['VIF'].idxmax()]</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co">#         max_vif = max_vif_row['VIF']</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co">#         if max_vif &gt; threshold:</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co">#             feature_to_drop = max_vif_row['Feature']</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="co">#             features_to_drop.append(feature_to_drop)</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="co">#             numerical_df.drop(columns=[feature_to_drop], inplace=True)</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="co">#             # Print progress every 10 features</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="co">#             if len(features_to_drop) % 10 == 0:</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="co">#                 print(f"Dropped {len(features_to_drop)} features. Current max VIF: {max_vif:.2f}")</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="co">#     print(f"\nTotal features dropped: {len(features_to_drop)}")</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a><span class="co">#     return features_to_drop, vif_df</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a><span class="co"># # Calculate VIF and get features to drop</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="co"># high_vif_features, final_vif = calculate_vif_optimized(X_with_dummies, threshold=10)</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="co"># # Drop high VIF features</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="co"># X_clean = X_with_dummies.drop(columns=high_vif_features)</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a><span class="co"># # Print summary</span></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a><span class="co"># print("\nFinal VIF Results (top 10 highest):")</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a><span class="co"># print(final_vif.sort_values('VIF', ascending=False).head(10))</span></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>    X_with_dummies, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>, stratify<span class="op">=</span>y</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Final shapes after VIF and split:"</span>)</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"X_train: </span><span class="sc">{</span>X_train<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"X_test: </span><span class="sc">{</span>X_test<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Final shapes after VIF and split:
+X_train: (14255, 684)
+X_test: (3564, 684)</code></pre>
+</div>
+</div>
+<div id="probit" class="cell" data-outputid="c135bab8-9c99-4eae-c4c2-993ad129d9f4">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Fitting Probit model for effect sizes and p-values..."</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Remove low variance columns</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>variance_threshold <span class="op">=</span> <span class="fl">0.01</span>  <span class="co"># Adjust this value as needed</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>variances <span class="op">=</span> X_train.var()</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>low_variance_columns <span class="op">=</span> variances[variances <span class="op">&lt;</span> variance_threshold].index</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>X_train_filtered <span class="op">=</span> X_train.drop(columns<span class="op">=</span>low_variance_columns)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Removed </span><span class="sc">{</span><span class="bu">len</span>(low_variance_columns)<span class="sc">}</span><span class="ss"> low variance columns"</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Handle perfect multicollinearity</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop highly correlated features</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> remove_highly_correlated_features(df, threshold<span class="op">=</span><span class="fl">0.95</span>):</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    corr_matrix <span class="op">=</span> df.corr().<span class="bu">abs</span>()</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    upper <span class="op">=</span> corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k<span class="op">=</span><span class="dv">1</span>).astype(<span class="bu">bool</span>))</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    to_drop <span class="op">=</span> [column <span class="cf">for</span> column <span class="kw">in</span> upper.columns <span class="cf">if</span> <span class="bu">any</span>(upper[column] <span class="op">&gt;</span> threshold)]</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df.drop(columns<span class="op">=</span>to_drop), to_drop</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>X_train_filtered, dropped_corr <span class="op">=</span> remove_highly_correlated_features(X_train_filtered)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Removed </span><span class="sc">{</span><span class="bu">len</span>(dropped_corr)<span class="sc">}</span><span class="ss"> highly correlated features"</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Add constant and fit model</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>X_train_probit <span class="op">=</span> sm.add_constant(X_train_filtered)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Ensure all data is numeric</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>X_train_probit <span class="op">=</span> X_train_probit.astype(<span class="bu">float</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Fit Probit model with robust covariance</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>    probit_model <span class="op">=</span> sm.Probit(y_train, X_train_probit)</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    probit_results <span class="op">=</span> probit_model.fit(method<span class="op">=</span><span class="st">'newton'</span>, cov_type<span class="op">=</span><span class="st">'HC0'</span>)</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Probit Model Summary:"</span>)</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(probit_results.summary())</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate marginal effects</span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Marginal Effects (Probit):"</span>)</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>    marginal_effects <span class="op">=</span> probit_results.get_margeff(at<span class="op">=</span><span class="st">'overall'</span>)</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(marginal_effects.summary())</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Print top significant variables</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    significant_vars <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Variable'</span>: X_train_probit.columns,</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Coefficient'</span>: probit_results.params,</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Std Error'</span>: probit_results.bse,</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>        <span class="st">'Z-Score'</span>: probit_results.tvalues,</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>        <span class="st">'P-Value'</span>: probit_results.pvalues</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>    }).sort_values(<span class="st">'P-Value'</span>)</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Top 10 Most Significant Variables:"</span>)</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(significant_vars.head(<span class="dv">10</span>))</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Error in model fitting: </span><span class="sc">{</span><span class="bu">str</span>(e)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Data shape:"</span>, X_train_probit.shape)</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Number of NaN values:"</span>, X_train_probit.isna().<span class="bu">sum</span>().<span class="bu">sum</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Fitting Probit model for effect sizes and p-values...
+Removed 471 low variance columns
+Removed 10 highly correlated features
+Optimization terminated successfully.
+         Current function value: 0.356300
+         Iterations 9
+
+Probit Model Summary:
+                          Probit Regression Results                           
+==============================================================================
+Dep. Variable:                 pttlwk   No. Observations:                14255
+Model:                         Probit   Df Residuals:                    14055
+Method:                           MLE   Df Model:                          199
+Date:                Thu, 06 Feb 2025   Pseudo R-squ.:                  0.3545
+Time:                        08:33:29   Log-Likelihood:                -5079.1
+converged:                       True   LL-Null:                       -7868.1
+Covariance Type:                  HC0   LLR p-value:                     0.000
+========================================================================================
+                           coef    std err          z      P&gt;|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------
+const                   -0.4438        nan        nan        nan         nan         nan
+hetelhhd_dummy_2        -0.3904      0.125     -3.120      0.002      -0.636      -0.145
+hetelavl_dummy_2         0.0665      0.167      0.399      0.690      -0.260       0.393
+hefaminc_dummy_10        0.0909      0.160      0.568      0.570      -0.223       0.405
+hefaminc_dummy_11       -0.1193      0.144     -0.826      0.409      -0.402       0.164
+hefaminc_dummy_12        0.0291      0.188      0.155      0.877      -0.339       0.397
+hefaminc_dummy_13        0.1481      0.108      1.368      0.171      -0.064       0.360
+hefaminc_dummy_14        0.1722      0.113      1.525      0.127      -0.049       0.394
+hefaminc_dummy_15        0.2896      0.101      2.859      0.004       0.091       0.488
+hefaminc_dummy_16        0.4533      0.122      3.720      0.000       0.214       0.692
+hefaminc_dummy_7        -0.1080      0.226     -0.477      0.633      -0.552       0.336
+hefaminc_dummy_8         0.2058      0.158      1.299      0.194      -0.105       0.516
+hefaminc_dummy_9        -0.2087      0.181     -1.151      0.250      -0.564       0.147
+hrnumhou                -0.0828      0.028     -3.000      0.003      -0.137      -0.029
+hrhtype_dummy_3         -0.0427      0.107     -0.398      0.690      -0.253       0.168
+hrhtype_dummy_4          0.0338      0.104      0.326      0.744      -0.169       0.237
+hrhtype_dummy_6         -0.0910      0.177     -0.513      0.608      -0.438       0.256
+hrhtype_dummy_7         -0.1437      0.182     -0.791      0.429      -0.500       0.212
+HUBUS_dummy_2           -0.3604      0.080     -4.485      0.000      -0.518      -0.203
+gestfips_dummy_36        0.0539      0.188      0.287      0.774      -0.315       0.422
+gtcbsa_dummy_10580       0.1101        nan        nan        nan         nan         nan
+gtcbsa_dummy_13780      -0.1873      0.351     -0.534      0.594      -0.875       0.500
+gtcbsa_dummy_15380      -0.1131   5.19e+07  -2.18e-09      1.000   -1.02e+08    1.02e+08
+gtcbsa_dummy_35620       0.1921    1.6e+06    1.2e-07      1.000   -3.13e+06    3.13e+06
+gtcbsa_dummy_37980      -0.2836        nan        nan        nan         nan         nan
+gtcbsa_dummy_40380      -0.0566   5.96e+07   -9.5e-10      1.000   -1.17e+08    1.17e+08
+gtcbsa_dummy_45060      -0.1722        nan        nan        nan         nan         nan
+gtcbsa_dummy_45940       0.4605      0.248      1.857      0.063      -0.026       0.947
+gtco_dummy_103          -0.1515      0.125     -1.210      0.226      -0.397       0.094
+gtco_dummy_119          -0.2373      0.131     -1.813      0.070      -0.494       0.019
+gtco_dummy_13            0.0841      0.097      0.871      0.384      -0.105       0.273
+gtco_dummy_17            0.0980      0.115      0.849      0.396      -0.128       0.324
+gtco_dummy_23           -0.0961      0.100     -0.959      0.338      -0.293       0.100
+gtco_dummy_27            0.3721      0.096      3.857      0.000       0.183       0.561
+gtco_dummy_3             0.1696      0.094      1.813      0.070      -0.014       0.353
+gtco_dummy_31            0.2710      0.132      2.055      0.040       0.013       0.530
+gtco_dummy_35            0.0497      0.129      0.385      0.700      -0.203       0.302
+gtco_dummy_39           -0.0034      0.136     -0.025      0.980      -0.270       0.263
+gtco_dummy_47            0.7798      0.156      4.989      0.000       0.473       1.086
+gtco_dummy_5             0.5346      0.146      3.660      0.000       0.248       0.821
+gtco_dummy_55           -0.1912      0.170     -1.122      0.262      -0.525       0.143
+gtco_dummy_59           -0.3640      0.131     -2.783      0.005      -0.620      -0.108
+gtco_dummy_61            0.8676      0.159      5.457      0.000       0.556       1.179
+gtco_dummy_67           -0.1184      0.411     -0.288      0.773      -0.924       0.687
+gtco_dummy_7            -0.0162   4.53e+06  -3.57e-09      1.000   -8.89e+06    8.89e+06
+gtco_dummy_71            0.0603      0.148      0.409      0.683      -0.229       0.349
+gtco_dummy_81            0.7921      0.161      4.911      0.000       0.476       1.108
+gtco_dummy_85            0.1173      0.232      0.507      0.612      -0.336       0.571
+gtco_dummy_87           -1.0649      0.195     -5.458      0.000      -1.447      -0.683
+gtcbsast_dummy_2        -0.1585      0.101     -1.570      0.116      -0.356       0.039
+gtcbsast_dummy_3        -0.1579        nan        nan        nan         nan         nan
+gtcbsast_dummy_4         0.0213        nan        nan        nan         nan         nan
+gtindvpc_dummy_1        -0.8703      0.179     -4.871      0.000      -1.220      -0.520
+gtindvpc_dummy_2        -0.2450      0.176     -1.394      0.163      -0.589       0.099
+gtcbsasz_dummy_2        -0.3653      0.219     -1.665      0.096      -0.795       0.065
+gtcbsasz_dummy_3        -0.3957      0.240     -1.650      0.099      -0.866       0.074
+gtcbsasz_dummy_4        -0.0621        nan        nan        nan         nan         nan
+gtcbsasz_dummy_5        -0.1698        nan        nan        nan         nan         nan
+gtcbsasz_dummy_7        -0.0915   8.05e+05  -1.14e-07      1.000   -1.58e+06    1.58e+06
+gtcsa_dummy_104         -0.2497      0.207     -1.208      0.227      -0.655       0.155
+gtcsa_dummy_428          0.2514      0.228      1.104      0.270      -0.195       0.698
+perrp_dummy_41.0         0.1192      0.213      0.560      0.576      -0.298       0.537
+perrp_dummy_42.0        -0.2038      0.145     -1.410      0.159      -0.487       0.080
+perrp_dummy_44.0         0.3822      0.169      2.267      0.023       0.052       0.713
+perrp_dummy_48.0        -0.3012      0.164     -1.836      0.066      -0.623       0.020
+perrp_dummy_50.0        -0.1561      0.267     -0.585      0.559      -0.680       0.367
+perrp_dummy_51.0        -0.0459      0.280     -0.164      0.870      -0.594       0.502
+perrp_dummy_52.0        -0.4274      0.318     -1.346      0.178      -1.050       0.195
+perrp_dummy_55.0         0.6969      0.180      3.872      0.000       0.344       1.050
+prtage                  -0.0426      0.021     -2.026      0.043      -0.084      -0.001
+pemaritl_dummy_2.0      -0.1861      0.146     -1.273      0.203      -0.473       0.100
+pemaritl_dummy_3.0       0.0187      0.137      0.136      0.891      -0.250       0.288
+pemaritl_dummy_4.0      -0.0314      0.105     -0.298      0.766      -0.238       0.175
+pemaritl_dummy_5.0      -0.1715      0.139     -1.238      0.216      -0.443       0.100
+pemaritl_dummy_6.0      -0.0865      0.105     -0.826      0.409      -0.292       0.119
+pesex_dummy_2.0          0.2232      0.035      6.335      0.000       0.154       0.292
+peeduca_dummy_33.0       0.3720      0.378      0.984      0.325      -0.369       1.113
+peeduca_dummy_37.0       0.1358      0.325      0.418      0.676      -0.500       0.772
+peeduca_dummy_38.0       0.0823      0.326      0.252      0.801      -0.557       0.721
+peeduca_dummy_39.0       0.3780      0.200      1.890      0.059      -0.014       0.770
+peeduca_dummy_40.0       0.6360      0.202      3.145      0.002       0.240       1.032
+peeduca_dummy_41.0       0.5762      0.222      2.600      0.009       0.142       1.010
+peeduca_dummy_42.0       0.6776      0.206      3.290      0.001       0.274       1.081
+peeduca_dummy_43.0       0.8655      0.200      4.330      0.000       0.474       1.257
+peeduca_dummy_44.0       1.0688      0.202      5.287      0.000       0.673       1.465
+peeduca_dummy_45.0       1.1099      0.219      5.058      0.000       0.680       1.540
+peeduca_dummy_46.0       1.2331      0.216      5.711      0.000       0.810       1.656
+ptdtrace_dummy_2.0      -0.0249      0.055     -0.455      0.649      -0.132       0.082
+ptdtrace_dummy_4.0      -0.0388      0.074     -0.523      0.601      -0.184       0.106
+prdthsp_dummy_2.0        0.1004      0.147      0.685      0.493      -0.187       0.388
+prdthsp_dummy_4.0       -0.3129      0.209     -1.497      0.134      -0.723       0.097
+prdthsp_dummy_6.0       -0.2805      0.202     -1.391      0.164      -0.676       0.115
+prdthsp_dummy_7.0        0.0820      0.159      0.516      0.606      -0.230       0.394
+PUCHINHH_dummy_3.0      -0.2696      0.195     -1.381      0.167      -0.652       0.113
+PUCHINHH_dummy_9.0      -0.0507      0.138     -0.367      0.714      -0.321       0.220
+prfamrel_dummy_1.0      -0.0493      0.142     -0.348      0.728      -0.327       0.228
+prfamrel_dummy_4.0      -0.2085      0.245     -0.850      0.396      -0.689       0.272
+prfamtyp_dummy_3.0      -0.0399      0.255     -0.156      0.876      -0.539       0.460
+prfamtyp_dummy_5.0      -0.3361      0.213     -1.580      0.114      -0.753       0.081
+pehspnon_dummy_2.0       0.1137      0.104      1.091      0.275      -0.091       0.318
+penatvty_dummy_207.0     0.0231      0.166      0.139      0.889      -0.302       0.348
+penatvty_dummy_210.0     0.0226      0.165      0.137      0.891      -0.301       0.346
+penatvty_dummy_303.0     0.1393      0.304      0.458      0.647      -0.457       0.736
+penatvty_dummy_329.0     0.1313      0.222      0.591      0.555      -0.304       0.567
+penatvty_dummy_333.0    -0.3091      0.254     -1.215      0.224      -0.808       0.189
+penatvty_dummy_365.0     0.1572      0.327      0.481      0.631      -0.484       0.798
+penatvty_dummy_57.0      0.3278      0.143      2.288      0.022       0.047       0.609
+pemntvty_dummy_207.0    -0.1621      0.231     -0.703      0.482      -0.614       0.290
+pemntvty_dummy_210.0     0.3692      0.150      2.465      0.014       0.076       0.663
+pemntvty_dummy_233.0     0.3973      0.362      1.098      0.272      -0.312       1.106
+pemntvty_dummy_303.0    -0.4136      0.335     -1.235      0.217      -1.070       0.243
+pemntvty_dummy_329.0    -0.3135      0.326     -0.962      0.336      -0.952       0.325
+pemntvty_dummy_332.0    -0.4948      0.165     -2.991      0.003      -0.819      -0.171
+pemntvty_dummy_333.0     0.4170      0.216      1.934      0.053      -0.006       0.840
+pemntvty_dummy_364.0    -0.6624      0.368     -1.802      0.071      -1.383       0.058
+pemntvty_dummy_365.0     1.2720      0.230      5.533      0.000       0.821       1.723
+pemntvty_dummy_57.0     -0.0017      0.069     -0.025      0.980      -0.137       0.134
+pemntvty_dummy_73.0     -0.1555      0.232     -0.670      0.503      -0.610       0.299
+pefntvty_dummy_120.0    -0.1514      0.134     -1.133      0.257      -0.413       0.110
+pefntvty_dummy_207.0     0.2339      0.227      1.031      0.303      -0.211       0.679
+pefntvty_dummy_233.0    -0.4991      0.378     -1.321      0.186      -1.239       0.241
+pefntvty_dummy_303.0    -0.0906      0.288     -0.314      0.753      -0.656       0.475
+pefntvty_dummy_329.0     0.5558      0.298      1.868      0.062      -0.027       1.139
+pefntvty_dummy_364.0     0.4193      0.371      1.129      0.259      -0.309       1.147
+pefntvty_dummy_365.0    -1.0838      0.290     -3.732      0.000      -1.653      -0.515
+pefntvty_dummy_57.0      0.0957      0.069      1.388      0.165      -0.039       0.231
+pefntvty_dummy_73.0      0.3499      0.231      1.512      0.130      -0.104       0.803
+prcitshp_dummy_4.0       0.4262      0.148      2.876      0.004       0.136       0.717
+prcitshp_dummy_5.0       0.4360      0.161      2.706      0.007       0.120       0.752
+prinuyer_dummy_11.0     -0.0443      0.139     -0.319      0.750      -0.316       0.228
+prinuyer_dummy_12.0     -0.1863      0.148     -1.256      0.209      -0.477       0.104
+prinuyer_dummy_14.0     -0.0306      0.146     -0.209      0.834      -0.317       0.256
+prinuyer_dummy_15.0     -0.3445      0.178     -1.933      0.053      -0.694       0.005
+prinuyer_dummy_16.0     -0.1977      0.128     -1.541      0.123      -0.449       0.054
+prinuyer_dummy_17.0     -0.2555      0.122     -2.094      0.036      -0.495      -0.016
+prinuyer_dummy_18.0     -0.0259      0.150     -0.172      0.863      -0.320       0.268
+prinuyer_dummy_19.0     -0.0810      0.153     -0.528      0.597      -0.381       0.219
+prinuyer_dummy_20.0     -0.4099      0.164     -2.504      0.012      -0.731      -0.089
+prinuyer_dummy_21.0     -0.0698      0.150     -0.466      0.641      -0.363       0.224
+prinuyer_dummy_22.0     -0.0406      0.142     -0.287      0.774      -0.318       0.237
+prinuyer_dummy_23.0     -0.1634      0.161     -1.017      0.309      -0.478       0.152
+prinuyer_dummy_24.0     -0.4663      0.160     -2.914      0.004      -0.780      -0.153
+prinuyer_dummy_25.0     -0.4639      0.148     -3.136      0.002      -0.754      -0.174
+prinuyer_dummy_26.0     -0.2901      0.161     -1.803      0.071      -0.606       0.025
+prinuyer_dummy_27.0     -0.5785      0.189     -3.068      0.002      -0.948      -0.209
+prinuyer_dummy_28.0     -0.1560      0.170     -0.919      0.358      -0.489       0.177
+pemjot_dummy_2.0        -0.4350      0.064     -6.818      0.000      -0.560      -0.310
+pehruslt                -0.0201      0.021     -0.977      0.329      -0.060       0.020
+pehractt                 0.0488      0.021      2.346      0.019       0.008       0.090
+peio1cow_dummy_2.0      -0.6072      0.114     -5.311      0.000      -0.831      -0.383
+peio1cow_dummy_3.0      -0.9695      0.117     -8.289      0.000      -1.199      -0.740
+peio1cow_dummy_4.0      -0.4798      0.108     -4.428      0.000      -0.692      -0.267
+peio1cow_dummy_5.0      -0.3845      0.119     -3.242      0.001      -0.617      -0.152
+peio1cow_dummy_6.0      -0.1254      0.126     -0.997      0.319      -0.372       0.121
+peio1cow_dummy_7.0      -0.2443      0.125     -1.951      0.051      -0.490       0.001
+prdtind1_dummy_19.0      0.2093      0.117      1.792      0.073      -0.020       0.438
+prdtind1_dummy_21.0     -0.0161      0.103     -0.156      0.876      -0.218       0.186
+prdtind1_dummy_22.0     -0.4119      0.072     -5.711      0.000      -0.553      -0.271
+prdtind1_dummy_23.0     -0.8310      0.130     -6.409      0.000      -1.085      -0.577
+prdtind1_dummy_32.0      0.2446      0.069      3.548      0.000       0.109       0.380
+prdtind1_dummy_33.0      0.5550      0.103      5.365      0.000       0.352       0.758
+prdtind1_dummy_34.0     -0.0839      0.108     -0.774      0.439      -0.296       0.129
+prdtind1_dummy_36.0      0.3042      0.058      5.250      0.000       0.191       0.418
+prdtind1_dummy_38.0     -0.0279      0.095     -0.292      0.770      -0.215       0.159
+prdtind1_dummy_4.0      -0.3925      0.097     -4.053      0.000      -0.582      -0.203
+prdtind1_dummy_40.0     -0.3013      0.080     -3.743      0.000      -0.459      -0.144
+prdtind1_dummy_41.0     -0.3179      0.096     -3.320      0.001      -0.506      -0.130
+prdtind1_dummy_42.0     -0.1392      0.077     -1.810      0.070      -0.290       0.012
+prdtind1_dummy_43.0     -0.1846      0.098     -1.880      0.060      -0.377       0.008
+prdtind1_dummy_44.0     -0.4101      0.103     -3.998      0.000      -0.611      -0.209
+prdtind1_dummy_46.0     -0.7857      0.114     -6.917      0.000      -1.008      -0.563
+prdtind1_dummy_48.0     -0.6080      0.178     -3.407      0.001      -0.958      -0.258
+prdtind1_dummy_49.0     -0.0754      0.119     -0.633      0.527      -0.309       0.158
+prdtind1_dummy_51.0     -0.1874      0.104     -1.808      0.071      -0.391       0.016
+prdtocc1_dummy_10.0     -1.0416      0.087    -11.907      0.000      -1.213      -0.870
+prdtocc1_dummy_11.0     -0.7223      0.098     -7.346      0.000      -0.915      -0.530
+prdtocc1_dummy_12.0     -1.0094      0.172     -5.859      0.000      -1.347      -0.672
+prdtocc1_dummy_13.0     -0.6446      0.129     -4.994      0.000      -0.898      -0.392
+prdtocc1_dummy_14.0     -0.8193      0.114     -7.172      0.000      -1.043      -0.595
+prdtocc1_dummy_15.0     -0.5606      0.132     -4.255      0.000      -0.819      -0.302
+prdtocc1_dummy_16.0     -0.1442      0.066     -2.201      0.028      -0.273      -0.016
+prdtocc1_dummy_17.0     -0.1676      0.057     -2.914      0.004      -0.280      -0.055
+prdtocc1_dummy_19.0     -0.8087      0.130     -6.209      0.000      -1.064      -0.553
+prdtocc1_dummy_2.0       0.2930      0.055      5.292      0.000       0.185       0.402
+prdtocc1_dummy_20.0     -0.8588      0.137     -6.246      0.000      -1.128      -0.589
+prdtocc1_dummy_21.0     -0.9260      0.117     -7.929      0.000      -1.155      -0.697
+prdtocc1_dummy_22.0     -1.6501      0.205     -8.037      0.000      -2.053      -1.248
+prdtocc1_dummy_3.0       0.4683      0.071      6.626      0.000       0.330       0.607
+prdtocc1_dummy_4.0      -0.0518      0.095     -0.544      0.587      -0.239       0.135
+prdtocc1_dummy_5.0      -0.0389      0.115     -0.337      0.736      -0.265       0.187
+prdtocc1_dummy_6.0      -0.2713      0.092     -2.962      0.003      -0.451      -0.092
+prdtocc1_dummy_7.0      -0.0872      0.101     -0.866      0.386      -0.284       0.110
+prdtocc1_dummy_8.0      -0.7237      0.081     -8.986      0.000      -0.882      -0.566
+prdtocc1_dummy_9.0      -0.0342      0.081     -0.422      0.673      -0.193       0.125
+pternwa                  0.0320      0.023      1.386      0.166      -0.013       0.077
+ptwk_dummy_1            -0.0838      0.207     -0.404      0.686      -0.490       0.322
+prchld_dummy_1.0        -0.0076      0.085     -0.090      0.929      -0.174       0.159
+prchld_dummy_10.0       -0.1151      0.099     -1.159      0.246      -0.310       0.079
+prchld_dummy_2.0        -0.1091      0.108     -1.012      0.312      -0.321       0.102
+prchld_dummy_3.0        -0.0836      0.067     -1.251      0.211      -0.215       0.047
+prchld_dummy_4.0        -0.1046      0.068     -1.530      0.126      -0.239       0.029
+prchld_dummy_5.0        -0.0709      0.107     -0.661      0.509      -0.281       0.139
+prchld_dummy_8.0        -0.1087      0.122     -0.887      0.375      -0.349       0.131
+prnmchld                 0.0549      0.028      1.977      0.048       0.000       0.109
+========================================================================================
+
+Marginal Effects (Probit):
+       Probit Marginal Effects       
+=====================================
+Dep. Variable:                 pttlwk
+Method:                          dydx
+At:                           overall
+========================================================================================
+                          dy/dx    std err          z      P&gt;|z|      [0.025      0.975]
+----------------------------------------------------------------------------------------
+hetelhhd_dummy_2        -0.0778        nan        nan        nan         nan         nan
+hetelavl_dummy_2         0.0133      0.032      0.409      0.682      -0.050       0.077
+hefaminc_dummy_10        0.0181      0.026      0.687      0.492      -0.034       0.070
+hefaminc_dummy_11       -0.0238      0.033     -0.714      0.475      -0.089       0.041
+hefaminc_dummy_12        0.0058      0.036      0.163      0.871      -0.064       0.076
+hefaminc_dummy_13        0.0295        nan        nan        nan         nan         nan
+hefaminc_dummy_14        0.0343        nan        nan        nan         nan         nan
+hefaminc_dummy_15        0.0577        nan        nan        nan         nan         nan
+hefaminc_dummy_16        0.0903        nan        nan        nan         nan         nan
+hefaminc_dummy_7        -0.0215      0.049     -0.438      0.661      -0.118       0.075
+hefaminc_dummy_8         0.0410        nan        nan        nan         nan         nan
+hefaminc_dummy_9        -0.0416      0.038     -1.084      0.278      -0.117       0.034
+hrnumhou                -0.0165        nan        nan        nan         nan         nan
+hrhtype_dummy_3         -0.0085      0.021     -0.399      0.690      -0.050       0.033
+hrhtype_dummy_4          0.0067      0.020      0.336      0.737      -0.033       0.046
+hrhtype_dummy_6         -0.0181      0.034     -0.538      0.590      -0.084       0.048
+hrhtype_dummy_7         -0.0286      0.032     -0.900      0.368      -0.091       0.034
+HUBUS_dummy_2           -0.0718        nan        nan        nan         nan         nan
+gestfips_dummy_36        0.0107      0.038      0.281      0.779      -0.064       0.086
+gtcbsa_dummy_10580       0.0219        nan        nan        nan         nan         nan
+gtcbsa_dummy_13780      -0.0373      0.068     -0.549      0.583      -0.171       0.096
+gtcbsa_dummy_15380      -0.0226   1.03e+07  -2.19e-09      1.000   -2.02e+07    2.02e+07
+gtcbsa_dummy_35620       0.0383   2.78e+05   1.38e-07      1.000   -5.45e+05    5.45e+05
+gtcbsa_dummy_37980      -0.0565   9.01e+04  -6.28e-07      1.000   -1.77e+05    1.77e+05
+gtcbsa_dummy_40380      -0.0113   1.19e+07  -9.51e-10      1.000   -2.33e+07    2.33e+07
+gtcbsa_dummy_45060      -0.0343        nan        nan        nan         nan         nan
+gtcbsa_dummy_45940       0.0918        nan        nan        nan         nan         nan
+gtco_dummy_103          -0.0302      0.024     -1.278      0.201      -0.077       0.016
+gtco_dummy_119          -0.0473      0.020     -2.383      0.017      -0.086      -0.008
+gtco_dummy_13            0.0168      0.020      0.854      0.393      -0.022       0.055
+gtco_dummy_17            0.0195      0.021      0.935      0.350      -0.021       0.060
+gtco_dummy_23           -0.0192      0.017     -1.129      0.259      -0.052       0.014
+gtco_dummy_27            0.0742        nan        nan        nan         nan         nan
+gtco_dummy_3             0.0338      0.006      5.359      0.000       0.021       0.046
+gtco_dummy_31            0.0540        nan        nan        nan         nan         nan
+gtco_dummy_35            0.0099      0.026      0.381      0.704      -0.041       0.061
+gtco_dummy_39           -0.0007      0.027     -0.025      0.980      -0.054       0.052
+gtco_dummy_47            0.1554        nan        nan        nan         nan         nan
+gtco_dummy_5             0.1066        nan        nan        nan         nan         nan
+gtco_dummy_55           -0.0381      0.011     -3.559      0.000      -0.059      -0.017
+gtco_dummy_59           -0.0726        nan        nan        nan         nan         nan
+gtco_dummy_61            0.1729        nan        nan        nan         nan         nan
+gtco_dummy_67           -0.0236      0.081     -0.292      0.771      -0.182       0.135
+gtco_dummy_7            -0.0032   9.03e+05  -3.58e-09      1.000   -1.77e+06    1.77e+06
+gtco_dummy_71            0.0120      0.027      0.445      0.656      -0.041       0.065
+gtco_dummy_81            0.1579        nan        nan        nan         nan         nan
+gtco_dummy_85            0.0234      0.049      0.480      0.631      -0.072       0.119
+gtco_dummy_87           -0.2123        nan        nan        nan         nan         nan
+gtcbsast_dummy_2        -0.0316      0.018     -1.771      0.077      -0.067       0.003
+gtcbsast_dummy_3        -0.0315        nan        nan        nan         nan         nan
+gtcbsast_dummy_4         0.0042        nan        nan        nan         nan         nan
+gtindvpc_dummy_1        -0.1735        nan        nan        nan         nan         nan
+gtindvpc_dummy_2        -0.0488      0.022     -2.212      0.027      -0.092      -0.006
+gtcbsasz_dummy_2        -0.0728      0.021     -3.396      0.001      -0.115      -0.031
+gtcbsasz_dummy_3        -0.0789      0.017     -4.561      0.000      -0.113      -0.045
+gtcbsasz_dummy_4        -0.0124        nan        nan        nan         nan         nan
+gtcbsasz_dummy_5        -0.0338        nan        nan        nan         nan         nan
+gtcbsasz_dummy_7        -0.0182   1.56e+05  -1.17e-07      1.000   -3.05e+05    3.05e+05
+gtcsa_dummy_104         -0.0498      0.037     -1.359      0.174      -0.122       0.022
+gtcsa_dummy_428          0.0501      0.034      1.478      0.139      -0.016       0.117
+perrp_dummy_41.0         0.0238      0.017      1.410      0.159      -0.009       0.057
+perrp_dummy_42.0        -0.0406      0.048     -0.851      0.395      -0.134       0.053
+perrp_dummy_44.0         0.0762        nan        nan        nan         nan         nan
+perrp_dummy_48.0        -0.0600      0.056     -1.081      0.280      -0.169       0.049
+perrp_dummy_50.0        -0.0311      0.064     -0.487      0.626      -0.156       0.094
+perrp_dummy_51.0        -0.0091      0.059     -0.155      0.877      -0.125       0.107
+perrp_dummy_52.0        -0.0852      0.080     -1.061      0.288      -0.243       0.072
+perrp_dummy_55.0         0.1389        nan        nan        nan         nan         nan
+prtage                  -0.0085        nan        nan        nan         nan         nan
+pemaritl_dummy_2.0      -0.0371      0.012     -3.160      0.002      -0.060      -0.014
+pemaritl_dummy_3.0       0.0037      0.027      0.136      0.892      -0.050       0.058
+pemaritl_dummy_4.0      -0.0063      0.020     -0.312      0.755      -0.046       0.033
+pemaritl_dummy_5.0      -0.0342      0.019     -1.768      0.077      -0.072       0.004
+pemaritl_dummy_6.0      -0.0172      0.016     -1.053      0.292      -0.049       0.015
+pesex_dummy_2.0          0.0445        nan        nan        nan         nan         nan
+peeduca_dummy_33.0       0.0741      0.088      0.838      0.402      -0.099       0.248
+peeduca_dummy_37.0       0.0271      0.071      0.382      0.702      -0.112       0.166
+peeduca_dummy_38.0       0.0164      0.069      0.237      0.813      -0.119       0.152
+peeduca_dummy_39.0       0.0753      0.050      1.498      0.134      -0.023       0.174
+peeduca_dummy_40.0       0.1268      0.042      3.015      0.003       0.044       0.209
+peeduca_dummy_41.0       0.1148      0.049      2.341      0.019       0.019       0.211
+peeduca_dummy_42.0       0.1351      0.038      3.541      0.000       0.060       0.210
+peeduca_dummy_43.0       0.1725        nan        nan        nan         nan         nan
+peeduca_dummy_44.0       0.2130        nan        nan        nan         nan         nan
+peeduca_dummy_45.0       0.2212        nan        nan        nan         nan         nan
+peeduca_dummy_46.0       0.2458        nan        nan        nan         nan         nan
+ptdtrace_dummy_2.0      -0.0050      0.010     -0.480      0.632      -0.025       0.015
+ptdtrace_dummy_4.0      -0.0077      0.014     -0.549      0.583      -0.035       0.020
+prdthsp_dummy_2.0        0.0200      0.033      0.600      0.548      -0.045       0.085
+prdthsp_dummy_4.0       -0.0624        nan        nan        nan         nan         nan
+prdthsp_dummy_6.0       -0.0559        nan        nan        nan         nan         nan
+prdthsp_dummy_7.0        0.0163      0.034      0.482      0.630      -0.050       0.083
+PUCHINHH_dummy_3.0      -0.0537        nan        nan        nan         nan         nan
+PUCHINHH_dummy_9.0      -0.0101      0.023     -0.436      0.663      -0.056       0.035
+prfamrel_dummy_1.0      -0.0098      0.035     -0.277      0.782      -0.079       0.060
+prfamrel_dummy_4.0      -0.0416      0.047     -0.884      0.376      -0.134       0.051
+prfamtyp_dummy_3.0      -0.0079      0.048     -0.165      0.869      -0.102       0.086
+prfamtyp_dummy_5.0      -0.0670      0.063     -1.058      0.290      -0.191       0.057
+pehspnon_dummy_2.0       0.0227      0.024      0.926      0.355      -0.025       0.071
+penatvty_dummy_207.0     0.0046      0.035      0.133      0.894      -0.063       0.072
+penatvty_dummy_210.0     0.0045      0.034      0.134      0.893      -0.061       0.070
+penatvty_dummy_303.0     0.0278      0.060      0.461      0.645      -0.090       0.146
+penatvty_dummy_329.0     0.0262      0.045      0.577      0.564      -0.063       0.115
+penatvty_dummy_333.0    -0.0616      0.026     -2.405      0.016      -0.112      -0.011
+penatvty_dummy_365.0     0.0313      0.064      0.490      0.624      -0.094       0.157
+penatvty_dummy_57.0      0.0653      0.101      0.644      0.520      -0.134       0.264
+pemntvty_dummy_207.0    -0.0323      0.044     -0.731      0.465      -0.119       0.054
+pemntvty_dummy_210.0     0.0736        nan        nan        nan         nan         nan
+pemntvty_dummy_233.0     0.0792      0.034      2.296      0.022       0.012       0.147
+pemntvty_dummy_303.0    -0.0824      0.053     -1.553      0.120      -0.186       0.022
+pemntvty_dummy_329.0    -0.0625      0.063     -0.988      0.323      -0.186       0.062
+pemntvty_dummy_332.0    -0.0986        nan        nan        nan         nan         nan
+pemntvty_dummy_333.0     0.0831        nan        nan        nan         nan         nan
+pemntvty_dummy_364.0    -0.1320      0.051     -2.587      0.010      -0.232      -0.032
+pemntvty_dummy_365.0     0.2535        nan        nan        nan         nan         nan
+pemntvty_dummy_57.0     -0.0003      0.014     -0.024      0.981      -0.029       0.028
+pemntvty_dummy_73.0     -0.0310      0.043     -0.725      0.469      -0.115       0.053
+pefntvty_dummy_120.0    -0.0302        nan        nan        nan         nan         nan
+pefntvty_dummy_207.0     0.0466      0.036      1.304      0.192      -0.023       0.117
+pefntvty_dummy_233.0    -0.0995      0.004    -24.044      0.000      -0.108      -0.091
+pefntvty_dummy_303.0    -0.0181      0.054     -0.332      0.740      -0.125       0.089
+pefntvty_dummy_329.0     0.1108      0.019      5.941      0.000       0.074       0.147
+pefntvty_dummy_364.0     0.0836      0.072      1.154      0.248      -0.058       0.225
+pefntvty_dummy_365.0    -0.2160        nan        nan        nan         nan         nan
+pefntvty_dummy_57.0      0.0191      0.030      0.643      0.520      -0.039       0.077
+pefntvty_dummy_73.0      0.0697      0.058      1.196      0.232      -0.045       0.184
+prcitshp_dummy_4.0       0.0849      0.105      0.810      0.418      -0.120       0.290
+prcitshp_dummy_5.0       0.0869      0.105      0.825      0.410      -0.120       0.293
+prinuyer_dummy_11.0     -0.0088      0.024     -0.372      0.710      -0.055       0.038
+prinuyer_dummy_12.0     -0.0371        nan        nan        nan         nan         nan
+prinuyer_dummy_14.0     -0.0061      0.028     -0.220      0.826      -0.060       0.048
+prinuyer_dummy_15.0     -0.0687        nan        nan        nan         nan         nan
+prinuyer_dummy_16.0     -0.0394        nan        nan        nan         nan         nan
+prinuyer_dummy_17.0     -0.0509        nan        nan        nan         nan         nan
+prinuyer_dummy_18.0     -0.0052      0.029     -0.180      0.857      -0.061       0.051
+prinuyer_dummy_19.0     -0.0161      0.026     -0.628      0.530      -0.066       0.034
+prinuyer_dummy_20.0     -0.0817        nan        nan        nan         nan         nan
+prinuyer_dummy_21.0     -0.0139      0.024     -0.584      0.559      -0.061       0.033
+prinuyer_dummy_22.0     -0.0081      0.026     -0.312      0.755      -0.059       0.043
+prinuyer_dummy_23.0     -0.0326      0.017     -1.917      0.055      -0.066       0.001
+prinuyer_dummy_24.0     -0.0930        nan        nan        nan         nan         nan
+prinuyer_dummy_25.0     -0.0925        nan        nan        nan         nan         nan
+prinuyer_dummy_26.0     -0.0578        nan        nan        nan         nan         nan
+prinuyer_dummy_27.0     -0.1153        nan        nan        nan         nan         nan
+prinuyer_dummy_28.0     -0.0311      0.020     -1.559      0.119      -0.070       0.008
+pemjot_dummy_2.0        -0.0867        nan        nan        nan         nan         nan
+pehruslt                -0.0040      0.003     -1.313      0.189      -0.010       0.002
+pehractt                 0.0097        nan        nan        nan         nan         nan
+peio1cow_dummy_2.0      -0.1210        nan        nan        nan         nan         nan
+peio1cow_dummy_3.0      -0.1932        nan        nan        nan         nan         nan
+peio1cow_dummy_4.0      -0.0956        nan        nan        nan         nan         nan
+peio1cow_dummy_5.0      -0.0766        nan        nan        nan         nan         nan
+peio1cow_dummy_6.0      -0.0250      0.029     -0.858      0.391      -0.082       0.032
+peio1cow_dummy_7.0      -0.0487      0.026     -1.909      0.056      -0.099       0.001
+prdtind1_dummy_19.0      0.0417      0.014      2.981      0.003       0.014       0.069
+prdtind1_dummy_21.0     -0.0032      0.020     -0.160      0.873      -0.042       0.036
+prdtind1_dummy_22.0     -0.0821        nan        nan        nan         nan         nan
+prdtind1_dummy_23.0     -0.1656        nan        nan        nan         nan         nan
+prdtind1_dummy_32.0      0.0488        nan        nan        nan         nan         nan
+prdtind1_dummy_33.0      0.1106        nan        nan        nan         nan         nan
+prdtind1_dummy_34.0     -0.0167      0.020     -0.838      0.402      -0.056       0.022
+prdtind1_dummy_36.0      0.0606        nan        nan        nan         nan         nan
+prdtind1_dummy_38.0     -0.0056      0.018     -0.306      0.759      -0.041       0.030
+prdtind1_dummy_4.0      -0.0782        nan        nan        nan         nan         nan
+prdtind1_dummy_40.0     -0.0600        nan        nan        nan         nan         nan
+prdtind1_dummy_41.0     -0.0634        nan        nan        nan         nan         nan
+prdtind1_dummy_42.0     -0.0277        nan        nan        nan         nan         nan
+prdtind1_dummy_43.0     -0.0368        nan        nan        nan         nan         nan
+prdtind1_dummy_44.0     -0.0817        nan        nan        nan         nan         nan
+prdtind1_dummy_46.0     -0.1566        nan        nan        nan         nan         nan
+prdtind1_dummy_48.0     -0.1212        nan        nan        nan         nan         nan
+prdtind1_dummy_49.0     -0.0150      0.019     -0.788      0.431      -0.052       0.022
+prdtind1_dummy_51.0     -0.0374      0.012     -3.125      0.002      -0.061      -0.014
+prdtocc1_dummy_10.0     -0.2076        nan        nan        nan         nan         nan
+prdtocc1_dummy_11.0     -0.1440        nan        nan        nan         nan         nan
+prdtocc1_dummy_12.0     -0.2012        nan        nan        nan         nan         nan
+prdtocc1_dummy_13.0     -0.1285        nan        nan        nan         nan         nan
+prdtocc1_dummy_14.0     -0.1633        nan        nan        nan         nan         nan
+prdtocc1_dummy_15.0     -0.1117        nan        nan        nan         nan         nan
+prdtocc1_dummy_16.0     -0.0287        nan        nan        nan         nan         nan
+prdtocc1_dummy_17.0     -0.0334        nan        nan        nan         nan         nan
+prdtocc1_dummy_19.0     -0.1612        nan        nan        nan         nan         nan
+prdtocc1_dummy_2.0       0.0584        nan        nan        nan         nan         nan
+prdtocc1_dummy_20.0     -0.1712        nan        nan        nan         nan         nan
+prdtocc1_dummy_21.0     -0.1846        nan        nan        nan         nan         nan
+prdtocc1_dummy_22.0     -0.3289        nan        nan        nan         nan         nan
+prdtocc1_dummy_3.0       0.0933        nan        nan        nan         nan         nan
+prdtocc1_dummy_4.0      -0.0103      0.018     -0.583      0.560      -0.045       0.024
+prdtocc1_dummy_5.0      -0.0078      0.022     -0.350      0.726      -0.051       0.036
+prdtocc1_dummy_6.0      -0.0541        nan        nan        nan         nan         nan
+prdtocc1_dummy_7.0      -0.0174      0.018     -0.960      0.337      -0.053       0.018
+prdtocc1_dummy_8.0      -0.1443        nan        nan        nan         nan         nan
+prdtocc1_dummy_9.0      -0.0068      0.016     -0.424      0.672      -0.038       0.025
+pternwa                  0.0064      0.003      2.006      0.045       0.000       0.013
+ptwk_dummy_1            -0.0167      0.040     -0.415      0.678      -0.096       0.062
+prchld_dummy_1.0        -0.0015      0.017     -0.090      0.929      -0.035       0.032
+prchld_dummy_10.0       -0.0229      0.016     -1.435      0.151      -0.054       0.008
+prchld_dummy_2.0        -0.0218      0.019     -1.159      0.246      -0.059       0.015
+prchld_dummy_3.0        -0.0167      0.011     -1.459      0.145      -0.039       0.006
+prchld_dummy_4.0        -0.0209      0.007     -2.911      0.004      -0.035      -0.007
+prchld_dummy_5.0        -0.0141      0.019     -0.753      0.451      -0.051       0.023
+prchld_dummy_8.0        -0.0217      0.021     -1.020      0.308      -0.063       0.020
+prnmchld                 0.0109        nan        nan        nan         nan         nan
+========================================================================================
+
+Top 10 Most Significant Variables:
+                                Variable  Coefficient  Std Error    Z-Score  \
+prdtocc1_dummy_10.0  prdtocc1_dummy_10.0    -1.041564   0.087472 -11.907428   
+prdtocc1_dummy_8.0    prdtocc1_dummy_8.0    -0.723746   0.080538  -8.986380   
+peio1cow_dummy_3.0    peio1cow_dummy_3.0    -0.969504   0.116961  -8.289127   
+prdtocc1_dummy_22.0  prdtocc1_dummy_22.0    -1.650114   0.205311  -8.037127   
+prdtocc1_dummy_21.0  prdtocc1_dummy_21.0    -0.925981   0.116783  -7.929049   
+prdtocc1_dummy_11.0  prdtocc1_dummy_11.0    -0.722348   0.098332  -7.345973   
+prdtocc1_dummy_14.0  prdtocc1_dummy_14.0    -0.819323   0.114242  -7.171822   
+prdtind1_dummy_46.0  prdtind1_dummy_46.0    -0.785719   0.113591  -6.917108   
+pemjot_dummy_2.0        pemjot_dummy_2.0    -0.434968   0.063793  -6.818380   
+prdtocc1_dummy_3.0    prdtocc1_dummy_3.0     0.468295   0.070678   6.625764   
+
+                          P-Value  
+prdtocc1_dummy_10.0  1.082656e-32  
+prdtocc1_dummy_8.0   2.555069e-19  
+peio1cow_dummy_3.0   1.140827e-16  
+prdtocc1_dummy_22.0  9.196906e-16  
+prdtocc1_dummy_21.0  2.208309e-15  
+prdtocc1_dummy_11.0  2.042670e-13  
+prdtocc1_dummy_14.0  7.400639e-13  
+prdtind1_dummy_46.0  4.609557e-12  
+pemjot_dummy_2.0     9.207254e-12  
+prdtocc1_dummy_3.0   3.454563e-11  </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/usr/local/lib/python3.11/dist-packages/statsmodels/discrete/discrete_margins.py:343: RuntimeWarning: invalid value encountered in sqrt
+  return cov_me, np.sqrt(np.diag(cov_me))</code></pre>
+</div>
+</div>
+<div id="cell-6" class="cell" data-outputid="e1c1198f-bbca-4957-c4e2-e499af850f2a">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to DMatrix format</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>dtrain <span class="op">=</span> xgb.DMatrix(X_train, label<span class="op">=</span>y_train)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>dtest <span class="op">=</span> xgb.DMatrix(X_test, label<span class="op">=</span>y_test)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define XGBoost parameters</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>params <span class="op">=</span> {</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'objective'</span>: <span class="st">'binary:logistic'</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'eval_metric'</span>: [<span class="st">'logloss'</span>, <span class="st">'auc'</span>],</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'max_depth'</span>: <span class="dv">5</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'learning_rate'</span>: <span class="fl">0.1</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'subsample'</span>: <span class="fl">0.8</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'colsample_bytree'</span>: <span class="fl">0.8</span>,</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'seed'</span>: <span class="dv">42</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform cross-validation</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Performing cross-validation..."</span>)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>num_round <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>cv_results <span class="op">=</span> xgb.cv(</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    params,</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    dtrain,</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    num_boost_round<span class="op">=</span>num_round,</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    nfold<span class="op">=</span><span class="dv">5</span>,</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    metrics<span class="op">=</span>[<span class="st">'auc'</span>, <span class="st">'error'</span>],</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    early_stopping_rounds<span class="op">=</span><span class="dv">20</span>,</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    verbose_eval<span class="op">=</span><span class="va">True</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Print CV results</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Cross-validation results:"</span>)</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best AUC: </span><span class="sc">{</span>cv_results[<span class="st">'test-auc-mean'</span>]<span class="sc">.</span><span class="bu">max</span>()<span class="sc">:.4f}</span><span class="ss"> (+/- </span><span class="sc">{</span>cv_results[<span class="st">'test-auc-std'</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.4f}</span><span class="ss">)"</span>)</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Best Error: </span><span class="sc">{</span>cv_results[<span class="st">'test-error-mean'</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.4f}</span><span class="ss"> (+/- </span><span class="sc">{</span>cv_results[<span class="st">'test-error-std'</span>]<span class="sc">.</span><span class="bu">min</span>()<span class="sc">:.4f}</span><span class="ss">)"</span>)</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Train final model</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Training final model..."</span>)</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>final_model <span class="op">=</span> xgb.train(params, dtrain, num_round)</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Make predictions</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> final_model.predict(dtest)</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>y_pred_binary <span class="op">=</span> (y_pred <span class="op">&gt;</span> <span class="fl">0.5</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic metrics</span></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Calculating performance metrics..."</span>)</span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> accuracy_score(y_test, y_pred_binary)</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>roc_auc <span class="op">=</span> roc_auc_score(y_test, y_pred)</span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Accuracy: </span><span class="sc">{</span>accuracy<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ROC AUC: </span><span class="sc">{</span>roc_auc<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Classification Report:"</span>)</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred_binary))</span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Confusion Matrix:"</span>)</span>
+<span id="cb12-54"><a href="#cb12-54" aria-hidden="true" tabindex="-1"></a>conf_matrix <span class="op">=</span> confusion_matrix(y_test, y_pred_binary)</span>
+<span id="cb12-55"><a href="#cb12-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(conf_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Performing cross-validation...
+[0] train-auc:0.76180+0.01116   train-error:0.24076+0.00120 test-auc:0.75189+0.01767    test-error:0.24076+0.00481
+[1] train-auc:0.81591+0.00558   train-error:0.24076+0.00120 test-auc:0.80476+0.01110    test-error:0.24076+0.00481
+[2] train-auc:0.82405+0.00306   train-error:0.24076+0.00120 test-auc:0.81268+0.00610    test-error:0.24076+0.00481
+[3] train-auc:0.83087+0.00315   train-error:0.24076+0.00120 test-auc:0.81905+0.00661    test-error:0.24076+0.00481
+[4] train-auc:0.83203+0.00321   train-error:0.24074+0.00123 test-auc:0.81966+0.00749    test-error:0.24076+0.00481
+[5] train-auc:0.83691+0.00384   train-error:0.23743+0.00385 test-auc:0.82363+0.00705    test-error:0.23907+0.00539
+[6] train-auc:0.84269+0.00298   train-error:0.22590+0.00318 test-auc:0.82859+0.00640    test-error:0.23016+0.00490
+[7] train-auc:0.84602+0.00357   train-error:0.21568+0.00479 test-auc:0.83038+0.00697    test-error:0.22182+0.00659
+[8] train-auc:0.84989+0.00256   train-error:0.20451+0.00359 test-auc:0.83337+0.00618    test-error:0.21312+0.00547
+[9] train-auc:0.85271+0.00200   train-error:0.19632+0.00280 test-auc:0.83605+0.00549    test-error:0.20365+0.00468
+[10]    train-auc:0.85554+0.00191   train-error:0.19239+0.00290 test-auc:0.83848+0.00644    test-error:0.20077+0.00453
+[11]    train-auc:0.85825+0.00247   train-error:0.18857+0.00281 test-auc:0.84061+0.00659    test-error:0.19825+0.00534
+[12]    train-auc:0.86157+0.00212   train-error:0.18641+0.00282 test-auc:0.84300+0.00664    test-error:0.19818+0.00639
+[13]    train-auc:0.86295+0.00191   train-error:0.18101+0.00348 test-auc:0.84428+0.00640    test-error:0.19277+0.00570
+[14]    train-auc:0.86469+0.00203   train-error:0.17838+0.00301 test-auc:0.84640+0.00619    test-error:0.19046+0.00478
+[15]    train-auc:0.86724+0.00211   train-error:0.17746+0.00248 test-auc:0.84859+0.00601    test-error:0.18976+0.00619
+[16]    train-auc:0.86932+0.00286   train-error:0.17536+0.00241 test-auc:0.85062+0.00499    test-error:0.18772+0.00697
+[17]    train-auc:0.87064+0.00272   train-error:0.17380+0.00266 test-auc:0.85144+0.00536    test-error:0.18653+0.00697
+[18]    train-auc:0.87209+0.00272   train-error:0.17304+0.00267 test-auc:0.85277+0.00543    test-error:0.18604+0.00728
+[19]    train-auc:0.87351+0.00239   train-error:0.17175+0.00260 test-auc:0.85417+0.00596    test-error:0.18534+0.00748
+[20]    train-auc:0.87491+0.00255   train-error:0.17173+0.00288 test-auc:0.85495+0.00590    test-error:0.18506+0.00849
+[21]    train-auc:0.87632+0.00258   train-error:0.17089+0.00303 test-auc:0.85612+0.00565    test-error:0.18351+0.00908
+[22]    train-auc:0.87813+0.00274   train-error:0.16943+0.00297 test-auc:0.85744+0.00549    test-error:0.18302+0.00922
+[23]    train-auc:0.87939+0.00277   train-error:0.16898+0.00305 test-auc:0.85822+0.00563    test-error:0.18337+0.00912
+[24]    train-auc:0.88055+0.00249   train-error:0.16777+0.00322 test-auc:0.85933+0.00585    test-error:0.18183+0.00949
+[25]    train-auc:0.88178+0.00245   train-error:0.16706+0.00242 test-auc:0.86033+0.00573    test-error:0.18099+0.00919
+[26]    train-auc:0.88290+0.00206   train-error:0.16633+0.00212 test-auc:0.86136+0.00586    test-error:0.18078+0.00837
+[27]    train-auc:0.88426+0.00189   train-error:0.16542+0.00208 test-auc:0.86249+0.00613    test-error:0.17945+0.00789
+[28]    train-auc:0.88519+0.00199   train-error:0.16450+0.00215 test-auc:0.86306+0.00641    test-error:0.17952+0.00844
+[29]    train-auc:0.88611+0.00204   train-error:0.16375+0.00254 test-auc:0.86408+0.00669    test-error:0.17832+0.00768
+[30]    train-auc:0.88707+0.00200   train-error:0.16326+0.00245 test-auc:0.86490+0.00650    test-error:0.17818+0.00807
+[31]    train-auc:0.88805+0.00205   train-error:0.16214+0.00213 test-auc:0.86565+0.00654    test-error:0.17685+0.00843
+[32]    train-auc:0.88881+0.00207   train-error:0.16093+0.00244 test-auc:0.86622+0.00627    test-error:0.17587+0.00873
+[33]    train-auc:0.88971+0.00208   train-error:0.16040+0.00222 test-auc:0.86692+0.00628    test-error:0.17566+0.00892
+[34]    train-auc:0.89049+0.00221   train-error:0.15968+0.00208 test-auc:0.86753+0.00607    test-error:0.17461+0.00821
+[35]    train-auc:0.89149+0.00200   train-error:0.15901+0.00187 test-auc:0.86818+0.00619    test-error:0.17461+0.00798
+[36]    train-auc:0.89240+0.00218   train-error:0.15817+0.00195 test-auc:0.86906+0.00600    test-error:0.17348+0.00738
+[37]    train-auc:0.89320+0.00217   train-error:0.15738+0.00163 test-auc:0.86959+0.00598    test-error:0.17306+0.00702
+[38]    train-auc:0.89421+0.00205   train-error:0.15709+0.00203 test-auc:0.87023+0.00595    test-error:0.17334+0.00678
+[39]    train-auc:0.89517+0.00184   train-error:0.15637+0.00167 test-auc:0.87059+0.00574    test-error:0.17194+0.00713
+[40]    train-auc:0.89602+0.00201   train-error:0.15584+0.00193 test-auc:0.87119+0.00580    test-error:0.17194+0.00703
+[41]    train-auc:0.89674+0.00209   train-error:0.15503+0.00178 test-auc:0.87165+0.00561    test-error:0.17096+0.00666
+[42]    train-auc:0.89751+0.00187   train-error:0.15461+0.00197 test-auc:0.87219+0.00581    test-error:0.17075+0.00634
+[43]    train-auc:0.89815+0.00172   train-error:0.15370+0.00181 test-auc:0.87248+0.00584    test-error:0.17005+0.00686
+[44]    train-auc:0.89874+0.00174   train-error:0.15345+0.00168 test-auc:0.87294+0.00592    test-error:0.16969+0.00705
+[45]    train-auc:0.89939+0.00179   train-error:0.15279+0.00194 test-auc:0.87343+0.00574    test-error:0.16927+0.00803
+[46]    train-auc:0.89998+0.00179   train-error:0.15263+0.00186 test-auc:0.87389+0.00577    test-error:0.16892+0.00755
+[47]    train-auc:0.90047+0.00176   train-error:0.15253+0.00176 test-auc:0.87417+0.00575    test-error:0.16899+0.00709
+[48]    train-auc:0.90125+0.00180   train-error:0.15179+0.00176 test-auc:0.87472+0.00574    test-error:0.16857+0.00719
+[49]    train-auc:0.90187+0.00182   train-error:0.15130+0.00196 test-auc:0.87509+0.00555    test-error:0.16892+0.00750
+[50]    train-auc:0.90239+0.00183   train-error:0.15091+0.00190 test-auc:0.87533+0.00560    test-error:0.16822+0.00761
+[51]    train-auc:0.90290+0.00182   train-error:0.15063+0.00203 test-auc:0.87571+0.00550    test-error:0.16801+0.00721
+[52]    train-auc:0.90362+0.00182   train-error:0.14988+0.00198 test-auc:0.87622+0.00546    test-error:0.16752+0.00730
+[53]    train-auc:0.90422+0.00196   train-error:0.14884+0.00213 test-auc:0.87670+0.00533    test-error:0.16759+0.00682
+[54]    train-auc:0.90477+0.00187   train-error:0.14860+0.00170 test-auc:0.87705+0.00538    test-error:0.16759+0.00637
+[55]    train-auc:0.90536+0.00181   train-error:0.14825+0.00186 test-auc:0.87739+0.00550    test-error:0.16780+0.00662
+[56]    train-auc:0.90606+0.00176   train-error:0.14800+0.00160 test-auc:0.87788+0.00547    test-error:0.16766+0.00656
+[57]    train-auc:0.90656+0.00176   train-error:0.14777+0.00178 test-auc:0.87829+0.00556    test-error:0.16752+0.00583
+[58]    train-auc:0.90731+0.00179   train-error:0.14684+0.00175 test-auc:0.87876+0.00541    test-error:0.16668+0.00635
+[59]    train-auc:0.90777+0.00167   train-error:0.14642+0.00207 test-auc:0.87901+0.00550    test-error:0.16605+0.00673
+[60]    train-auc:0.90829+0.00167   train-error:0.14598+0.00205 test-auc:0.87925+0.00539    test-error:0.16556+0.00710
+[61]    train-auc:0.90882+0.00157   train-error:0.14498+0.00203 test-auc:0.87944+0.00531    test-error:0.16499+0.00690
+[62]    train-auc:0.90936+0.00156   train-error:0.14470+0.00223 test-auc:0.87978+0.00519    test-error:0.16450+0.00697
+[63]    train-auc:0.90992+0.00167   train-error:0.14442+0.00195 test-auc:0.87999+0.00507    test-error:0.16415+0.00670
+[64]    train-auc:0.91044+0.00156   train-error:0.14383+0.00174 test-auc:0.88045+0.00511    test-error:0.16345+0.00726
+[65]    train-auc:0.91086+0.00151   train-error:0.14344+0.00162 test-auc:0.88068+0.00503    test-error:0.16380+0.00741
+[66]    train-auc:0.91127+0.00157   train-error:0.14332+0.00179 test-auc:0.88093+0.00495    test-error:0.16310+0.00731
+[67]    train-auc:0.91164+0.00154   train-error:0.14297+0.00176 test-auc:0.88121+0.00494    test-error:0.16268+0.00743
+[68]    train-auc:0.91219+0.00160   train-error:0.14206+0.00168 test-auc:0.88160+0.00489    test-error:0.16219+0.00719
+[69]    train-auc:0.91258+0.00150   train-error:0.14200+0.00152 test-auc:0.88181+0.00497    test-error:0.16226+0.00687
+[70]    train-auc:0.91308+0.00161   train-error:0.14179+0.00193 test-auc:0.88207+0.00488    test-error:0.16233+0.00693
+[71]    train-auc:0.91358+0.00164   train-error:0.14139+0.00185 test-auc:0.88226+0.00473    test-error:0.16275+0.00633
+[72]    train-auc:0.91404+0.00157   train-error:0.14093+0.00168 test-auc:0.88246+0.00480    test-error:0.16268+0.00669
+[73]    train-auc:0.91444+0.00146   train-error:0.14044+0.00138 test-auc:0.88255+0.00479    test-error:0.16198+0.00682
+[74]    train-auc:0.91488+0.00135   train-error:0.14011+0.00109 test-auc:0.88289+0.00487    test-error:0.16191+0.00697
+[75]    train-auc:0.91521+0.00132   train-error:0.13981+0.00124 test-auc:0.88314+0.00472    test-error:0.16163+0.00666
+[76]    train-auc:0.91560+0.00132   train-error:0.13962+0.00117 test-auc:0.88334+0.00475    test-error:0.16142+0.00674
+[77]    train-auc:0.91613+0.00137   train-error:0.13897+0.00112 test-auc:0.88357+0.00479    test-error:0.16100+0.00636
+[78]    train-auc:0.91647+0.00139   train-error:0.13857+0.00142 test-auc:0.88367+0.00473    test-error:0.16121+0.00665
+[79]    train-auc:0.91684+0.00148   train-error:0.13825+0.00157 test-auc:0.88379+0.00466    test-error:0.16072+0.00675
+[80]    train-auc:0.91724+0.00156   train-error:0.13783+0.00135 test-auc:0.88388+0.00466    test-error:0.16107+0.00667
+[81]    train-auc:0.91762+0.00170   train-error:0.13771+0.00129 test-auc:0.88404+0.00453    test-error:0.16121+0.00680
+[82]    train-auc:0.91804+0.00175   train-error:0.13716+0.00165 test-auc:0.88433+0.00442    test-error:0.16093+0.00652
+[83]    train-auc:0.91835+0.00175   train-error:0.13683+0.00183 test-auc:0.88458+0.00429    test-error:0.16093+0.00660
+[84]    train-auc:0.91872+0.00177   train-error:0.13622+0.00193 test-auc:0.88485+0.00416    test-error:0.16072+0.00572
+[85]    train-auc:0.91914+0.00172   train-error:0.13583+0.00189 test-auc:0.88491+0.00410    test-error:0.16128+0.00586
+[86]    train-auc:0.91939+0.00173   train-error:0.13553+0.00190 test-auc:0.88500+0.00414    test-error:0.16135+0.00572
+[87]    train-auc:0.91973+0.00179   train-error:0.13529+0.00202 test-auc:0.88523+0.00409    test-error:0.16128+0.00550
+[88]    train-auc:0.92011+0.00178   train-error:0.13509+0.00217 test-auc:0.88546+0.00407    test-error:0.16072+0.00566
+[89]    train-auc:0.92047+0.00186   train-error:0.13492+0.00227 test-auc:0.88571+0.00400    test-error:0.16022+0.00496
+[90]    train-auc:0.92077+0.00188   train-error:0.13436+0.00224 test-auc:0.88584+0.00402    test-error:0.16029+0.00489
+[91]    train-auc:0.92107+0.00179   train-error:0.13427+0.00223 test-auc:0.88609+0.00421    test-error:0.16015+0.00530
+[92]    train-auc:0.92132+0.00185   train-error:0.13420+0.00214 test-auc:0.88620+0.00412    test-error:0.16022+0.00538
+[93]    train-auc:0.92181+0.00186   train-error:0.13346+0.00231 test-auc:0.88652+0.00409    test-error:0.16022+0.00522
+[94]    train-auc:0.92211+0.00187   train-error:0.13320+0.00251 test-auc:0.88668+0.00404    test-error:0.16043+0.00531
+[95]    train-auc:0.92245+0.00189   train-error:0.13290+0.00275 test-auc:0.88684+0.00412    test-error:0.16036+0.00564
+[96]    train-auc:0.92273+0.00186   train-error:0.13262+0.00270 test-auc:0.88708+0.00411    test-error:0.15980+0.00585
+[97]    train-auc:0.92296+0.00185   train-error:0.13223+0.00244 test-auc:0.88728+0.00411    test-error:0.16015+0.00553
+[98]    train-auc:0.92323+0.00193   train-error:0.13204+0.00256 test-auc:0.88747+0.00405    test-error:0.15994+0.00584
+[99]    train-auc:0.92351+0.00189   train-error:0.13225+0.00244 test-auc:0.88762+0.00411    test-error:0.15980+0.00599
+[100]   train-auc:0.92376+0.00192   train-error:0.13192+0.00242 test-auc:0.88771+0.00402    test-error:0.15910+0.00562
+[101]   train-auc:0.92401+0.00186   train-error:0.13178+0.00245 test-auc:0.88783+0.00402    test-error:0.15875+0.00497
+[102]   train-auc:0.92421+0.00184   train-error:0.13145+0.00221 test-auc:0.88794+0.00402    test-error:0.15868+0.00491
+[103]   train-auc:0.92455+0.00189   train-error:0.13120+0.00271 test-auc:0.88812+0.00401    test-error:0.15840+0.00459
+[104]   train-auc:0.92484+0.00192   train-error:0.13109+0.00266 test-auc:0.88825+0.00407    test-error:0.15847+0.00448
+[105]   train-auc:0.92510+0.00192   train-error:0.13130+0.00259 test-auc:0.88838+0.00406    test-error:0.15868+0.00468
+[106]   train-auc:0.92537+0.00198   train-error:0.13076+0.00265 test-auc:0.88853+0.00401    test-error:0.15861+0.00487
+[107]   train-auc:0.92566+0.00185   train-error:0.13039+0.00245 test-auc:0.88858+0.00401    test-error:0.15882+0.00514
+[108]   train-auc:0.92592+0.00193   train-error:0.13016+0.00254 test-auc:0.88878+0.00388    test-error:0.15840+0.00470
+[109]   train-auc:0.92621+0.00197   train-error:0.12987+0.00215 test-auc:0.88890+0.00389    test-error:0.15833+0.00437
+[110]   train-auc:0.92650+0.00196   train-error:0.12973+0.00220 test-auc:0.88908+0.00399    test-error:0.15833+0.00438
+[111]   train-auc:0.92676+0.00198   train-error:0.12910+0.00219 test-auc:0.88924+0.00401    test-error:0.15896+0.00484
+[112]   train-auc:0.92708+0.00182   train-error:0.12866+0.00182 test-auc:0.88944+0.00419    test-error:0.15861+0.00484
+[113]   train-auc:0.92734+0.00173   train-error:0.12885+0.00182 test-auc:0.88956+0.00433    test-error:0.15875+0.00481
+[114]   train-auc:0.92762+0.00158   train-error:0.12841+0.00162 test-auc:0.88968+0.00435    test-error:0.15798+0.00515
+[115]   train-auc:0.92784+0.00157   train-error:0.12822+0.00151 test-auc:0.88984+0.00455    test-error:0.15840+0.00543
+[116]   train-auc:0.92801+0.00162   train-error:0.12785+0.00178 test-auc:0.88991+0.00449    test-error:0.15805+0.00512
+[117]   train-auc:0.92827+0.00170   train-error:0.12759+0.00154 test-auc:0.89006+0.00442    test-error:0.15819+0.00504
+[118]   train-auc:0.92855+0.00173   train-error:0.12764+0.00168 test-auc:0.89017+0.00431    test-error:0.15784+0.00472
+[119]   train-auc:0.92875+0.00159   train-error:0.12738+0.00156 test-auc:0.89027+0.00434    test-error:0.15798+0.00460
+[120]   train-auc:0.92916+0.00172   train-error:0.12685+0.00185 test-auc:0.89041+0.00426    test-error:0.15798+0.00451
+[121]   train-auc:0.92940+0.00168   train-error:0.12689+0.00207 test-auc:0.89047+0.00422    test-error:0.15805+0.00474
+[122]   train-auc:0.92968+0.00176   train-error:0.12667+0.00200 test-auc:0.89059+0.00423    test-error:0.15826+0.00480
+[123]   train-auc:0.93003+0.00151   train-error:0.12634+0.00192 test-auc:0.89077+0.00444    test-error:0.15805+0.00511
+[124]   train-auc:0.93039+0.00142   train-error:0.12597+0.00194 test-auc:0.89087+0.00440    test-error:0.15784+0.00517
+[125]   train-auc:0.93072+0.00140   train-error:0.12578+0.00193 test-auc:0.89106+0.00442    test-error:0.15791+0.00495
+[126]   train-auc:0.93100+0.00132   train-error:0.12545+0.00176 test-auc:0.89125+0.00447    test-error:0.15784+0.00521
+[127]   train-auc:0.93128+0.00136   train-error:0.12515+0.00153 test-auc:0.89134+0.00443    test-error:0.15742+0.00542
+[128]   train-auc:0.93156+0.00133   train-error:0.12501+0.00159 test-auc:0.89149+0.00447    test-error:0.15742+0.00534
+[129]   train-auc:0.93173+0.00132   train-error:0.12480+0.00134 test-auc:0.89150+0.00445    test-error:0.15721+0.00563
+[130]   train-auc:0.93193+0.00129   train-error:0.12445+0.00101 test-auc:0.89161+0.00447    test-error:0.15700+0.00605
+[131]   train-auc:0.93219+0.00124   train-error:0.12420+0.00096 test-auc:0.89177+0.00445    test-error:0.15721+0.00610
+[132]   train-auc:0.93233+0.00126   train-error:0.12411+0.00107 test-auc:0.89186+0.00451    test-error:0.15707+0.00568
+[133]   train-auc:0.93256+0.00120   train-error:0.12380+0.00103 test-auc:0.89203+0.00456    test-error:0.15665+0.00595
+[134]   train-auc:0.93276+0.00117   train-error:0.12345+0.00120 test-auc:0.89213+0.00454    test-error:0.15637+0.00582
+[135]   train-auc:0.93306+0.00109   train-error:0.12304+0.00097 test-auc:0.89230+0.00461    test-error:0.15637+0.00516
+[136]   train-auc:0.93341+0.00119   train-error:0.12262+0.00136 test-auc:0.89247+0.00448    test-error:0.15609+0.00452
+[137]   train-auc:0.93353+0.00118   train-error:0.12252+0.00143 test-auc:0.89254+0.00441    test-error:0.15559+0.00408
+[138]   train-auc:0.93374+0.00114   train-error:0.12201+0.00152 test-auc:0.89257+0.00440    test-error:0.15517+0.00424
+[139]   train-auc:0.93389+0.00107   train-error:0.12178+0.00139 test-auc:0.89264+0.00437    test-error:0.15496+0.00419
+[140]   train-auc:0.93414+0.00101   train-error:0.12175+0.00122 test-auc:0.89276+0.00424    test-error:0.15517+0.00471
+[141]   train-auc:0.93431+0.00095   train-error:0.12140+0.00113 test-auc:0.89283+0.00424    test-error:0.15496+0.00500
+[142]   train-auc:0.93445+0.00095   train-error:0.12134+0.00120 test-auc:0.89288+0.00429    test-error:0.15531+0.00494
+[143]   train-auc:0.93474+0.00093   train-error:0.12113+0.00110 test-auc:0.89293+0.00422    test-error:0.15566+0.00516
+[144]   train-auc:0.93497+0.00104   train-error:0.12096+0.00108 test-auc:0.89298+0.00420    test-error:0.15538+0.00500
+[145]   train-auc:0.93517+0.00101   train-error:0.12068+0.00119 test-auc:0.89301+0.00427    test-error:0.15503+0.00562
+[146]   train-auc:0.93544+0.00106   train-error:0.12043+0.00112 test-auc:0.89311+0.00424    test-error:0.15468+0.00540
+[147]   train-auc:0.93566+0.00106   train-error:0.12019+0.00114 test-auc:0.89325+0.00425    test-error:0.15405+0.00535
+[148]   train-auc:0.93580+0.00107   train-error:0.12005+0.00113 test-auc:0.89333+0.00429    test-error:0.15440+0.00530
+[149]   train-auc:0.93610+0.00123   train-error:0.12005+0.00115 test-auc:0.89358+0.00425    test-error:0.15412+0.00534
+[150]   train-auc:0.93633+0.00124   train-error:0.11964+0.00118 test-auc:0.89377+0.00428    test-error:0.15370+0.00540
+[151]   train-auc:0.93658+0.00115   train-error:0.11961+0.00108 test-auc:0.89382+0.00426    test-error:0.15384+0.00525
+[152]   train-auc:0.93671+0.00116   train-error:0.11961+0.00104 test-auc:0.89396+0.00424    test-error:0.15356+0.00541
+[153]   train-auc:0.93699+0.00115   train-error:0.11908+0.00103 test-auc:0.89407+0.00423    test-error:0.15321+0.00527
+[154]   train-auc:0.93717+0.00114   train-error:0.11877+0.00096 test-auc:0.89416+0.00424    test-error:0.15335+0.00528
+[155]   train-auc:0.93740+0.00122   train-error:0.11854+0.00085 test-auc:0.89423+0.00424    test-error:0.15321+0.00505
+[156]   train-auc:0.93756+0.00117   train-error:0.11850+0.00073 test-auc:0.89433+0.00432    test-error:0.15321+0.00458
+[157]   train-auc:0.93777+0.00124   train-error:0.11812+0.00098 test-auc:0.89441+0.00436    test-error:0.15307+0.00466
+[158]   train-auc:0.93797+0.00134   train-error:0.11794+0.00113 test-auc:0.89441+0.00436    test-error:0.15328+0.00455
+[159]   train-auc:0.93816+0.00129   train-error:0.11782+0.00119 test-auc:0.89441+0.00442    test-error:0.15328+0.00451
+[160]   train-auc:0.93833+0.00135   train-error:0.11764+0.00126 test-auc:0.89443+0.00445    test-error:0.15307+0.00484
+[161]   train-auc:0.93854+0.00136   train-error:0.11736+0.00140 test-auc:0.89457+0.00443    test-error:0.15293+0.00404
+[162]   train-auc:0.93866+0.00136   train-error:0.11720+0.00136 test-auc:0.89464+0.00443    test-error:0.15279+0.00419
+[163]   train-auc:0.93886+0.00144   train-error:0.11701+0.00131 test-auc:0.89474+0.00440    test-error:0.15202+0.00423
+[164]   train-auc:0.93899+0.00140   train-error:0.11654+0.00121 test-auc:0.89481+0.00443    test-error:0.15209+0.00417
+[165]   train-auc:0.93925+0.00147   train-error:0.11627+0.00119 test-auc:0.89479+0.00447    test-error:0.15230+0.00444
+[166]   train-auc:0.93939+0.00147   train-error:0.11601+0.00122 test-auc:0.89487+0.00445    test-error:0.15202+0.00428
+[167]   train-auc:0.93968+0.00133   train-error:0.11570+0.00098 test-auc:0.89503+0.00448    test-error:0.15216+0.00388
+[168]   train-auc:0.93981+0.00127   train-error:0.11556+0.00101 test-auc:0.89516+0.00451    test-error:0.15209+0.00359
+[169]   train-auc:0.93993+0.00125   train-error:0.11533+0.00085 test-auc:0.89524+0.00444    test-error:0.15237+0.00324
+[170]   train-auc:0.94008+0.00122   train-error:0.11526+0.00071 test-auc:0.89534+0.00446    test-error:0.15251+0.00319
+[171]   train-auc:0.94030+0.00113   train-error:0.11515+0.00058 test-auc:0.89542+0.00446    test-error:0.15265+0.00332
+[172]   train-auc:0.94054+0.00104   train-error:0.11445+0.00076 test-auc:0.89543+0.00447    test-error:0.15279+0.00353
+[173]   train-auc:0.94080+0.00107   train-error:0.11387+0.00090 test-auc:0.89550+0.00450    test-error:0.15286+0.00384
+[174]   train-auc:0.94096+0.00107   train-error:0.11382+0.00109 test-auc:0.89550+0.00444    test-error:0.15251+0.00330
+[175]   train-auc:0.94125+0.00102   train-error:0.11366+0.00098 test-auc:0.89555+0.00436    test-error:0.15258+0.00297
+[176]   train-auc:0.94139+0.00103   train-error:0.11328+0.00104 test-auc:0.89560+0.00438    test-error:0.15251+0.00285
+[177]   train-auc:0.94153+0.00104   train-error:0.11319+0.00094 test-auc:0.89571+0.00437    test-error:0.15279+0.00309
+[178]   train-auc:0.94169+0.00101   train-error:0.11312+0.00099 test-auc:0.89582+0.00442    test-error:0.15258+0.00303
+[179]   train-auc:0.94194+0.00093   train-error:0.11310+0.00102 test-auc:0.89600+0.00444    test-error:0.15237+0.00297
+[180]   train-auc:0.94207+0.00091   train-error:0.11305+0.00093 test-auc:0.89613+0.00446    test-error:0.15230+0.00234
+[181]   train-auc:0.94218+0.00090   train-error:0.11289+0.00086 test-auc:0.89621+0.00450    test-error:0.15244+0.00249
+[182]   train-auc:0.94229+0.00092   train-error:0.11273+0.00083 test-auc:0.89628+0.00453    test-error:0.15223+0.00225
+[183]   train-auc:0.94245+0.00092   train-error:0.11243+0.00105 test-auc:0.89633+0.00452    test-error:0.15202+0.00279
+
+Cross-validation results:
+Best AUC: 0.8947 (+/- 0.0039)
+Best Error: 0.1520 (+/- 0.0040)
+
+Training final model...
+
+Calculating performance metrics...
+
+Accuracy: 0.8836
+ROC AUC: 0.9277
+
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.91      0.94      0.92      2706
+           1       0.79      0.71      0.74       858
+
+    accuracy                           0.88      3564
+   macro avg       0.85      0.82      0.83      3564
+weighted avg       0.88      0.88      0.88      3564
+
+
+Confusion Matrix:
+[[2544  162]
+ [ 253  605]]</code></pre>
+</div>
+</div>
+<div id="results" class="cell" data-outputid="d7ee94c0-a11e-434f-ea07-4fc65a4c30f4">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Additional Metrics</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Calculating additional performance metrics..."</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate metrics</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>rmse <span class="op">=</span> np.sqrt(mean_squared_error(y_test, y_pred))</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>mse <span class="op">=</span> mean_squared_error(y_test, y_pred)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>mae <span class="op">=</span> mean_absolute_error(y_test, y_pred)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>r2 <span class="op">=</span> r2_score(y_test, y_pred)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate detailed classification metrics</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>tn, fp, fn, tp <span class="op">=</span> confusion_matrix(y_test, y_pred_binary).ravel()</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> tn <span class="op">+</span> fp <span class="op">+</span> fn <span class="op">+</span> tp</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>precision <span class="op">=</span> tp <span class="op">/</span> (tp <span class="op">+</span> fp)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>recall <span class="op">=</span> tp <span class="op">/</span> (tp <span class="op">+</span> fn)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>specificity <span class="op">=</span> tn <span class="op">/</span> (tn <span class="op">+</span> fp)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>false_positive_rate <span class="op">=</span> fp <span class="op">/</span> (fp <span class="op">+</span> tn)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>false_negative_rate <span class="op">=</span> fn <span class="op">/</span> (fn <span class="op">+</span> tp)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>f1 <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (precision <span class="op">*</span> recall) <span class="op">/</span> (precision <span class="op">+</span> recall)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>prevalence <span class="op">=</span> (tp <span class="op">+</span> fn) <span class="op">/</span> total</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>negative_predictive_value <span class="op">=</span> tn <span class="op">/</span> (tn <span class="op">+</span> fn)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>positive_likelihood_ratio <span class="op">=</span> recall <span class="op">/</span> false_positive_rate</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>negative_likelihood_ratio <span class="op">=</span> false_negative_rate <span class="op">/</span> specificity</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Print comprehensive metrics</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Comprehensive Model Performance Metrics:"</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"RMSE: </span><span class="sc">{</span>rmse<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MSE: </span><span class="sc">{</span>mse<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"MAE: </span><span class="sc">{</span>mae<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"R-squared: </span><span class="sc">{</span>r2<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Precision: </span><span class="sc">{</span>precision<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Recall/Sensitivity: </span><span class="sc">{</span>recall<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Specificity: </span><span class="sc">{</span>specificity<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F1 Score: </span><span class="sc">{</span>f1<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Prevalence: </span><span class="sc">{</span>prevalence<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Negative Predictive Value: </span><span class="sc">{</span>negative_predictive_value<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Positive Likelihood Ratio: </span><span class="sc">{</span>positive_likelihood_ratio<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Negative Likelihood Ratio: </span><span class="sc">{</span>negative_likelihood_ratio<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Create visualizations</span></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">15</span>))</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 1: ROC Curve</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>fpr, tpr, _ <span class="op">=</span> roc_curve(y_test, y_pred)</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>plt.plot(fpr, tpr, color<span class="op">=</span><span class="st">'darkorange'</span>,</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span><span class="ss">f'ROC curve (AUC = </span><span class="sc">{</span>roc_auc<span class="sc">:.2f}</span><span class="ss">)'</span>)</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], color<span class="op">=</span><span class="st">'navy'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>plt.xlim([<span class="fl">0.0</span>, <span class="fl">1.0</span>])</span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>plt.ylim([<span class="fl">0.0</span>, <span class="fl">1.05</span>])</span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'False Positive Rate'</span>)</span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'True Positive Rate'</span>)</span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'ROC Curve'</span>)</span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">"lower right"</span>)</span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 2: Precision-Recall Curve</span></span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>precision_curve, recall_curve, _ <span class="op">=</span> precision_recall_curve(y_test, y_pred)</span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a>average_precision <span class="op">=</span> average_precision_score(y_test, y_pred)</span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>plt.plot(recall_curve, precision_curve,</span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span><span class="ss">f'Precision-Recall curve (AP = </span><span class="sc">{</span>average_precision<span class="sc">:.2f}</span><span class="ss">)'</span>)</span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Recall'</span>)</span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Precision'</span>)</span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Precision-Recall Curve'</span>)</span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 3: Feature Importance</span></span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>importance <span class="op">=</span> final_model.get_score(importance_type<span class="op">=</span><span class="st">'weight'</span>)</span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>importance_df <span class="op">=</span> pd.DataFrame(<span class="bu">list</span>(importance.items()),</span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>                           columns<span class="op">=</span>[<span class="st">'Feature'</span>, <span class="st">'Importance'</span>])</span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>importance_df <span class="op">=</span> importance_df.sort_values(by<span class="op">=</span><span class="st">'Importance'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a>sns.barplot(x<span class="op">=</span><span class="st">'Importance'</span>, y<span class="op">=</span><span class="st">'Feature'</span>, data<span class="op">=</span>importance_df.head(<span class="dv">10</span>))</span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Top 10 Feature Importances'</span>)</span>
+<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot 4: Confusion Matrix Heatmap</span></span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>plt.subplot(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>)</span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>sns.heatmap(conf_matrix, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'d'</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>)</span>
+<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Confusion Matrix'</span>)</span>
+<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'True Label'</span>)</span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Predicted Label'</span>)</span>
+<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a><span class="co"># SHAP Analysis</span></span>
+<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Generating SHAP values..."</span>)</span>
+<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>explainer <span class="op">=</span> shap.TreeExplainer(final_model)</span>
+<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>shap_values <span class="op">=</span> explainer.shap_values(X_test)</span>
+<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a>shap.summary_plot(shap_values, X_test, plot_type<span class="op">=</span><span class="st">"bar"</span>)</span>
+<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'SHAP Feature Importance'</span>)</span>
+<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a>shap.summary_plot(shap_values, X_test)</span>
+<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'SHAP Summary Plot'</span>)</span>
+<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a><span class="co"># Calibration plot</span></span>
+<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>prob_true, prob_pred <span class="op">=</span> calibration_curve(y_test, y_pred, n_bins<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a>plt.plot(prob_pred, prob_true, marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Mean Predicted Probability'</span>)</span>
+<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'True Probability'</span>)</span>
+<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Calibration Plot'</span>)</span>
+<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Calculating additional performance metrics...
+
+Comprehensive Model Performance Metrics:
+RMSE: 0.2913
+MSE: 0.0849
+MAE: 0.1675
+R-squared: 0.5357
+
+Precision: 0.7888
+Recall/Sensitivity: 0.7051
+Specificity: 0.9401
+F1 Score: 0.7446
+Prevalence: 0.2407
+Negative Predictive Value: 0.9095
+Positive Likelihood Ratio: 11.7783
+Negative Likelihood Ratio: 0.3136</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cps_with_dummies_files/figure-html/results-output-2.png" id="results-1" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Generating SHAP values...</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cps_with_dummies_files/figure-html/results-output-4.png" id="results-2" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cps_with_dummies_files/figure-html/results-output-5.png" id="results-3" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cps_with_dummies_files/figure-html/results-output-6.png" id="results-4" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cps_with_dummies_files/figure-html/results-output-7.png" id="results-5" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="cps_with_dummies_files/figure-html/results-output-8.png" id="results-6" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/arpannookala12\.github\.io\/ResourcePool_RUCI\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
