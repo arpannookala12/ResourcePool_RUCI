@@ -1,14 +1,16 @@
 # CPS Binary Classification Model Results & Explainability
-Multicollinearity Analysis
-{{< embed hps_cps_pums.ipynb#vif >}}
 
-Model Peformance
-{{< embed hps_cps_pums.ipynb#results >}}
+## Model Peformance
+{{< embed cps_with_dummies.ipynb#results >}}
 
-Probit Model
-{{< embed hps_cps_pums.ipynb#probit >}}
+## Probit Model
+{{< embed cps_with_dummies.ipynb#probit >}}
 
-SHAP Results
-{{< embed hps_cps_pums.ipynb#shap >}}
 
 # PUMS Binary Classification Model Results & Explainability
+
+## Model Performance
+{{< embed pums_with_dummies.ipynb#results >}}
+
+## Probit Model
+{{< embed pums_with_dummies.ipynb#probitactiv >}}
