@@ -13,4 +13,4 @@
 {{< embed pums_with_dummies.ipynb#results >}}
 
 ## Probit Model
-{{< embed pums_with_dummies.ipynb#probitactiv >}}
+{{< embed pums_with_dummies.ipynb#probit >}}
